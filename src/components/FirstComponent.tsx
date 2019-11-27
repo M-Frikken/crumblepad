@@ -6,7 +6,7 @@ const FirstComponent: React.FC = () => (
     <IonCard>
       <IonCardHeader>
         <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
-        <IonCardTitle>Card Title</IonCardTitle>
+        <IonCardTitle>Card T another commit itle</IonCardTitle>
       </IonCardHeader>
 
       <IonCardContent>
