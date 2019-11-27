@@ -10,7 +10,7 @@ const FirstComponent: React.FC = () => (
       </IonCardHeader>
 
       <IonCardContent>
-        Keep close to Nature's heart... and break clear away, once in awhile,
+        Keep close to Nature's heanother change art... and break clear away, once in awhile,
         and climb a mountain or spend a week in the woods. Wash your spirit clean.
       </IonCardContent>
     </IonCard>

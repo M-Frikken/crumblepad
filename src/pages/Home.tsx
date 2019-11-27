@@ -11,7 +11,7 @@ const Home: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
-        Hey My Nrach
+        Hey My Nrachasds
         <p>
           If you get lost, the{' '}
           <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/">
