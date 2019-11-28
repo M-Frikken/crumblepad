@@ -7,7 +7,7 @@ const NoteAddPage: React.FC = () => {
     return (
       <IonPage>
         <IonHeader>
-            <IonToolbar>
+            <IonToolbar color="orange">
                 <IonButtons slot="start">
                     <IonBackButton defaultHref="/home" />
                 </IonButtons>

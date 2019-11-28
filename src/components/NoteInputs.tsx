@@ -9,7 +9,7 @@ const NoteInputs: React.FC = () => {
       <IonCard>
         <IonCardHeader>
           <IonItem>
-            <IonToggle />
+            <IonToggle color="orange" />
             <IonLabel>
               <IonIcon icon={ timer } /> | <IonIcon icon={ lock } />
             </IonLabel>

@@ -16,7 +16,7 @@ const NoteDetailsPage: React.FC<NoteDetailsPageType> = ({ match }) => {
     return (
       <IonPage>
         <IonHeader>
-            <IonToolbar>
+            <IonToolbar color="orange">
                 <IonButtons slot="start">
                     <IonBackButton defaultHref="/home" />
                 </IonButtons>
