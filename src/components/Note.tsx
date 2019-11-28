@@ -1,15 +1,16 @@
 import React from 'react';
 import { IonLabel, IonItem } from '@ionic/react';
 import { Link } from 'react-router-dom';
+import '../styles/Note.css';
 
-export interface NoteType {
+interface NoteType {
   id?: number;
   title?: string;
   content?: string;
 }
 
 const Note: React.FC<NoteType> = ({ id, title, content }) => (
-  <Link to={ `/note/${id}` }>
+  <Link className="note" to={ `/note/${id}` }>
     <IonItem>
       <IonLabel>
         { `${ id } - ${ title }` }
