@@ -18,8 +18,8 @@ const NoteListPage: React.FC = () => {
             <IonIcon icon={add} />
           </IonFabButton>
           <IonFabList side="top">
-            <IonFabButton href="/note/edit/new"><IonIcon icon={timer} /></IonFabButton>
             <IonFabButton href="/note/edit/new"><IonIcon icon={lock} /></IonFabButton>
+            <IonFabButton href="/note/edit/new"><IonIcon icon={timer} /></IonFabButton>
           </IonFabList>
         </IonFab>
       </IonContent>

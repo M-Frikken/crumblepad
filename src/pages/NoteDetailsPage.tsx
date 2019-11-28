@@ -1,4 +1,5 @@
-import { IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonBackButton, IonContent } from '@ionic/react';
+import { IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonBackButton, IonContent, IonFab, IonFabButton, IonIcon } from '@ionic/react';
+import { create } from 'ionicons/icons';
 import React from 'react';
 import NoteDetailedView from '../components/NoteDetailedView';
 
@@ -25,6 +26,11 @@ const NoteDetailsPage: React.FC<NoteDetailsPageType> = ({ match }) => {
         </IonHeader>
         <IonContent>
             <NoteDetailedView noteId={ noteIdNum } />
+            <IonFab vertical="bottom" horizontal="end" slot="fixed">
+                <IonFabButton color="orange">
+                    <IonIcon icon={ create } />
+                </IonFabButton>
+            </IonFab>
         </IonContent>
       </IonPage>
     );
