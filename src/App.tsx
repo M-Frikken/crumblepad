@@ -32,7 +32,7 @@ const App: React.FC = () => (
         <Route path="/note/edit/new" component={NoteAddPage} />
         <Route path="/note/:noteId" component={NoteDetailsPage} />
         <Route path="/home" component={NoteListPage} exact={true} />
-        <Redirect from="/" to="/home" />
+        <Redirect exact={true} from="/" to="/home" />
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>
