@@ -3,7 +3,6 @@ import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import NoteListPage from './pages/NoteListPage';
-import NoteDetailsPage from './pages/NoteDetailsPage';
 import NoteAddPage from './pages/NoteAddPage';
 
 /* Core CSS required for Ionic components to work properly */
@@ -26,17 +25,16 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 
 const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <Route path="/note/edit/new" component={NoteAddPage} />
-        <Route path="/note/:noteId" component={NoteDetailsPage} />
-        <Route path="/home" component={NoteListPage} exact={true} />
-        <Route path="/" component={() => <Redirect to="/home" />} exact={true} />
-        <Redirect to="/home" />
-      </IonRouterOutlet>
-    </IonReactRouter>
-  </IonApp>
+    <IonApp>
+        <IonReactRouter>
+            <IonRouterOutlet>
+                <Route path="/note/:noteId" component={NoteAddPage} />
+                <Route path="/home" component={NoteListPage} exact={true} />
+                <Route path="/" component={() => <Redirect to="/home" />} exact={true} />
+                <Redirect to="/home" />
+            </IonRouterOutlet>
+        </IonReactRouter>
+    </IonApp>
 );
 
 export default App;

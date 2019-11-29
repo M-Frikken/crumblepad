@@ -4,6 +4,15 @@ import React from 'react';
 import NoteList from '../components/NoteList';
 
 const NoteListPage: React.FC = () => {
+  function renderButton() {
+    return (
+      <IonFabList side="top">
+        <IonFabButton href="/note/-1"><IonIcon icon={lock} /></IonFabButton>
+        <IonFabButton href="/note/-2"><IonIcon icon={timer} /></IonFabButton>
+      </IonFabList>
+    )
+  }
+
   return (
     <IonPage>
       <IonHeader>
@@ -17,10 +26,7 @@ const NoteListPage: React.FC = () => {
           <IonFabButton color="orange">
             <IonIcon icon={add} />
           </IonFabButton>
-          <IonFabList side="top">
-            <IonFabButton href="/note/edit/new"><IonIcon icon={lock} /></IonFabButton>
-            <IonFabButton href="/note/edit/new"><IonIcon icon={timer} /></IonFabButton>
-          </IonFabList>
+          { renderButton() }
         </IonFab>
       </IonContent>
     </IonPage>
