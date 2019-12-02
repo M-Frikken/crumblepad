@@ -1,24 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonInput, IonItem, IonLabel, IonToggle, IonIcon, IonTextarea } from '@ionic/react';
 import { timer, lock } from 'ionicons/icons';
-import { PERMANENT, TEMPORARY, NoteType } from './Note';
+import { PERMANENT, TEMPORARY, expirationOptions } from './Note';
+import { setCurrentNote, getCurrentNote } from '../utils/BrowserDB';
 
-const NoteInputs: React.FC<{ note: NoteType }> = ({ note: currentNote }) => {
-  const [title, setTitle] = useState<null | string | undefined>(currentNote.title || '');
-  const [text, setText] = useState<null | string | undefined>(currentNote.content || '');
-  let defType = currentNote.type || -2;
-  if (defType < 0) {
-    defType = currentNote.id === -2 ? TEMPORARY : PERMANENT;
+const NoteInputs: React.FC = () => {
+  const currentNote = getCurrentNote();
+  const { type, title, content: text } = currentNote;
+
+  const onTypeChange = (e: React.MouseEvent<HTMLIonToggleElement, MouseEvent>) => {
+    const expirationOption = 2;
+    const expiresAt =  new Date().getTime() + expirationOptions[expirationOption];
+    setCurrentNote({
+      ...getCurrentNote(),
+      type: e.currentTarget.checked ? PERMANENT : TEMPORARY,
+      expirationOption,
+      expiresAt
+    });
   }
-  const [type, setType] = useState(defType);
 
-  useEffect(() => {
-    localStorage.setItem('currentNote', JSON.stringify({
-      type,
-      title,
-      content: text
-    }));
-  }, [type, title, text]);
+  const onTitleChange = (e: React.FormEvent<HTMLIonInputElement>) => {
+    setCurrentNote({ ...getCurrentNote(), title: e.currentTarget.value || ''});
+  }
+
+  const onTextChange = (e: React.FormEvent<HTMLIonTextareaElement>) => {
+    setCurrentNote({ ...getCurrentNote(), content: e.currentTarget.value || '' });
+  }
 
   return (
     <IonCard>
@@ -27,18 +34,18 @@ const NoteInputs: React.FC<{ note: NoteType }> = ({ note: currentNote }) => {
           <IonToggle
             value="permanent"
             checked={ type === PERMANENT }
-            onClick={ (e) => setType(e.currentTarget.checked ? PERMANENT : TEMPORARY) }
+            onClick={ onTypeChange }
             color="orange" />
           <IonLabel>
             <IonIcon icon={ timer } /> | <IonIcon icon={ lock } />
-          </IonLabel>
+          </IonLabel>effect
         </IonItem>
         <IonCardTitle>
-          <IonInput value={ title } onInput={(e) => setTitle(e.currentTarget.value)} placeholder="Title" />
+          <IonInput value={ title } onInput={ onTitleChange } placeholder="Title" />
         </IonCardTitle>
       </IonCardHeader>
       <IonCardContent>
-        <IonTextarea value={ text } onInput={(e) => setText(e.currentTarget.value)} autofocus={true} placeholder="Write a note..."></IonTextarea>
+        <IonTextarea value={ text } onInput={ onTextChange } autofocus={true} placeholder="Write a note..."></IonTextarea>
       </IonCardContent>
     </IonCard>
   );
