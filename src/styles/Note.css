@@ -2,6 +2,6 @@
     text-decoration: none;
 }
 
-.expired {
-    background: red;
+.note .expired {
+    opacity: .6
 }

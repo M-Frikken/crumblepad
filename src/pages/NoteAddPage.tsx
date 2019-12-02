@@ -24,7 +24,7 @@ const NoteAddPage: React.FC<NoteDetailsPageType> = ({ match, history }) => {
             if (+noteId > 0) return { ...DB.getCurrentNote(), id: noteId };
 
             if (+noteId === TEMPORARY_NOTE_ID) {
-                const expirationOption = 1;
+                const expirationOption = 2;
                 const expiresAt =  new Date().getTime() + expirationOptions[expirationOption];
                 return {
                     type: TEMPORARY,

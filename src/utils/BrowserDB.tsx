@@ -1,4 +1,4 @@
-import { NoteType, NoteListType, expirationOptions } from "../components/Note";
+import { NoteType, NoteListType } from "../components/Note";
 
 export const FieldNames = {
     NEXT_ID: 'nextId',
@@ -40,8 +40,6 @@ export const createOrUpdateNote = (note: NoteType) => {
     if (!id) {
         const nextId = getNumber(FieldNames.NEXT_ID) || 0;
         notes[nextId] = { ...note, id: nextId };
-        // ======= TODO: change to dynamic
-        // =======
         setItem(FieldNames.NEXT_ID, nextId + 1);
     } else {
         notes[id] = note;
@@ -55,6 +53,18 @@ export const deleteNote = (noteId: number) => {
     delete notes[noteId];
     return notes;
 }
+
+export const deleteNotesByIds = (IDs: number[]) => {
+    const notes = getNotes();
+    const notesLeft = Object.entries(notes).reduce((acc, [key, value]) => {
+        return IDs.includes(+key)
+        ? { ...acc, [key]: value }
+        : acc;
+    });
+    setObject(FieldNames.NOTES, notesLeft);
+}
+
+
 
 export const setCurrentNote = (note: NoteType) => setObject(FieldNames.CURRENT_NOTE, note);
 

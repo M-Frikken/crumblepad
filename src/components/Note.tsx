@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { IonLabel, IonItem, IonIcon } from '@ionic/react';
 import { Link } from 'react-router-dom';
 import '../styles/Note.css';
 import { timer, lock } from 'ionicons/icons';
 import * as DB from '../utils/BrowserDB'
-import { timeLeft, isExpired } from '../utils/time';
+import { timeLeft } from '../utils/time';
 
 export const TEMPORARY = 'temporary';
 export const PERMANENT = 'permanent';
@@ -27,19 +27,31 @@ export type NoteType = {
   content?: string;
   expirationOption?: number;
   expiresAt?: number;
+  expired?: boolean;
 }
 
 export type NoteListType =  { [key: string]: NoteType };
 
 const Note: React.FC<NoteType> = note => {
-  const { id, type, title, expiresAt } = note;
+  const [expired, setExpired] = useState<boolean>(false);
+  const { id, type, title, expiresAt = new Date().getTime() } = note;
 
   const dateToShow = () => {
     if (type === PERMANENT) return 'NO';
-    if (!expiresAt) return 'no dateTill';
 
     const timeToDestruction = timeLeft(expiresAt);
-    return !timeToDestruction ? 'DESTROYED' : timeToDestruction }
+    return !timeToDestruction ? 'DESTROYED' : timeToDestruction;
+  }
+
+  useEffect(() => {
+    if (
+      type === TEMPORARY
+      && (
+        expiresAt
+        && expiresAt <= new Date().getTime()
+      )
+    ) setExpired(true);
+  });
 
   const renderIcon = () => {
     return type === TEMPORARY
@@ -49,8 +61,8 @@ const Note: React.FC<NoteType> = note => {
 
   return (
     <Link
-      onClick={() => { DB.setCurrentNote(note) } }
-      className="note"
+      onClick={() => { DB.setCurrentNote({ ...note, expired }) } }
+      className={ `note ${expired ? 'expired' : ''}` }
       to={ `/note/${id}` }
     >
       <IonItem>
