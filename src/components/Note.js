@@ -20,20 +20,8 @@ export const expirationOptions = {
   3: 1000 * 60 * 2, // 2 mins
 }
 
-export type NoteType = {
-  id?: number;
-  type?: string;
-  title?: string;
-  content?: string;
-  expirationOption?: number;
-  expiresAt?: number;
-  expired?: boolean;
-}
-
-export type NoteListType =  { [key: string]: NoteType };
-
-const Note: React.FC<NoteType> = note => {
-  const [expired, setExpired] = useState<boolean>(false);
+const Note = note => {
+  const [expired, setExpired] = useState(false);
   const { id, type, title, expiresAt = new Date().getTime() } = note;
 
   const dateToShow = () => {
@@ -51,7 +39,7 @@ const Note: React.FC<NoteType> = note => {
         && expiresAt <= new Date().getTime()
       )
     ) setExpired(true);
-  });
+  }, [expired, expiresAt, type]);
 
   const renderIcon = () => {
     return type === TEMPORARY

@@ -3,7 +3,7 @@ import { add, timer, lock } from 'ionicons/icons';
 import React from 'react';
 import NoteList from '../components/NoteList';
 
-const NoteListPage: React.FC = () => {
+const NoteListPage = () => {
   function renderButton() {
     return (
       <IonFabList side="top">

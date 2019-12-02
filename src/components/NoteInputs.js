@@ -4,11 +4,11 @@ import { timer, lock } from 'ionicons/icons';
 import { PERMANENT, TEMPORARY, expirationOptions } from './Note';
 import { setCurrentNote, getCurrentNote } from '../utils/BrowserDB';
 
-const NoteInputs: React.FC = () => {
+const NoteInputs = () => {
   const currentNote = getCurrentNote();
   const { type, title, content: text } = currentNote;
 
-  const onTypeChange = (e: React.MouseEvent<HTMLIonToggleElement, MouseEvent>) => {
+  const onTypeChange = (e) => {
     const expirationOption = 2;
     const expiresAt =  new Date().getTime() + expirationOptions[expirationOption];
     setCurrentNote({
@@ -19,11 +19,11 @@ const NoteInputs: React.FC = () => {
     });
   }
 
-  const onTitleChange = (e: React.FormEvent<HTMLIonInputElement>) => {
+  const onTitleChange = (e) => {
     setCurrentNote({ ...getCurrentNote(), title: e.currentTarget.value || ''});
   }
 
-  const onTextChange = (e: React.FormEvent<HTMLIonTextareaElement>) => {
+  const onTextChange = (e) => {
     setCurrentNote({ ...getCurrentNote(), content: e.currentTarget.value || '' });
   }
 
