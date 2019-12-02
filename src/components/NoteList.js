@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import Note, { TEMPORARY, expirationOptions } from '../components/Note';
+import React, { useState } from 'react';
+import Note from './Note';
 import { IonList, IonAlert } from '@ionic/react';
 import { getNotes, deleteNotesByIds } from '../utils/BrowserDB';
 import '../styles/NoteList.css';
 
-const NoteList: React.FC = () => {
-  const [showAlert, setShowAlert] = useState<boolean>(false);
+const NoteList = () => {
+  const [showAlert, setShowAlert] = useState(false);
   const notes = getNotes();
-  let expired: number[];
+  let expired = [];
 
   // useEffect(() => {
     // const timeOut = setInterval(() => {

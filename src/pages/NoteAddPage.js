@@ -5,18 +5,7 @@ import { checkmark } from 'ionicons/icons';
 import { PERMANENT, TEMPORARY, TEMPORARY_NOTE_ID, expirationOptions } from '../components/Note';
 import * as DB from '../utils/BrowserDB';
 
-export interface NoteDetailsPageType {
-    match: {
-        params: {
-            noteId: string;
-        }
-    },
-    history: {
-        push: (path: string) => {}
-    }
-}
-
-const NoteAddPage: React.FC<NoteDetailsPageType> = ({ match, history }) => {
+const NoteAddPage = ({ match, history }) => {
     const { noteId } = match.params || TEMPORARY_NOTE_ID;
 
     useEffect(() => {
