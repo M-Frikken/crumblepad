@@ -41,10 +41,15 @@ const NotesReducer = (state = initialState, action) => {
             const { notes } = state;
             const { noteId } = action;
 
-            delete notes[noteId];
+            const newNotes = Object.entries(notes).reduce((acc, [id, note]) => (
+                +id === noteId
+                ? acc
+                : { ...acc, [id]: note }
+            ), {});
+
             return {
                 ...state,
-                notes
+                notes: newNotes
             };
         default:
             return state;

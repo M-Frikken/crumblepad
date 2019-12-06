@@ -2,7 +2,7 @@ import { IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonBackButton, Io
 import React, { useState } from 'react';
 import NoteInputs from '../components/NoteInputs';
 import { checkmark } from 'ionicons/icons';
-import { TEMPORARY_NOTE_ID, expirationOptions } from '../components/Note';
+import { TEMPORARY_NOTE_ID, expirationOptions, TEMPORARY, PERMANENT } from '../components/Note';
 import { connect } from 'react-redux';
 import { addNote, updateNote } from '../store/Notes.actions';
 import * as DB from '../utils/BrowserDB';
@@ -14,7 +14,11 @@ const mapDispatchToProps = dispatch => ({
 
 const NoteAddPage = ({ match, history, addNote, updateNote }) => {
     const { noteId } = match.params || TEMPORARY_NOTE_ID;
-    const [note, setNote] = useState(DB.getCurrentNote() || { id: +noteId })
+    const type = +noteId === TEMPORARY_NOTE_ID ? TEMPORARY : PERMANENT;
+    const currentlySavedNote = DB.getCurrentNote();
+    const initialState = Object.keys(currentlySavedNote).length ? currentlySavedNote : { id: +noteId, type };
+
+    const [note, setNote] = useState(initialState)
 
     const emptyCurrentNote = () => {
         DB.removeCurrentNote();
@@ -27,12 +31,12 @@ const NoteAddPage = ({ match, history, addNote, updateNote }) => {
     }
 
     const addNoteAndRedirect = () => {
-        const expirationOption = 1;
-        const expiresAt =  new Date().getTime() + expirationOptions[expirationOption];
+        // const expirationOption = 1;
+        // const expiresAt =  new Date().getTime() + expirationOptions[expirationOption];
         const noteToAdd = {
             ...note,
-            expirationOption,
-            expiresAt
+            // expirationOption,
+            // expiresAt
         };
 
         !('id' in noteToAdd) || noteToAdd.id < 0
