@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 import '../styles/Note.css';
 import { timer, lock } from 'ionicons/icons';
 import { timeLeft } from '../utils/time';
-import * as DB from '../utils/BrowserDB';
 import { deleteNote } from '../store/Notes.actions';
 import { connect } from 'react-redux';
+import { SECONDS_IN_MS, MINUTE_IN_MS } from '../utils/time';
 
 export const TEMPORARY = 'temporary';
 export const PERMANENT = 'permanent';
@@ -16,10 +16,22 @@ export const PEMANENT_NOTE_ID = -1;
 
 // in MS
 export const expirationOptions = {
-  0: 1000 * 10, // 10 secs
-  1: 1000 * 20, // 20 secs
-  2: 1000 * 60, // 60 secs
-  3: 1000 * 60 * 2, // 2 mins
+  0: {
+    title: '10 seconds',
+    val: SECONDS_IN_MS * 10,
+  },
+  1: {
+    title: '20 seconds',
+    1: SECONDS_IN_MS * 20,
+  },
+  2: {
+    title: '1 minute',
+    2: MINUTE_IN_MS,
+  },
+  3: {
+    title: '2 minutes',
+    3: MINUTE_IN_MS * 2,
+  }
 }
 
 const mapDispatchToProps = dispatch => ({
@@ -29,7 +41,7 @@ const mapDispatchToProps = dispatch => ({
 const Note = (props) => {
   const [expired] = useState(false);
   const {
-    note, note: { id, type, title, expiresAt = new Date().getTime() },
+    note: { id, type, title, expiresAt = new Date().getTime() },
     deleteNote
   } = props;
 
@@ -49,7 +61,6 @@ const Note = (props) => {
   return (
       <IonItem>
         <Link
-          onClick={() => { DB.setCurrentNote({ ...note, expired }) } }
           className={ `note ${expired ? 'expired' : ''}` }
           to={ `/note/${id}` }
         >
@@ -58,7 +69,7 @@ const Note = (props) => {
             { renderIcon() }
           </IonLabel>
         </Link>
-        <IonButton onClick={ () => {console.log('deleting'); deleteNote(+id); }}>
+        <IonButton onClick={ () => deleteNote(+id) }>
           <IonIcon slot="icon-only" name="contact" />
         </IonButton>
       </IonItem>
