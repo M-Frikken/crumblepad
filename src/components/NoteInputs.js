@@ -1,10 +1,15 @@
-import React from 'react';
-import { IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonInput, IonItem, IonLabel, IonToggle, IonIcon, IonTextarea } from '@ionic/react';
+import React, { useEffect, useCallback } from 'react';
+import { IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonInput, IonItem, IonLabel, IonToggle, IonIcon, IonTextarea, IonSelect, IonSelectOption } from '@ionic/react';
 import { timer, lock } from 'ionicons/icons';
 import { PERMANENT, TEMPORARY } from './Note';
+import { expirationOptions } from '../components/Note';
 
 const NoteInputs = ({ note, setNote }) => {
-  const { type, title, content: text } = note;
+  const { expirationOption = 0, type, title, content: text } = note || {};
+  const customActionSheetOptions = {
+    header: 'Times',
+    subHeader: 'Select note destruction time'
+  };
 
   const onTypeChange = (e) => {
     setNote({
@@ -12,6 +17,22 @@ const NoteInputs = ({ note, setNote }) => {
       type: e.currentTarget.checked ? PERMANENT : TEMPORARY
     });
   }
+
+  const onSelectChange = useCallback(
+    (e) => {
+      if (e.target.className === "md in-item hydrated"){
+        setNote({ ...note, expirationOption: +e.detail.value })
+      };
+    }, [note, setNote]
+  );
+
+
+  useEffect(() => {
+    window.addEventListener('ionChange', onSelectChange);
+    return () => {
+      window.removeEventListener('ionChange', onSelectChange);
+    };
+  }, [onSelectChange]);
 
   const onTitleChange = (e) => {
     setNote({ ...note, title: e.currentTarget.value || ''});
@@ -21,23 +42,47 @@ const NoteInputs = ({ note, setNote }) => {
     setNote({ ...note, content: e.currentTarget.value || '' });
   }
 
+  const renderSelect = () => {
+    if (type === PERMANENT) return null;
+    return (
+      <>
+        <IonLabel>Time</IonLabel>
+        <IonSelect
+          onChange={ onSelectChange }
+          interfaceOptions={customActionSheetOptions}
+          interface="alert"
+          placeholder="Select One"
+        >
+          { Object.entries(expirationOptions).map(([name, { title }], i) => (
+            <IonSelectOption key={ name } selected={ i === expirationOption } value={ name }>{ title }</IonSelectOption>
+          )) }
+        </IonSelect>
+      </>
+    );
+  }
+
+  const renderHeader = () => (
+    <IonCardHeader>
+      <IonItem>
+        <IonToggle
+          value="permanent"
+          checked={ type === PERMANENT }
+          onClick={ onTypeChange }
+          color="orange" />
+        <IonLabel>
+          <IonIcon icon={ timer } /> | <IonIcon icon={ lock } />
+        </IonLabel>
+        { renderSelect() }
+      </IonItem>
+      <IonCardTitle>
+        <IonInput value={ title } onInput={ onTitleChange } placeholder="Title" />
+      </IonCardTitle>
+    </IonCardHeader>
+  )
+
   return (
     <IonCard>
-      <IonCardHeader>
-        <IonItem>
-          <IonToggle
-            value="permanent"
-            checked={ type === PERMANENT }
-            onClick={ onTypeChange }
-            color="orange" />
-          <IonLabel>
-            <IonIcon icon={ timer } /> | <IonIcon icon={ lock } />
-          </IonLabel>effect
-        </IonItem>
-        <IonCardTitle>
-          <IonInput value={ title } onInput={ onTitleChange } placeholder="Title" />
-        </IonCardTitle>
-      </IonCardHeader>
+      { renderHeader() }
       <IonCardContent>
         <IonTextarea value={ text } onInput={ onTextChange } autofocus={true} placeholder="Write a note..."></IonTextarea>
       </IonCardContent>

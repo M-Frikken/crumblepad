@@ -1,50 +1,55 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonBackButton, IonContent, IonRow, IonFab, IonFabButton, IonIcon } from '@ionic/react';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import NoteInputs from '../components/NoteInputs';
 import { checkmark } from 'ionicons/icons';
 import { TEMPORARY_NOTE_ID, expirationOptions, TEMPORARY, PERMANENT } from '../components/Note';
 import { connect } from 'react-redux';
-import { addNote, updateNote } from '../store/Notes.actions';
-import * as DB from '../utils/BrowserDB';
+import { addNote,  updateNote } from '../store/Notes.actions';
+
+const mapStateToProps = state => ({
+    notes: state.notes
+})
 
 const mapDispatchToProps = dispatch => ({
     addNote: note => dispatch(addNote(note)),
     updateNote: note => dispatch(updateNote(note))
 });
 
-const NoteAddPage = ({ match, history, addNote, updateNote }) => {
-    const { noteId } = match.params || TEMPORARY_NOTE_ID;
-    const type = +noteId === TEMPORARY_NOTE_ID ? TEMPORARY : PERMANENT;
-    const currentlySavedNote = DB.getCurrentNote();
-    const initialState = Object.keys(currentlySavedNote).length ? currentlySavedNote : { id: +noteId, type };
+const NoteAddPage = ({ match: { params, url }, history, notes, addNote, updateNote }) => {
+    const [note, setNote] = useState({})
 
-    const [note, setNote] = useState(initialState)
-
-    const emptyCurrentNote = () => {
-        DB.removeCurrentNote();
-        setNote({});
-    }
+    useEffect(() => {
+        const { noteId } = params || TEMPORARY_NOTE_ID;
+        const type = +noteId === TEMPORARY_NOTE_ID ? TEMPORARY : PERMANENT;
+        setNote(+noteId < 0 ? { id: +noteId, type } : notes[+noteId]);
+    }, [url])
 
     const cancel = () => {
-        emptyCurrentNote();
         history.push('/home');
     }
 
     const addNoteAndRedirect = () => {
-        // const expirationOption = 1;
-        // const expiresAt =  new Date().getTime() + expirationOptions[expirationOption];
-        const noteToAdd = {
+        const temporaryNoteParams = {};
+        if (note.type === TEMPORARY) {
+            const { expirationOption = 0 } = note;
+            const expiresAt =  new Date().getTime() + expirationOptions[expirationOption].val;
+            temporaryNoteParams.expiresAt = expiresAt;
+        }
+
+        const newNote = {
             ...note,
-            // expirationOption,
-            // expiresAt
+            ...temporaryNoteParams
         };
 
-        !('id' in noteToAdd) || noteToAdd.id < 0
-        ? addNote(noteToAdd)
-        : updateNote(noteToAdd);
-        emptyCurrentNote();
+        !('id' in newNote) || newNote.id < 0
+        ? addNote(newNote)
+        : updateNote(newNote);
         history.goBack();
     }
+
+    // TODO: test feature
+    if (note.type === TEMPORARY && note.expired) return history.push('/home');
 
     return (
         <IonPage>
@@ -70,4 +75,4 @@ const NoteAddPage = ({ match, history, addNote, updateNote }) => {
     );
   };
 
-export default connect(null, mapDispatchToProps)(NoteAddPage);
+export default connect(mapStateToProps, mapDispatchToProps)(NoteAddPage);
