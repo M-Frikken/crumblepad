@@ -1,7 +1,8 @@
-const SECONDS_IN_MS = 1000;
-const MINUTE_IN_MS = 60 * SECONDS_IN_MS;
-const HOUR_IN_MS = 60 * MINUTE_IN_MS;
-const DAY_IN_MS = 24 * HOUR_IN_MS;
+export const SECONDS_IN_MS = 1000;
+export const MINUTE_IN_MS = 60 * SECONDS_IN_MS;
+export const HOUR_IN_MS = 60 * MINUTE_IN_MS;
+export const DAY_IN_MS = 24 * HOUR_IN_MS;
+
 
 export const timeLeft = (timeInMs) => {
     const difference = getTimeDifference(timeInMs);
