@@ -5,7 +5,7 @@ import '../styles/NoteList.css';
 import { connect } from 'react-redux';
 
 const mapStateToProps = store => ({
-    notes: store.notes
+  notes: store.notes
 });
 
 const NoteList = ({ notes }) => {
@@ -22,7 +22,7 @@ const NoteList = ({ notes }) => {
             return (
               <Note
                 key={ `${note.id}_${note.title}` }
-                { ...note }
+                note={ note }
               />
             );
           }
