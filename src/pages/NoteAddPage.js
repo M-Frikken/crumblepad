@@ -42,6 +42,12 @@ const NoteAddPage = ({ match: { params, url }, history, notes, addNote, updateNo
             ...temporaryNoteParams
         };
 
+        if (!newNote.title) {
+            if (!newNote.content) return history.goBack();
+
+            newNote.title = 'Untitled Note';
+        }
+
         !('id' in newNote) || newNote.id < 0
         ? addNote(newNote)
         : updateNote(newNote);
