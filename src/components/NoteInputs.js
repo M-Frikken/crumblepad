@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonInput, IonItem, IonLabel, IonToggle, IonIcon, IonTextarea, IonSelect, IonSelectOption } from '@ionic/react';
 import { timer, lock } from 'ionicons/icons';
 import { PERMANENT, TEMPORARY } from './Note';
@@ -18,17 +18,21 @@ const NoteInputs = ({ note, setNote }) => {
     });
   }
 
-  // useEffect(() => {
-  //   window.addEventListener('ionChange', onSelectChange);
-  //   return () => {
-  //     window.addEventListener('ionChange', onSelectChange);
-  //   };
-  // }, []);
+  const onSelectChange = useCallback(
+    (e) => {
+      if (e.target.className === "md in-item hydrated"){
+        setNote({ ...note, expirationOption: +e.detail.value })
+      };
+    }, [note, setNote]
+  );
 
-  const onSelectChange = (e) => {
-    console.log(e, e.detail.value);
-    setNote({ ...note, expirationOption: +e.detail.value })
-  }
+
+  useEffect(() => {
+    window.addEventListener('ionChange', onSelectChange);
+    return () => {
+      window.removeEventListener('ionChange', onSelectChange);
+    };
+  }, [onSelectChange]);
 
   const onTitleChange = (e) => {
     setNote({ ...note, title: e.currentTarget.value || ''});
@@ -41,7 +45,7 @@ const NoteInputs = ({ note, setNote }) => {
   const renderSelect = () => {
     if (type === PERMANENT) return null;
     return (
-      <IonItem>
+      <>
         <IonLabel>Time</IonLabel>
         <IonSelect
           onChange={ onSelectChange }
@@ -53,7 +57,7 @@ const NoteInputs = ({ note, setNote }) => {
             <IonSelectOption key={ name } selected={ i === expirationOption } value={ name }>{ title }</IonSelectOption>
           )) }
         </IonSelect>
-      </IonItem>
+      </>
     );
   }
 

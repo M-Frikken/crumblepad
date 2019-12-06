@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IonLabel, IonItem, IonIcon, IonButton } from '@ionic/react';
 import { Link } from 'react-router-dom';
 import '../styles/Note.css';
 import { timer, lock } from 'ionicons/icons';
 import { timeLeft } from '../utils/time';
-import { deleteNote } from '../store/Notes.actions';
+import { deleteNote, updateNote } from '../store/Notes.actions';
 import { connect } from 'react-redux';
 import { SECONDS_IN_MS, MINUTE_IN_MS } from '../utils/time';
 
@@ -14,7 +14,6 @@ export const PERMANENT = 'permanent';
 export const TEMPORARY_NOTE_ID = -2;
 export const PEMANENT_NOTE_ID = -1;
 
-// in MS
 export const expirationOptions = {
   0: {
     title: '10 seconds',
@@ -22,34 +21,60 @@ export const expirationOptions = {
   },
   1: {
     title: '20 seconds',
-    1: SECONDS_IN_MS * 20,
+    val: SECONDS_IN_MS * 20,
   },
   2: {
     title: '1 minute',
-    2: MINUTE_IN_MS,
+    val: MINUTE_IN_MS,
   },
   3: {
     title: '2 minutes',
-    3: MINUTE_IN_MS * 2,
+    val: MINUTE_IN_MS * 2,
   }
 }
 
 const mapDispatchToProps = dispatch => ({
-  deleteNote: noteId => dispatch(deleteNote(noteId))
+  deleteNote: noteId => dispatch(deleteNote(noteId)),
+  updateNote: note => dispatch(updateNote(note))
 });
 
 const Note = (props) => {
-  const [expired] = useState(false);
   const {
-    note: { id, type, title, expiresAt = new Date().getTime() },
-    deleteNote
+    note, note: { id, type, title, expiresAt = new Date().getTime() },
+    deleteNote, updateNote
   } = props;
+  const [expired, setExpired] = useState(false);
 
   const dateToShow = () => {
-    if (type === PERMANENT) return 'NO';
+    if (type === PERMANENT) return 0;
 
     const timeToDestruction = timeLeft(expiresAt);
-    return !timeToDestruction ? 'DESTROYED' : timeToDestruction;
+    if (!timeToDestruction) {
+      setExpired(true);
+      console.log({ ...note, expired: true });
+      updateNote({ ...note, expired: true })
+      // deleteNote(+id);
+    }
+
+    return timeToDestruction;
+  }
+
+  const [time, setTime] = useState(timeLeft(expiresAt));
+
+  useEffect(() => {
+    let interval;
+    if (type === TEMPORARY && !expired) {
+      interval = setInterval(() => {
+        setTime(dateToShow());
+      }, 1000);
+    }
+    return () => {
+      if (type === TEMPORARY) clearInterval(interval);
+    };
+  }, [expired])
+
+  const onLinkClick = (e) => {
+    if (expired) e.preventDefault();
   }
 
   const renderIcon = () => {
@@ -58,19 +83,28 @@ const Note = (props) => {
       : <IonIcon icon={ lock } />
   };
 
+  const renderLabel = () => {
+    if (type === PERMANENT) return ` ${ title } `;
+
+    return !expired
+      ? ` ${ time } | ${ title } `
+      : <s>&nbsp;{ `${ title }` }&nbsp;</s>;
+  }
+
   return (
       <IonItem>
         <Link
-          className={ `note ${expired ? 'expired' : ''}` }
+          className={ `note${expired ? ' expired' : ''}` }
           to={ `/note/${id}` }
+          onClick={ onLinkClick }
         >
           <IonLabel>
-            { `${ id } - ${ title } - ${ dateToShow() }` }
             { renderIcon() }
+            { renderLabel() }
           </IonLabel>
         </Link>
         <IonButton onClick={ () => deleteNote(+id) }>
-          <IonIcon slot="icon-only" name="contact" />
+          <ion-icon name="close"></ion-icon>
         </IonButton>
       </IonItem>
   );

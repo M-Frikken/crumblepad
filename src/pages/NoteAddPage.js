@@ -33,8 +33,8 @@ const NoteAddPage = ({ match: { params, url }, history, notes, addNote, updateNo
         const temporaryNoteParams = {};
         if (note.type === TEMPORARY) {
             const { expirationOption = 0 } = note;
-            const expiresAt =  new Date().getTime() + expirationOptions[expirationOption];
-            temporaryNoteParams[expiresAt] = expiresAt;
+            const expiresAt =  new Date().getTime() + expirationOptions[expirationOption].val;
+            temporaryNoteParams.expiresAt = expiresAt;
         }
 
         const newNote = {
@@ -47,6 +47,9 @@ const NoteAddPage = ({ match: { params, url }, history, notes, addNote, updateNo
         : updateNote(newNote);
         history.goBack();
     }
+
+    // TODO: test feature
+    if (note.type === TEMPORARY && note.expired) return history.push('/home');
 
     return (
         <IonPage>

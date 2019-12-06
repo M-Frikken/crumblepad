@@ -1,9 +1,25 @@
 import { C } from './Notes.actions';
 
 const initialState = {
-    notes: {},
-    nextIndex: 0
-}
+    notes: {
+      '0': {
+        title: 'temporary note',
+        content: '124',
+        expirationOption: 1,
+        expiresAt: new Date().getTime() + 10000,
+        id: 0,
+        type: 'temporary'
+      },
+      '1': {
+        title: 'permanent note',
+        content: '124124',
+        type: 'permanent',
+        id: 1
+      }
+    },
+    nextIndex: 2,
+    currentNote: {}
+  }
 
 const NotesReducer = (state = initialState, action) => {
     const { type } = action;
@@ -27,7 +43,6 @@ const NotesReducer = (state = initialState, action) => {
                 },
                 nextIndex: nextIndex + 1
             };
-
         case C.UPDATE_NOTE:
             const { note } = action;
             return {
