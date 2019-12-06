@@ -1,55 +1,53 @@
 import { IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonBackButton, IonContent, IonRow, IonFab, IonFabButton, IonIcon } from '@ionic/react';
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import NoteInputs from '../components/NoteInputs';
 import { checkmark } from 'ionicons/icons';
-import { PERMANENT, TEMPORARY, TEMPORARY_NOTE_ID, expirationOptions } from '../components/Note';
+import { TEMPORARY_NOTE_ID, expirationOptions } from '../components/Note';
+import { connect } from 'react-redux';
+import { addNote, updateNote } from '../store/Notes.actions';
 import * as DB from '../utils/BrowserDB';
 
-const NoteAddPage = ({ match, history }) => {
+const mapDispatchToProps = dispatch => ({
+    addNote: note => dispatch(addNote(note)),
+    updateNote: note => dispatch(updateNote(note))
+});
+
+const NoteAddPage = ({ match, history, addNote, updateNote }) => {
     const { noteId } = match.params || TEMPORARY_NOTE_ID;
+    const [note, setNote] = useState(DB.getCurrentNote() || { id: +noteId })
 
-    useEffect(() => {
-        const getCurrentNote = () => {
-            if (+noteId > 0) return { ...DB.getCurrentNote(), id: noteId };
+    const emptyCurrentNote = () => {
+        DB.removeCurrentNote();
+        setNote({});
+    }
 
-            if (+noteId === TEMPORARY_NOTE_ID) {
-                const expirationOption = 2;
-                const expiresAt =  new Date().getTime() + expirationOptions[expirationOption];
-                return {
-                    type: TEMPORARY,
-                    expirationOption,
-                    expiresAt
-                };
-            }
-
-            return { type: PERMANENT };
-        }
-
-        DB.setCurrentNote(getCurrentNote());
-
-        return () => {
-            DB.createOrUpdateNoteFromCurrent();
-            DB.setCurrentNote({});
-        }
-    }, []);
-
-    const addNote = () => {
-        console.log('addingNote');
-        DB.createOrUpdateNoteFromCurrent();
+    const cancel = () => {
+        emptyCurrentNote();
+        history.push('/home');
     }
 
     const addNoteAndRedirect = () => {
-        console.log('add and redirecting');
-        addNote();
-        history.push('/home');
+        const expirationOption = 1;
+        const expiresAt =  new Date().getTime() + expirationOptions[expirationOption];
+        const noteToAdd = {
+            ...note,
+            expirationOption,
+            expiresAt
+        };
+
+        !('id' in noteToAdd) || noteToAdd.id < 0
+        ? addNote(noteToAdd)
+        : updateNote(noteToAdd);
+        emptyCurrentNote();
+        history.goBack();
     }
 
     return (
         <IonPage>
             <IonHeader>
                 <IonToolbar color="orange">
-                    <IonButtons onClick={addNote} slot="start">
-                        <IonBackButton defaultHref="/home" />
+                    <IonButtons slot="start">
+                        <IonBackButton onClick={ cancel } defaultHref="/home" />
                     </IonButtons>
                     <IonRow>
                         <IonTitle>New Note</IonTitle>
@@ -57,10 +55,10 @@ const NoteAddPage = ({ match, history }) => {
                 </IonToolbar>
             </IonHeader>
             <IonContent>
-                <NoteInputs />
+                <NoteInputs note={ note } setNote={ setNote } />
                 <IonFab vertical="bottom" horizontal="end" slot="fixed">
-                    <IonFabButton onClick={addNoteAndRedirect} color="orange">
-                        <IonIcon icon={checkmark} />
+                    <IonFabButton onClick={ addNoteAndRedirect } color="orange">
+                        <IonIcon icon={ checkmark } />
                     </IonFabButton>
                 </IonFab>
             </IonContent>
@@ -68,4 +66,4 @@ const NoteAddPage = ({ match, history }) => {
     );
   };
 
-export default NoteAddPage;
+export default connect(null, mapDispatchToProps)(NoteAddPage);

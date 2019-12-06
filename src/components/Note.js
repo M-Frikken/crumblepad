@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { IonLabel, IonItem, IonIcon } from '@ionic/react';
 import { Link } from 'react-router-dom';
 import '../styles/Note.css';
 import { timer, lock } from 'ionicons/icons';
-import * as DB from '../utils/BrowserDB'
 import { timeLeft } from '../utils/time';
+import * as DB from '../utils/BrowserDB';
 
 export const TEMPORARY = 'temporary';
 export const PERMANENT = 'permanent';
@@ -21,7 +21,7 @@ export const expirationOptions = {
 }
 
 const Note = note => {
-  const [expired, setExpired] = useState(false);
+  const [expired] = useState(false);
   const { id, type, title, expiresAt = new Date().getTime() } = note;
 
   const dateToShow = () => {
@@ -30,16 +30,6 @@ const Note = note => {
     const timeToDestruction = timeLeft(expiresAt);
     return !timeToDestruction ? 'DESTROYED' : timeToDestruction;
   }
-
-  useEffect(() => {
-    if (
-      type === TEMPORARY
-      && (
-        expiresAt
-        && expiresAt <= new Date().getTime()
-      )
-    ) setExpired(true);
-  }, [expired, expiresAt, type]);
 
   const renderIcon = () => {
     return type === TEMPORARY

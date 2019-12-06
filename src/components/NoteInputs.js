@@ -1,30 +1,24 @@
 import React from 'react';
 import { IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonInput, IonItem, IonLabel, IonToggle, IonIcon, IonTextarea } from '@ionic/react';
 import { timer, lock } from 'ionicons/icons';
-import { PERMANENT, TEMPORARY, expirationOptions } from './Note';
-import { setCurrentNote, getCurrentNote } from '../utils/BrowserDB';
+import { PERMANENT, TEMPORARY } from './Note';
 
-const NoteInputs = () => {
-  const currentNote = getCurrentNote();
-  const { type, title, content: text } = currentNote;
+const NoteInputs = ({ note, setNote }) => {
+  const { type, title, content: text } = note;
 
   const onTypeChange = (e) => {
-    const expirationOption = 2;
-    const expiresAt =  new Date().getTime() + expirationOptions[expirationOption];
-    setCurrentNote({
-      ...getCurrentNote(),
-      type: e.currentTarget.checked ? PERMANENT : TEMPORARY,
-      expirationOption,
-      expiresAt
+    setNote({
+      ...note,
+      type: e.currentTarget.checked ? PERMANENT : TEMPORARY
     });
   }
 
   const onTitleChange = (e) => {
-    setCurrentNote({ ...getCurrentNote(), title: e.currentTarget.value || ''});
+    setNote({ ...note, title: e.currentTarget.value || ''});
   }
 
   const onTextChange = (e) => {
-    setCurrentNote({ ...getCurrentNote(), content: e.currentTarget.value || '' });
+    setNote({ ...note, content: e.currentTarget.value || '' });
   }
 
   return (

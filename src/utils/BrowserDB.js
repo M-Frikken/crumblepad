@@ -62,11 +62,11 @@ export const deleteNotesByIds = (IDs) => {
     setObject(FieldNames.NOTES, notesLeft);
 }
 
-
-
 export const setCurrentNote = (note) => setObject(FieldNames.CURRENT_NOTE, note);
 
 export const getCurrentNote = () => getObject(FieldNames.CURRENT_NOTE);
+
+export const removeCurrentNote = () => localStorage.removeItem(FieldNames.CURRENT_NOTE);
 
 export const createOrUpdateNoteFromCurrent = () => {
     const note = getCurrentNote();
