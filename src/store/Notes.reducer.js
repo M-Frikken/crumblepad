@@ -1,28 +1,11 @@
 import { C } from './Notes.actions';
 
 const initialState = {
-    notes: {
-        // "0": {
-        //     "type": "temporary",
-        //     "title": "124",
-        //     "content": "241424",
-        //     "id": 0,
-        //     expired: false
-        // },
-        // "1": {
-        //     "type": "temporary",
-        //     "title": "142",
-        //     "content": "124",
-        //     "id": "1",
-        //     "expired": true
-        // }
-    },
+    notes: {},
     nextIndex: 0
-    // currentNote: {}
 }
 
 const NotesReducer = (state = initialState, action) => {
-    console.log('inside a store', state, action);
     const { type } = action;
     switch (type) {
         case C.ADD_CURRENT_NOTE:

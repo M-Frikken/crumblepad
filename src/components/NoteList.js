@@ -1,65 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Note from './Note';
-import { IonList, IonAlert } from '@ionic/react';
-import { getNotes, deleteNotesByIds } from '../utils/BrowserDB';
+import { IonList } from '@ionic/react';
 import '../styles/NoteList.css';
+import { connect } from 'react-redux';
 
-const NoteList = () => {
-  const [showAlert, setShowAlert] = useState(false);
-  const notes = getNotes();
-  let expired = [];
+const mapStateToProps = store => ({
+    notes: store.notes
+});
 
-  // useEffect(() => {
-    // const timeOut = setInterval(() => {
-    //   expired = Object.values(notes).reduce<number[]>((acc, { id, type, expiresAt }) => {
-    //     if (
-    //       type === TEMPORARY
-    //       && id
-    //       && (
-    //         expiresAt
-    //         && expiresAt <= new Date().getTime()
-    //       )
-    //     ) return [ ...acc, +id ];
-
-    //     return acc;
-    //   }, []);
-
-    //   if (expired.length > 0) setShowAlert(true);
-    //   // clearInterval(timeOut);
-    // }, 1000)
-  //   return () => {
-  //     clearInterval(timeOut);
-  //   };
-  // });
-
+const NoteList = ({ notes }) => {
   if (!Object.keys(notes).length) return <h4 className='empty' >Oops, no notes to crumble...</h4>
+
+  const renderAlert = () => (
+    null
+  );
 
   return (
     <IonList>
-      <IonAlert
-        isOpen={showAlert}
-        onDidDismiss={() => setShowAlert(false)}
-        header={'Warning!'}
-        subHeader={'Some notes have expired'}
-        message={'Would you like to delete them?'}
-        buttons={[
-          {
-            text: 'No',
-            role: 'cancel',
-            cssClass: 'secondary',
-            handler: e => {
-              console.log('Confirm Cancel: blah', expired);
-              deleteNotesByIds(expired);
-            }
-          },
-          {
-            text: 'Okay',
-            handler: () => {
-              console.log('Confirm Okay', expired);
-            }
-          }
-        ]}
-      />
+      { renderAlert() }
       { Object.values(notes).reverse().map(note => {
             return (
               <Note
@@ -74,4 +32,6 @@ const NoteList = () => {
   );
 };
 
-export default NoteList;
+export default connect(mapStateToProps)(NoteList);
+
+// export default NoteList;
