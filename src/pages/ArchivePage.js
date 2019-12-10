@@ -5,7 +5,7 @@ import NoteList from '../components/NoteList';
 import { Link } from 'react-router-dom';
 import Menu from '../components/Menu';
 
-const NoteListPage = () => {
+const ArchivePage = () => {
 
   function renderButton() {
     return (
@@ -28,7 +28,7 @@ const NoteListPage = () => {
             <IonMenuToggle><IonMenuButton></IonMenuButton></IonMenuToggle>
           </IonButtons>
           <IonTitle>
-            All Notes
+            Archive
           </IonTitle>
         </IonToolbar>
       </IonHeader>
@@ -45,4 +45,4 @@ const NoteListPage = () => {
   );
 };
 
-export default NoteListPage;
+export default ArchivePage;
