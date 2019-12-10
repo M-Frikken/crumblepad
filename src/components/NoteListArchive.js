@@ -8,7 +8,7 @@ const mapStateToProps = store => ({
   notes: store.notes
 });
 
-const NoteList = ({ notes }) => {
+const NoteListArchive = ({ notes }) => {
   if (!Object.keys(notes).length) return <h4 className='empty' >Oops, no notes to crumble...</h4>
 
   const renderAlert = () => (
@@ -19,7 +19,7 @@ const NoteList = ({ notes }) => {
     <IonList>
       { renderAlert() }
       { Object.values(notes).reverse().map(note => {
-            if (!note.expired){
+            if(note.expired){
               return (
                 <Note
                   key={ `${note.id}_${note.title}` }
@@ -34,6 +34,6 @@ const NoteList = ({ notes }) => {
   );
 };
 
-export default connect(mapStateToProps)(NoteList);
+export default connect(mapStateToProps)(NoteListArchive);
 
 // export default NoteList;

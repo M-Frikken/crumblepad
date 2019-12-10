@@ -1,7 +1,7 @@
 import { IonMenuButton, IonMenuToggle, IonButtons, IonList, IonItem, IonHeader, IonPage, IonTitle, IonToolbar, IonContent, IonFab, IonFabButton, IonFabList, IonIcon } from '@ionic/react';
 import { add, timer, lock } from 'ionicons/icons';
 import React from 'react';
-import NoteList from '../components/NoteList';
+import NoteListArchive from '../components/NoteListArchive';
 import { Link } from 'react-router-dom';
 import Menu from '../components/Menu';
 
@@ -33,7 +33,7 @@ const ArchivePage = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <NoteList />
+        <NoteListArchive />
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
           <IonFabButton color="orange">
             <IonIcon icon={ add } />
