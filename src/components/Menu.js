@@ -23,7 +23,8 @@ const Menu = () => {
                             <Link key={page.key} to={page.path}>
                                 <IonItem>
                                     <IonIcon icon={ page.icon } />
-                                    <IonTitle>{page.title}</IonTitle></IonItem>
+                                    <IonTitle>{page.title}</IonTitle>
+                                </IonItem>
                             </Link>
                         );
                     })}
