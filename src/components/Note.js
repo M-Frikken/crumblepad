@@ -73,7 +73,7 @@ const Note = (props) => {
     return () => {
       if (type === TEMPORARY) clearInterval(interval);
     };
-  }, [expired])
+  }, [type, expired, expiresAt])
 
   const onLinkClick = (e) => {
     if (expired) e.preventDefault();
@@ -90,7 +90,7 @@ const Note = (props) => {
 
     return !expired
       ? ` ${ time } | ${ title } `
-      : <s>&nbsp;{ `${ title }` }&nbsp;</s>;
+      : ` ${ title } `;
   }
 
   const renderDelete = () => {
