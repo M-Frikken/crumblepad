@@ -73,7 +73,7 @@ const Note = (props) => {
     return () => {
       if (type === TEMPORARY) clearInterval(interval);
     };
-  }, [expired])
+  }, [type, expired, expiresAt])
 
   const onLinkClick = (e) => {
     if (expired) e.preventDefault();
