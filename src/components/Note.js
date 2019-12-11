@@ -88,9 +88,7 @@ const Note = (props) => {
   const renderLabel = () => {
     if (type === PERMANENT) return ` ${ title } `;
 
-    return !expired
-      ? ` ${ time } | ${ title } `
-      : <s>&nbsp;{ `${ title }` }&nbsp;</s>;
+    return ` ${ time } | ${ title } `
   }
 
   const renderDelete = () => {
