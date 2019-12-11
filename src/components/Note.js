@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { IonLabel, IonItem, IonIcon, IonButton } from '@ionic/react';
 import { Link } from 'react-router-dom';
@@ -35,16 +36,18 @@ export const expirationOptions = {
 
 const mapDispatchToProps = dispatch => ({
   deleteNote: noteId => dispatch(deleteNote(noteId)),
-  // deleteNote: note => dispatch(deleteNote(note)),
   updateNote: note => dispatch(updateNote(note))
 });
 
 const Note = (props) => {
   const {
-    note, note: { id, type, title, expiresAt = new Date().getTime() },
-    permanentDeleteNote, deleteNote, updateNote
+    note, note: {
+      id, type, title,
+      expired: expiredInitial = false, expiresAt = new Date().getTime()
+    },
+    deleteNote, updateNote
   } = props;
-  const [expired, setExpired] = useState(false);
+  const [expired, setExpired] = useState(expiredInitial);
 
   const dateToShow = () => {
     if (type === PERMANENT) return 0;
@@ -52,9 +55,7 @@ const Note = (props) => {
     const timeToDestruction = timeLeft(expiresAt);
     if (!timeToDestruction) {
       setExpired(true);
-      console.log({ ...note, expired: true });
       updateNote({ ...note, expired: true })
-      // deleteNote(+id);
     }
 
     return timeToDestruction;
@@ -93,20 +94,19 @@ const Note = (props) => {
   }
 
   const renderDelete = () => {
-    if (expired) {
-      return (
-        <IonButton onClick={ () => deleteNote(+id) }>
-          <ion-icon name="close"></ion-icon>
-        </IonButton>
-      )
-    }
-    else {
-      return (
-        <IonButton onClick={ () => updateNote({ ...note, expired: true }) }>
-          <ion-icon name="close"></ion-icon>
-        </IonButton>
-        )
-    }
+    const actions = {
+      DELETE: () => deleteNote(+id),
+      UPDATE_TO_EXPIRED: () => {
+        setExpired(true);
+        updateNote({ ...note, expired: true });
+      }
+    };
+
+    return (
+      <IonButton onClick={ expired ? actions.DELETE : actions.UPDATE_TO_EXPIRED }>
+        <ion-icon name="close"></ion-icon>
+      </IonButton>
+    )
   }
 
   return (
