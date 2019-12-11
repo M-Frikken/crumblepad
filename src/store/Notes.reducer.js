@@ -17,11 +17,18 @@ const initialState = {
         id: 1
       },
       '2': {
-        title: 'permanent note',
+        title: 'permanent expired note',
         content: '124124',
         type: 'permanent',
         expired: true,
         id: 2
+      },
+      '3': {
+        title: 'temp expired note',
+        content: '134124',
+        type: 'temporary',
+        expired: true,
+        id: 3
       }
     },
     nextIndex: 2,
