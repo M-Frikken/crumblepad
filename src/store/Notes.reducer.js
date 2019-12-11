@@ -15,6 +15,13 @@ const initialState = {
         content: '124124',
         type: 'permanent',
         id: 1
+      },
+      '2': {
+        title: 'permanent note',
+        content: '124124',
+        type: 'permanent',
+        expired: true,
+        id: 2
       }
     },
     nextIndex: 2,

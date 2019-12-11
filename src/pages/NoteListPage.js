@@ -1,9 +1,8 @@
-import { IonMenuButton, IonMenuToggle, IonButtons, IonList, IonItem, IonHeader, IonPage, IonTitle, IonToolbar, IonContent, IonFab, IonFabButton, IonFabList, IonIcon } from '@ionic/react';
+import { IonMenuButton, IonMenuToggle, IonButtons, IonHeader, IonPage, IonTitle, IonToolbar, IonContent, IonFab, IonFabButton, IonFabList, IonIcon } from '@ionic/react';
 import { add, timer, lock } from 'ionicons/icons';
 import React from 'react';
 import NoteList from '../components/NoteList';
 import { Link } from 'react-router-dom';
-import Menu from '../components/Menu';
 
 const NoteListPage = () => {
 
