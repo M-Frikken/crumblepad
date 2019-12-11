@@ -9,6 +9,16 @@ const mapStateToProps = store => ({
 });
 
 const NoteList = ({ notes }) => {
+  var filtered = {};
+
+  Object.values(notes).map(note => {
+      if('expired' in note && note.expired === false){}
+      else{
+        filtered = Object.assign({ note } , filtered);
+      }
+    })
+
+
   if (!Object.keys(notes).length) return <h4 className='empty' >Oops, no notes to crumble...</h4>
 
   const renderAlert = () => (
