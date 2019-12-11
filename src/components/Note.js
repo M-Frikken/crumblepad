@@ -112,7 +112,7 @@ const Note = (props) => {
   return (
       <IonItem>
         <Link
-          className={ `note${expired ? ' expired' : ''}` }
+          className="note"
           to={ `/note/${id}` }
           onClick={ onLinkClick }
         >

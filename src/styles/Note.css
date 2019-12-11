@@ -1,9 +1,3 @@
 .note {
     text-decoration: none;
 }
-
-.note.expired {
-    opacity: .6;
-    pointer-events: none;
-    cursor: none;
-}
