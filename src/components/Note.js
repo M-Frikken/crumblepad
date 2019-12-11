@@ -66,12 +66,10 @@ const Note = (props) => {
   useEffect(() => {
     let interval;
     if (type === TEMPORARY && !expired) {
-      interval = setInterval(() => {
-        setTime(dateToShow());
-      }, 1000);
+      interval = setInterval(() => setTime(dateToShow()), 1000);
     }
     return () => {
-      if (type === TEMPORARY) clearInterval(interval);
+      if (interval) clearInterval(interval);
     };
   }, [type, expired, expiresAt])
 

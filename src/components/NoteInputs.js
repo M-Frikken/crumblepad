@@ -75,7 +75,7 @@ const NoteInputs = ({ note, setNote }) => {
         { renderSelect() }
       </IonItem>
       <IonCardTitle>
-        <IonInput value={ title } onInput={ onTitleChange } placeholder="Title" />
+        <IonInput autofocus value={ title } onInput={ onTitleChange } placeholder="Title" />
       </IonCardTitle>
     </IonCardHeader>
   )
@@ -84,7 +84,7 @@ const NoteInputs = ({ note, setNote }) => {
     <IonCard>
       { renderHeader() }
       <IonCardContent>
-        <IonTextarea value={ text } onInput={ onTextChange } autofocus={true} placeholder="Write a note..."></IonTextarea>
+        <IonTextarea value={ text } onInput={ onTextChange } placeholder="Write a note..."></IonTextarea>
       </IonCardContent>
     </IonCard>
   );
