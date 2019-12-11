@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { IonLabel, IonItem, IonIcon, IonButton } from '@ionic/react';
 import { Link } from 'react-router-dom';
@@ -40,10 +41,13 @@ const mapDispatchToProps = dispatch => ({
 
 const Note = (props) => {
   const {
-    note, note: { id, type, title, expiresAt = new Date().getTime() },
+    note, note: {
+      id, type, title,
+      expired: expiredInitial = false, expiresAt = new Date().getTime()
+    },
     deleteNote, updateNote
   } = props;
-  const [expired, setExpired] = useState(false);
+  const [expired, setExpired] = useState(expiredInitial);
 
   const dateToShow = () => {
     if (type === PERMANENT) return 0;
@@ -51,9 +55,7 @@ const Note = (props) => {
     const timeToDestruction = timeLeft(expiresAt);
     if (!timeToDestruction) {
       setExpired(true);
-      console.log({ ...note, expired: true });
       updateNote({ ...note, expired: true })
-      // deleteNote(+id);
     }
 
     return timeToDestruction;
@@ -91,6 +93,22 @@ const Note = (props) => {
       : <s>&nbsp;{ `${ title }` }&nbsp;</s>;
   }
 
+  const renderDelete = () => {
+    const actions = {
+      DELETE: () => deleteNote(+id),
+      UPDATE_TO_EXPIRED: () => {
+        setExpired(true);
+        updateNote({ ...note, expired: true });
+      }
+    };
+
+    return (
+      <IonButton onClick={ expired ? actions.DELETE : actions.UPDATE_TO_EXPIRED }>
+        <ion-icon name="close"></ion-icon>
+      </IonButton>
+    )
+  }
+
   return (
       <IonItem>
         <Link
@@ -103,9 +121,7 @@ const Note = (props) => {
             { renderLabel() }
           </IonLabel>
         </Link>
-        <IonButton onClick={ () => deleteNote(+id) }>
-          <ion-icon name="close"></ion-icon>
-        </IonButton>
+        { renderDelete() }
       </IonItem>
   );
 };

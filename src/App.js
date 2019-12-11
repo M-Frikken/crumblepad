@@ -4,6 +4,8 @@ import { IonApp, IonRouterOutlet } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import NoteListPage from './pages/NoteListPage';
 import NoteAddPage from './pages/NoteAddPage';
+import ArchivePage from './pages/ArchivePage';
+import Menu from './components/Menu';
 import store from './store';
 import { Provider } from 'react-redux';
 
@@ -30,9 +32,11 @@ const App = () => (
     <Provider store={store}>
         <IonApp>
             <IonReactRouter>
-                <IonRouterOutlet>
+                <Menu />
+                <IonRouterOutlet id="content">
                     <Route path="/note/:noteId" component={NoteAddPage} />
                     <Route path="/home" component={NoteListPage} exact={true} />
+                    <Route path="/archive" component={ArchivePage} exact={true} />
                     <Route path="/" component={() => <Redirect to="/home" />} exact={true} />
                     <Redirect to="/home" />
                 </IonRouterOutlet>

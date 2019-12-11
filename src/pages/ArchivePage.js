@@ -1,10 +1,10 @@
 import { IonMenuButton, IonMenuToggle, IonButtons, IonHeader, IonPage, IonTitle, IonToolbar, IonContent, IonFab, IonFabButton, IonFabList, IonIcon } from '@ionic/react';
 import { add, timer, lock } from 'ionicons/icons';
 import React from 'react';
-import NoteList from '../components/NoteList';
+import NoteListArchive from '../components/NoteListArchive';
 import { Link } from 'react-router-dom';
 
-const NoteListPage = () => {
+const ArchivePage = () => {
 
   function renderButton() {
     return (
@@ -27,12 +27,12 @@ const NoteListPage = () => {
             <IonMenuToggle><IonMenuButton></IonMenuButton></IonMenuToggle>
           </IonButtons>
           <IonTitle>
-            All Notes
+            Archive
           </IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <NoteList />
+        <NoteListArchive />
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
           <IonFabButton color="orange">
             <IonIcon icon={ add } />
@@ -44,4 +44,4 @@ const NoteListPage = () => {
   );
 };
 
-export default NoteListPage;
+export default ArchivePage;
