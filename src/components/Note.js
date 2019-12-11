@@ -112,6 +112,7 @@ const Note = (props) => {
   return (
       <IonItem>
         <Link
+          className="note"
           to={ `/note/${id}` }
           onClick={ onLinkClick }
         >
