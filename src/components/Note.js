@@ -35,13 +35,14 @@ export const expirationOptions = {
 
 const mapDispatchToProps = dispatch => ({
   deleteNote: noteId => dispatch(deleteNote(noteId)),
+  // deleteNote: note => dispatch(deleteNote(note)),
   updateNote: note => dispatch(updateNote(note))
 });
 
 const Note = (props) => {
   const {
     note, note: { id, type, title, expiresAt = new Date().getTime() },
-    deleteNote, updateNote
+    permanentDeleteNote, deleteNote, updateNote
   } = props;
   const [expired, setExpired] = useState(false);
 
@@ -91,6 +92,23 @@ const Note = (props) => {
       : <s>&nbsp;{ `${ title }` }&nbsp;</s>;
   }
 
+  const renderDelete = () => {
+    if (expired) {
+      return (
+        <IonButton onClick={ () => deleteNote(+id) }>
+          <ion-icon name="close"></ion-icon>
+        </IonButton>
+      )
+    }
+    else {
+      return (
+        <IonButton onClick={ () => updateNote({ ...note, expired: true }) }>
+          <ion-icon name="close"></ion-icon>
+        </IonButton>
+        )
+    }
+  }
+
   return (
       <IonItem>
         <Link
@@ -103,9 +121,7 @@ const Note = (props) => {
             { renderLabel() }
           </IonLabel>
         </Link>
-        <IonButton onClick={ () => deleteNote(+id) }>
-          <ion-icon name="close"></ion-icon>
-        </IonButton>
+        { renderDelete() }
       </IonItem>
   );
 };

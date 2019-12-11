@@ -1,6 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { IonMenu, IonRouterLink, IonList, IonItem, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/react';
+import { IonMenu, IonRouterLink, IonList, IonItem, IonHeader, IonToolbar, IonTitle, IonContent, IonIcon } from '@ionic/react';
+import { listBox, archive } from 'ionicons/icons';
+
+const pages = [
+    { key: 1, title: 'Home', path: '/home', icon: listBox },
+    { key: 2, title: 'Archive', path: '/archive', icon: archive }
+];
 
 const Menu = () => {
     return (
@@ -12,12 +18,15 @@ const Menu = () => {
             </IonHeader>
             <IonContent>
                 <IonList>
-                    <Link to="/">
-                        <IonItem>Notes</IonItem>
-                    </Link>
-                    <Link to="/archive">
-                        <IonItem>Archive</IonItem>
-                    </Link>
+                    { Object.values(pages).map(page => {
+                        return (
+                            <Link key={page.key} to={page.path}>
+                                <IonItem>
+                                    <IonIcon icon={ page.icon } />
+                                    <IonTitle>{page.title}</IonTitle></IonItem>
+                            </Link>
+                        );
+                    })}
                 </IonList>
             </IonContent>
         </IonMenu>

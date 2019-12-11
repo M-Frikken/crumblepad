@@ -34,9 +34,9 @@ const App = () => (
             <IonReactRouter>
                 <Menu />
                 <IonRouterOutlet id="content">
-                    <Route path="/archive" component={ArchivePage} />
                     <Route path="/note/:noteId" component={NoteAddPage} />
                     <Route path="/home" component={NoteListPage} exact={true} />
+                    <Route path="/archive" component={ArchivePage} exact={true} />
                     <Route path="/" component={() => <Redirect to="/home" />} exact={true} />
                     <Redirect to="/home" />
                 </IonRouterOutlet>
