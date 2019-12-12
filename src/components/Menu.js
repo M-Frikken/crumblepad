@@ -20,8 +20,6 @@ const Menu = ({ location: { pathname } }) => {
         if (pathname !== pageNameTo ) menuRef.current.close();
     }
 
-    console.log(firebaseConfig);
-
     return (
         <IonMenu ref={ menuRef } side="start" menu-id="main-menu" content-id="content" type="push">
             <IonHeader>
