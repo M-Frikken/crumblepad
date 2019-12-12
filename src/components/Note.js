@@ -6,7 +6,7 @@ import '../styles/Note.css';
 import { timer, lock } from 'ionicons/icons';
 import { timeLeft } from '../utils/time';
 import { deleteNote, updateNote } from '../store/Notes.actions';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { SECONDS_IN_MS, MINUTE_IN_MS } from '../utils/time';
 
 export const TEMPORARY = 'temporary';
@@ -34,28 +34,24 @@ export const expirationOptions = {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  deleteNote: noteId => dispatch(deleteNote(noteId)),
-  updateNote: note => dispatch(updateNote(note))
-});
-
 const Note = (props) => {
+  const dispatch = useDispatch();
+
   const {
     note, note: {
       id, type, title,
       expired: expiredInitial = false, expiresAt = new Date().getTime()
-    },
-    deleteNote, updateNote
+    }
   } = props;
   const [expired, setExpired] = useState(expiredInitial);
 
-  const dateToShow = () => {
+  const _dateToShow = () => {
     if (type === PERMANENT) return 0;
 
     const timeToDestruction = timeLeft(expiresAt);
     if (!timeToDestruction) {
       setExpired(true);
-      updateNote({ ...note, expired: true })
+      dispatch(updateNote({ ...note, expired: true }))
     }
 
     return timeToDestruction;
@@ -66,7 +62,7 @@ const Note = (props) => {
   useEffect(() => {
     let interval;
     if (type === TEMPORARY && !expired) {
-      interval = setInterval(() => setTime(dateToShow()), 1000);
+      interval = setInterval(() => setTime(_dateToShow()), 1000);
     }
     return () => {
       if (interval) clearInterval(interval);
@@ -93,10 +89,10 @@ const Note = (props) => {
 
   const renderDelete = () => {
     const actions = {
-      DELETE: () => deleteNote(+id),
+      DELETE: () => dispatch(deleteNote(+id)),
       UPDATE_TO_EXPIRED: () => {
         setExpired(true);
-        updateNote({ ...note, expired: true });
+        dispatch(updateNote({ ...note, expired: true }));
       }
     };
 
@@ -124,4 +120,4 @@ const Note = (props) => {
   );
 };
 
-export default connect(null, mapDispatchToProps)(Note);
+export default Note;

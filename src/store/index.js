@@ -2,13 +2,13 @@ import NotesReducer from "./Notes.reducer";
 import { createStore, combineReducers } from 'redux';
 import { firebaseReducer } from 'react-redux-firebase';
 
-const rootReducer = combineReducers({
+const combinedReducer = combineReducers({
     notes:NotesReducer,
     firebase: firebaseReducer
 });
 
 const store = createStore(
-    rootReducer,
+    combinedReducer,
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 )
 

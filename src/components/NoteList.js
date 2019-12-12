@@ -2,13 +2,11 @@ import React from 'react';
 import Note from './Note';
 import { IonList } from '@ionic/react';
 import '../styles/NoteList.css';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-const mapStateToProps = store => ({
-  notes: store.notes.notes
-});
+const NoteList = () => {
+  const notes = useSelector(state => state.notes.notes);
 
-const NoteList = ({ notes }) => {
   const activeNotes = Object.entries(notes).reduce((acc, [key, note]) => (
     !('expired' in note) || !note.expired
     ? { ...acc, [key]: note }
@@ -35,4 +33,4 @@ const NoteList = ({ notes }) => {
   );
 };
 
-export default connect(mapStateToProps)(NoteList);
+export default NoteList;
