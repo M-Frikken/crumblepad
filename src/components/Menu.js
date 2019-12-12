@@ -4,6 +4,7 @@ import { IonMenu, IonList, IonItem, IonHeader, IonToolbar, IonTitle, IonContent,
 import { listBox, archive } from 'ionicons/icons';
 import { withRouter } from "react-router";
 import '../styles/Menu.css';
+import firebaseConfig from './firebase';
 
 const pages = [
     { title: 'Home', path: '/home', icon: listBox },
@@ -12,7 +13,6 @@ const pages = [
 
 const Menu = ({ location: { pathname } }) => {
     const menuRef = useRef();
-    console.log(pages[0].path.substr(1));
 
     const menuItemClick = (e) => {
         const locationTo = e.currentTarget.href.split('/');
