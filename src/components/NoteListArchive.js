@@ -2,13 +2,11 @@ import React from 'react';
 import Note from './Note';
 import { IonList } from '@ionic/react';
 import '../styles/NoteList.css';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-const mapStateToProps = store => ({
-  notes: store.notes.notes
-});
+const NoteListArchive = () => {
+  const notes = useSelector(state => state.notes.notes);
 
-const NoteListArchive = ({ notes }) => {
   const filteredNotes = Object.entries(notes).reduce((acc, [key, note]) => (
     note.expired
     ? { ...acc, [key]: note }
@@ -39,6 +37,4 @@ const NoteListArchive = ({ notes }) => {
   );
 };
 
-export default connect(mapStateToProps)(NoteListArchive);
-
-// export default NoteList;
+export default NoteListArchive;

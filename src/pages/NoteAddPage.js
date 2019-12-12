@@ -4,19 +4,13 @@ import React, { useState, useEffect } from 'react';
 import NoteInputs from '../components/NoteInputs';
 import { checkmark } from 'ionicons/icons';
 import { TEMPORARY_NOTE_ID, expirationOptions, TEMPORARY, PERMANENT } from '../components/Note';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { addNote,  updateNote } from '../store/Notes.actions';
 
-const mapStateToProps = state => ({
-    notes: state.notes
-})
+const NoteAddPage = ({ match: { params, url }, history }) => {
+    const notes = useSelector(state => state.notes.notes);
+    const dispatch = useDispatch();
 
-const mapDispatchToProps = dispatch => ({
-    addNote: note => dispatch(addNote(note)),
-    updateNote: note => dispatch(updateNote(note))
-});
-
-const NoteAddPage = ({ match: { params, url }, history, notes, addNote, updateNote }) => {
     const [note, setNote] = useState({})
 
     useEffect(() => {
@@ -49,8 +43,8 @@ const NoteAddPage = ({ match: { params, url }, history, notes, addNote, updateNo
         }
 
         !('id' in newNote) || newNote.id < 0
-        ? addNote(newNote)
-        : updateNote(newNote);
+        ? dispatch(addNote(newNote))
+        : dispatch(updateNote(newNote));
         history.goBack();
     }
 
@@ -81,4 +75,4 @@ const NoteAddPage = ({ match: { params, url }, history, notes, addNote, updateNo
     );
   };
 
-export default connect(mapStateToProps, mapDispatchToProps)(NoteAddPage);
+export default NoteAddPage;
