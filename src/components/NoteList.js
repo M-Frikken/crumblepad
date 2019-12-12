@@ -5,12 +5,12 @@ import '../styles/NoteList.css';
 import { connect } from 'react-redux';
 
 const mapStateToProps = store => ({
-  notes: store.notes
+  notes: store.notes.notes
 });
 
 const NoteList = ({ notes }) => {
   const activeNotes = Object.entries(notes).reduce((acc, [key, note]) => (
-    !('expired' in note) || note.expired === false
+    !('expired' in note) || !note.expired
     ? { ...acc, [key]: note }
     : acc
   ), {});

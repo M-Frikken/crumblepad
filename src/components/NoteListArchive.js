@@ -5,7 +5,7 @@ import '../styles/NoteList.css';
 import { connect } from 'react-redux';
 
 const mapStateToProps = store => ({
-  notes: store.notes
+  notes: store.notes.notes
 });
 
 const NoteListArchive = ({ notes }) => {

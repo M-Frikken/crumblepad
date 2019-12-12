@@ -8,6 +8,10 @@ import ArchivePage from './pages/ArchivePage';
 import Menu from './components/Menu';
 import store from './store';
 import { Provider } from 'react-redux';
+import firebaseConfig from './components/firebase';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -28,20 +32,35 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
+try {
+    firebase.initializeApp(firebaseConfig);
+} catch (err) {}
+
+const rrfProps = {
+    firebase,
+    config: {
+        userProfile: "users",
+        notes: "notes"
+    },
+    dispatch: store.dispatch
+}
+
 const App = () => (
     <Provider store={store}>
-        <IonApp>
-            <IonReactRouter>
-                <Menu />
-                <IonRouterOutlet id="content">
-                    <Route path="/note/:noteId" component={NoteAddPage} />
-                    <Route path="/home" component={NoteListPage} exact={true} />
-                    <Route path="/archive" component={ArchivePage} exact={true} />
-                    <Route path="/" component={() => <Redirect to="/home" />} exact={true} />
-                    <Redirect to="/home" />
-                </IonRouterOutlet>
-            </IonReactRouter>
-        </IonApp>
+        <ReactReduxFirebaseProvider {...rrfProps}>
+            <IonApp>
+                <IonReactRouter>
+                    <Menu />
+                    <IonRouterOutlet id="content">
+                        <Route path="/note/:noteId" component={NoteAddPage} />
+                        <Route path="/home" component={NoteListPage} exact={true} />
+                        <Route path="/archive" component={ArchivePage} exact={true} />
+                        <Route path="/" component={() => <Redirect to="/home" />} exact={true} />
+                        <Redirect to="/home" />
+                    </IonRouterOutlet>
+                </IonReactRouter>
+            </IonApp>
+        </ReactReduxFirebaseProvider>
     </Provider>
 );
 

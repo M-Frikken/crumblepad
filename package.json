@@ -16,6 +16,7 @@
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-redux": "^7.1.3",
+    "react-redux-firebase": "^3.0.5",
     "react-router": "^5.1.0",
     "react-router-dom": "^5.1.0",
     "react-scripts": "3.2.0",
@@ -24,10 +25,10 @@
   },
   "scripts": {
     "devapp": "ionic serve --devapp",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "react-scripts start --env:.env",
+    "build": "react-scripts build --env:.env",
+    "test": "react-scripts test --env:.env",
+    "eject": "react-scripts eject --env:.env"
   },
   "eslintConfig": {
     "extends": "react-app"
