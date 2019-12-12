@@ -4,7 +4,6 @@ import { IonMenu, IonList, IonItem, IonHeader, IonToolbar, IonTitle, IonContent,
 import { listBox, archive } from 'ionicons/icons';
 import { withRouter } from "react-router";
 import '../styles/Menu.css';
-import firebaseConfig from './firebase';
 
 const pages = [
     { title: 'Home', path: '/home', icon: listBox },
