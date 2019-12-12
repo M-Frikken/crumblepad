@@ -31,3 +31,9 @@ Let's get ready to crumble!
     REACT_APP_MEASUREMENT_ID=G-xxx
     ```
 8. `npm run start`
+
+## to deploy
+
+1. `npm run build`
+2. `firebase login`
+3. `firebase deploy`
