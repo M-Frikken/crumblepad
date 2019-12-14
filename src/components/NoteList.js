@@ -28,7 +28,7 @@ const NoteList = () => {
       { renderAlert() }
       { Object.entries(activeNotes).reverse().map(([id, note]) => (
           <Note
-            key={ `${note.id}_${note.title}` }
+            key={ id }
             note={ note }
             id={ id }
           />
