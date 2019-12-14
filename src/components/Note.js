@@ -77,11 +77,11 @@ const Note = (props) => {
   };
 
   const renderLabel = () => {
-    if (type === PERMANENT) return `${ id } ${ title } `;
+    if (type === PERMANENT) return ` ${ title } `;
 
     return !expired
-      ? `${ id } ${ time } | ${ title } `
-      : `${ id } ${ title } `;
+      ? ` ${ time } | ${ title } `
+      : ` ${ title } `;
   }
 
   const renderDeleteButton = () => {
