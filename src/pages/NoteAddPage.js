@@ -51,7 +51,7 @@ const NoteAddPage = ({ match: { url }, history }) => {
             firebase.update(`notes/${noteId}`, newNote);
         }
 
-        history.push('/home');
+        history.goBack();
     }
 
     if (
