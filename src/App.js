@@ -10,6 +10,7 @@ import store from './store';
 import { Provider } from 'react-redux';
 import firebaseConfig from './components/firebase';
 import firebase from 'firebase/app';
+import 'firebase/database';
 import 'firebase/auth';
 import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
 
@@ -39,15 +40,14 @@ try {
 const rrfProps = {
     firebase,
     config: {
-        userProfile: "users",
-        notes: "notes"
+        userProfile: "users"
     },
     dispatch: store.dispatch
 }
 
 const App = () => (
-    <Provider store={store}>
-        <ReactReduxFirebaseProvider {...rrfProps}>
+    <Provider store={ store }>
+        <ReactReduxFirebaseProvider { ...rrfProps }>
             <IonApp>
                 <IonReactRouter>
                     <Menu />

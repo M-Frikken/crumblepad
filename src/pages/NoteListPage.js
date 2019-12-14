@@ -3,16 +3,16 @@ import { add, timer, lock } from 'ionicons/icons';
 import React from 'react';
 import NoteList from '../components/NoteList';
 import { Link } from 'react-router-dom';
+import { TEMPORARY, PERMANENT } from '../components/Note';
 
 const NoteListPage = () => {
-
   function renderButton() {
     return (
       <IonFabList side="top">
-        <Link to="/note/-1">
+        <Link to={ `/note/${ PERMANENT }` }>
           <IonFabButton size="small"><IonIcon icon={ lock } /></IonFabButton>
         </Link>
-        <Link to="/note/-2">
+        <Link to={ `/note/${ TEMPORARY }` }>
           <IonFabButton size="small"><IonIcon icon={ timer } /></IonFabButton>
         </Link>
       </IonFabList>

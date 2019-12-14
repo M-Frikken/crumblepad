@@ -3,20 +3,21 @@ import { IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonBackButton, Io
 import React, { useState, useEffect } from 'react';
 import NoteInputs from '../components/NoteInputs';
 import { checkmark } from 'ionicons/icons';
-import { TEMPORARY_NOTE_ID, expirationOptions, TEMPORARY, PERMANENT } from '../components/Note';
-import { useSelector, useDispatch } from 'react-redux';
-import { addNote,  updateNote } from '../store/Notes.actions';
+import { expirationOptions, TEMPORARY, PERMANENT } from '../components/Note';
+import { useSelector } from 'react-redux';
+import { useFirebase } from 'react-redux-firebase';
+import { useParams } from 'react-router';
 
-const NoteAddPage = ({ match: { params, url }, history }) => {
-    const notes = useSelector(state => state.notes.notes);
-    const dispatch = useDispatch();
+const NoteAddPage = ({ match: { url }, history }) => {
+    const { noteId } = useParams() || TEMPORARY;
+    const firebase = useFirebase();
+    const notes = useSelector(state => state.firebase.data.notes);
 
     const [note, setNote] = useState({})
 
     useEffect(() => {
-        const { noteId } = params || TEMPORARY_NOTE_ID;
-        const type = +noteId === TEMPORARY_NOTE_ID ? TEMPORARY : PERMANENT;
-        setNote(+noteId < 0 ? { id: +noteId, type } : notes[+noteId]);
+        if (noteId === TEMPORARY || noteId === PERMANENT) setNote({ type: noteId })
+        else setNote((notes && notes[noteId]) || {});
     }, [url])
 
     const cancel = () => {
@@ -27,29 +28,36 @@ const NoteAddPage = ({ match: { params, url }, history }) => {
         const temporaryNoteParams = {};
         if (note.type === TEMPORARY) {
             const { expirationOption = 0 } = note;
-            const expiresAt =  new Date().getTime() + expirationOptions[expirationOption].val;
+            const expiresAt = new Date().getTime() + expirationOptions[expirationOption].val;
             temporaryNoteParams.expiresAt = expiresAt;
         }
 
         const newNote = {
             ...note,
-            ...temporaryNoteParams
+            ...temporaryNoteParams,
+            updatedAt: new Date().getTime()
         };
 
         if (!newNote.title) {
-            if (!newNote.content) return history.goBack();
+            // TODO: notify user that note was exmpy
+            if (!newNote.content) return history.push('/home');
 
             newNote.title = 'Untitled Note';
         }
 
-        !('id' in newNote) || newNote.id < 0
-        ? dispatch(addNote(newNote))
-        : dispatch(updateNote(newNote));
+        if (noteId === TEMPORARY || noteId === PERMANENT) {
+            firebase.push('notes', newNote);
+        } else {
+            firebase.update(`notes/${noteId}`, newNote);
+        }
+
         history.goBack();
     }
 
-    // TODO: test feature
-    if (note.type === TEMPORARY && note.expired) return history.push('/home');
+    if (
+        // TODO: test
+        (note.type === TEMPORARY && note.expired)
+    ) return history.push('/home');
 
     return (
         <IonPage>

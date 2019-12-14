@@ -5,7 +5,7 @@
   "background_color": "#ffa500",
   "display": "standalone",
   "orientation": "portrait",
-  "scope": "/src",
+  "scope": "/",
   "start_url": "/home",
   "icons": [
     {
