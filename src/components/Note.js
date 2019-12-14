@@ -3,17 +3,13 @@ import React, { useState, useEffect } from 'react';
 import { IonLabel, IonItem, IonIcon, IonButton } from '@ionic/react';
 import { Link } from 'react-router-dom';
 import '../styles/Note.css';
-import { timer, lock } from 'ionicons/icons';
+import { timer, lock, pulse, close } from 'ionicons/icons';
 import { timeLeft } from '../utils/time';
-import { deleteNote, updateNote } from '../store/Notes.actions';
-import { useDispatch } from 'react-redux';
 import { SECONDS_IN_MS, MINUTE_IN_MS } from '../utils/time';
+import { useFirebase } from 'react-redux-firebase';
 
 export const TEMPORARY = 'temporary';
 export const PERMANENT = 'permanent';
-
-export const TEMPORARY_NOTE_ID = -2;
-export const PEMANENT_NOTE_ID = -1;
 
 export const expirationOptions = {
   0: {
@@ -35,14 +31,15 @@ export const expirationOptions = {
 }
 
 const Note = (props) => {
-  const dispatch = useDispatch();
+  const firebase = useFirebase();
 
   const {
     note, note: {
-      id, type, title,
+      type, title,
       expired: expiredInitial = false, expiresAt = new Date().getTime()
-    }
+    }, id
   } = props;
+  const notePath = `notes/${ id }`;
   const [expired, setExpired] = useState(expiredInitial);
 
   const _dateToShow = () => {
@@ -51,7 +48,7 @@ const Note = (props) => {
     const timeToDestruction = timeLeft(expiresAt);
     if (!timeToDestruction) {
       setExpired(true);
-      dispatch(updateNote({ ...note, expired: true }))
+      firebase.update(notePath, { ...note, expired: true });
     }
 
     return timeToDestruction;
@@ -80,25 +77,40 @@ const Note = (props) => {
   };
 
   const renderLabel = () => {
-    if (type === PERMANENT) return ` ${ title } `;
+    if (type === PERMANENT) return `${ id } ${ title } `;
 
     return !expired
-      ? ` ${ time } | ${ title } `
-      : ` ${ title } `;
+      ? `${ id } ${ time } | ${ title } `
+      : `${ id } ${ title } `;
   }
 
-  const renderDelete = () => {
+  const renderDeleteButton = () => {
     const actions = {
-      DELETE: () => dispatch(deleteNote(+id)),
+      DELETE: () => firebase.remove(notePath),
       UPDATE_TO_EXPIRED: () => {
         setExpired(true);
-        dispatch(updateNote({ ...note, expired: true }));
+        firebase.update(notePath, { ...note, expired: true });
       }
     };
 
     return (
       <IonButton onClick={ expired ? actions.DELETE : actions.UPDATE_TO_EXPIRED }>
-        <ion-icon name="close"></ion-icon>
+        <IonIcon icon={ close }></IonIcon>
+      </IonButton>
+    )
+  }
+
+  const renderRestoreButton = () => {
+    if (!expired) return null;
+
+    const restore = () => {
+      setExpired(false);
+      firebase.update(notePath, { ...note, expired: false });
+    }
+
+    return (
+      <IonButton onClick={ restore }>
+        <IonIcon icon={ pulse }></IonIcon>
       </IonButton>
     )
   }
@@ -115,7 +127,8 @@ const Note = (props) => {
             { renderLabel() }
           </IonLabel>
         </Link>
-        { renderDelete() }
+        { renderDeleteButton() }
+        { renderRestoreButton() }
       </IonItem>
   );
 };

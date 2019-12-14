@@ -20,7 +20,8 @@ const NoteInputs = ({ note, setNote }) => {
 
   const onSelectChange = useCallback(
     (e) => {
-      if (e.target.className === "md in-item hydrated"){
+      const selectClass = "md in-item hydrated";
+      if (e.target.className === selectClass){
         setNote({ ...note, expirationOption: +e.detail.value })
       };
     }, [note, setNote]
@@ -54,7 +55,9 @@ const NoteInputs = ({ note, setNote }) => {
           placeholder="Select One"
         >
           { Object.entries(expirationOptions).map(([name, { title }], i) => (
-            <IonSelectOption key={ name } selected={ i === expirationOption } value={ name }>{ title }</IonSelectOption>
+            <IonSelectOption key={ name } selected={ i === expirationOption } value={ name }>
+              { title }
+            </IonSelectOption>
           )) }
         </IonSelect>
       </>

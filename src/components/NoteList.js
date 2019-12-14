@@ -3,9 +3,13 @@ import Note from './Note';
 import { IonList } from '@ionic/react';
 import '../styles/NoteList.css';
 import { useSelector } from 'react-redux';
+import { useFirebaseConnect } from 'react-redux-firebase';
 
 const NoteList = () => {
-  const notes = useSelector(state => state.notes.notes);
+  useFirebaseConnect([
+    { path: 'notes', queryParams: [ 'orderByChild=updatedAt' ] }
+  ]);
+  const notes = useSelector(state => state.firebase.data.notes) || {};
 
   const activeNotes = Object.entries(notes).reduce((acc, [key, note]) => (
     !('expired' in note) || !note.expired
@@ -22,10 +26,11 @@ const NoteList = () => {
   return (
     <IonList>
       { renderAlert() }
-      { Object.values(activeNotes).reverse().map(note => (
+      { Object.entries(activeNotes).reverse().map(([id, note]) => (
           <Note
             key={ `${note.id}_${note.title}` }
             note={ note }
+            id={ id }
           />
         ))
       }

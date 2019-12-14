@@ -3,18 +3,22 @@ import Note from './Note';
 import { IonList } from '@ionic/react';
 import '../styles/NoteList.css';
 import { useSelector } from 'react-redux';
+import { useFirebaseConnect } from 'react-redux-firebase';
 
-const NoteListArchive = () => {
-  const notes = useSelector(state => state.notes.notes);
+const NoteList = () => {
+  useFirebaseConnect([
+    { path: 'notes', queryParams: [ 'orderByChild=updatedAt' ] }
+  ]);
+  const notes = useSelector(state => state.firebase.data.notes) || {};
 
-  const filteredNotes = Object.entries(notes).reduce((acc, [key, note]) => (
+  const expiredNotes = Object.entries(notes).reduce((acc, [key, note]) => (
     note.expired
     ? { ...acc, [key]: note }
     : acc
   ), {});
 
 
-  if (!Object.keys(filteredNotes).length) return <h4 className='empty' >Archive is empty...</h4>
+  if (!Object.keys(expiredNotes).length) return <h4 className='empty' >Archive is empty...</h4>
 
   const renderAlert = () => (
     null
@@ -23,18 +27,16 @@ const NoteListArchive = () => {
   return (
     <IonList>
       { renderAlert() }
-      { Object.values(filteredNotes).reverse().map(note => {
-            return (
-              <Note
-                key={ `${note.id}_${note.title}` }
-                note={ note }
-              />
-            );
-          }
-        )
+      { Object.entries(expiredNotes).reverse().map(([id, note]) => (
+          <Note
+            key={ `${note.id}_${note.title}` }
+            note={ note }
+            id={ id }
+          />
+        ))
       }
     </IonList>
   );
 };
 
-export default NoteListArchive;
+export default NoteList;
