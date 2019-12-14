@@ -105,7 +105,7 @@ const Note = (props) => {
 
     const restore = () => {
       setExpired(false);
-      firebase.update(notePath, { ...note, expired: false });
+      firebase.update(notePath, { ...note, expired: false, type: PERMANENT });
     }
 
     return (
