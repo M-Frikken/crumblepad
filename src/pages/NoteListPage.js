@@ -2,14 +2,18 @@ import { IonMenuButton, IonMenuToggle, IonButtons, IonHeader, IonPage, IonTitle,
 import { add, timer, lock } from 'ionicons/icons';
 import React from 'react';
 import NoteList from '../components/NoteList';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { TEMPORARY, PERMANENT } from '../components/Note';
 import { useFirebase } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
 
 const NoteListPage = ({ history }) => {
   const firebase = useFirebase();
-  const username = useSelector(state => state.firebase.profile.username)
+
+  const { username, isLoaded, isEmpty } = useSelector(({ firebase }) => firebase.profile);
+  if (isLoaded && isEmpty) {
+    return <Redirect to='/login'/>
+  }
 
   const renderButton = () => {
     return (

@@ -6,7 +6,7 @@ import { checkmark } from 'ionicons/icons';
 import { expirationOptions, TEMPORARY, PERMANENT } from '../components/Note';
 import { useSelector } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
-import { useParams } from 'react-router';
+import { useParams, Redirect } from 'react-router';
 
 const NoteAddPage = ({ match: { url }, history }) => {
     const { noteId } = useParams() || TEMPORARY;
@@ -20,6 +20,11 @@ const NoteAddPage = ({ match: { url }, history }) => {
         if (noteId === TEMPORARY || noteId === PERMANENT) setNote({ type: noteId })
         else setNote((notes && notes[noteId]) || {});
     }, [url])
+
+    const { isLoaded, isEmpty } = useSelector(({ firebase }) => firebase.profile);
+    if (isLoaded && isEmpty) {
+      return <Redirect to='/login'/>
+    }
 
     const cancel = () => {
         history.push('/home');
