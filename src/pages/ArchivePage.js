@@ -2,9 +2,14 @@ import { IonMenuButton, IonMenuToggle, IonButtons, IonHeader, IonPage, IonTitle,
 import { add, timer, lock } from 'ionicons/icons';
 import React from 'react';
 import NoteListArchive from '../components/NoteListArchive';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const ArchivePage = () => {
+  const { isLoaded, isEmpty } = useSelector(({ firebase }) => firebase.profile);
+  if (isLoaded && isEmpty) {
+    return <Redirect to='/login'/>
+  }
 
   function renderButton() {
     return (

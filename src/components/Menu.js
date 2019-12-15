@@ -4,6 +4,7 @@ import { IonMenu, IonList, IonItem, IonHeader, IonToolbar, IonTitle, IonContent,
 import { listBox, archive } from 'ionicons/icons';
 import { withRouter } from "react-router";
 import '../styles/Menu.css';
+import { useFirebaseConnect } from 'react-redux-firebase';
 
 const pages = [
     { title: 'Home', path: '/home', icon: listBox },
@@ -11,8 +12,11 @@ const pages = [
 ];
 
 const Menu = ({ location: { pathname } }) => {
-    const menuRef = useRef();
+    useFirebaseConnect([
+        { path: 'notes', type: 'value', queryParams: [ 'orderByChild=updatedAt' ] }
+    ]);
 
+    const menuRef = useRef();
     const menuItemClick = (e) => {
         const locationTo = e.currentTarget.href.split('/');
         const pageNameTo = `/${ locationTo[locationTo.length-1] }`;
