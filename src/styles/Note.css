@@ -1,7 +1,4 @@
 .note {
     text-decoration: none;
-}
-
-.note .expired {
-    opacity: .6
+    padding-right: 5px;
 }
