@@ -6,7 +6,7 @@ export const DAY_IN_MS = 24 * HOUR_IN_MS;
 
 export const timeLeft = (timeInMs) => {
     const difference = getTimeDifference(timeInMs);
-    if (isExpired(timeInMs)) return false;
+    if (isExpired(timeInMs)) return '';
 
     const days = Math.floor(difference / DAY_IN_MS);
     const hours = Math.floor(difference / HOUR_IN_MS) % 24;
