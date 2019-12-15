@@ -21,7 +21,7 @@ const NoteInputs = ({ note, setNote }) => {
   const onSelectChange = useCallback(
     (e) => {
       const selectClass = "md in-item hydrated";
-      if (e.target.className === selectClass){
+      if (e.target.className === selectClass) {
         setNote({ ...note, expirationOption: +e.detail.value })
       };
     }, [note, setNote]
