@@ -12,6 +12,7 @@ const NoteAddPage = ({ match: { url }, history }) => {
     const { noteId } = useParams() || TEMPORARY;
     const firebase = useFirebase();
     const notes = useSelector(state => state.firebase.data.notes);
+    const userId = useSelector(state => state.firebase.auth.uid);
 
     const [note, setNote] = useState({})
 
@@ -35,7 +36,8 @@ const NoteAddPage = ({ match: { url }, history }) => {
         const newNote = {
             ...note,
             ...temporaryNoteParams,
-            updatedAt: new Date().getTime()
+            updatedAt: new Date().getTime(),
+            userId
         };
 
         if (!newNote.title) {

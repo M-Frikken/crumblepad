@@ -6,13 +6,15 @@ import { useSelector } from 'react-redux';
 import { useFirebaseConnect } from 'react-redux-firebase';
 
 const NoteList = () => {
+  const currentUserId = useSelector(state => state.firebase.auth.uid);
   useFirebaseConnect([
     { path: 'notes', queryParams: [ 'orderByChild=updatedAt' ] }
+    // { path: 'notes', queryParams: [ 'orderByChild=userId', `equalTo=${ currentUserId }`, 'orderByChild=updatedAt' ] }
   ]);
   const notes = useSelector(state => state.firebase.data.notes) || {};
 
   const activeNotes = Object.entries(notes).reduce((acc, [key, note]) => (
-    !('expired' in note) || !note.expired
+    (!('expired' in note) || !note.expired) && note.userId === currentUserId
     ? { ...acc, [key]: note }
     : acc
   ), {});
