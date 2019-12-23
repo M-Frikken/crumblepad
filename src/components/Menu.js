@@ -21,7 +21,8 @@ const Menu = ({ location: { pathname } }) => {
     const menuItemClick = (e) => {
         const locationTo = e.currentTarget.href.split('/');
         const pageNameTo = `/${ locationTo[locationTo.length-1] }`;
-        if (pathname !== pageNameTo ) menuRef.current.close();
+        if (pathname !== pageNameTo) menuRef.current.close();
+        else e.preventDefault();
     }
 
     return (
