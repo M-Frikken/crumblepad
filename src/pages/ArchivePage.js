@@ -1,9 +1,10 @@
-import { IonMenuButton, IonMenuToggle, IonButtons, IonHeader, IonPage, IonTitle, IonToolbar, IonContent, IonFab, IonFabButton, IonFabList, IonIcon } from '@ionic/react';
-import { add, timer, lock } from 'ionicons/icons';
+import { IonContent, IonFab, IonFabButton, IonFabList, IonIcon, IonPage } from '@ionic/react';
+import { add, lock, timer } from 'ionicons/icons';
 import React from 'react';
-import NoteListArchive from '../components/NoteListArchive';
-import { Link, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Link, Redirect } from 'react-router-dom';
+import NoteListArchive from '../components/NoteListArchive';
+import PageHeader from '../components/PageHeader';
 
 const ArchivePage = () => {
   const { isLoaded, isEmpty } = useSelector(({ firebase }) => firebase.profile);
@@ -26,16 +27,7 @@ const ArchivePage = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar color="orange">
-          <IonButtons slot="start">
-            <IonMenuToggle><IonMenuButton></IonMenuButton></IonMenuToggle>
-          </IonButtons>
-          <IonTitle>
-            Archive
-          </IonTitle>
-        </IonToolbar>
-      </IonHeader>
+      <PageHeader title="Archive" />
       <IonContent>
         <NoteListArchive />
         <IonFab vertical="bottom" horizontal="end" slot="fixed">

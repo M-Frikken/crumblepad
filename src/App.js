@@ -34,6 +34,7 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import SignInPage from './pages/SignInPage';
 import LoginPage from './pages/LoginPage';
+import SettingsPage from './pages/SettingsPage';
 
 try {
     firebase.initializeApp(firebaseConfig);
@@ -59,6 +60,7 @@ const App = () => (
                         <Route path="/signin" component={ SignInPage } exact={ true } />
                         <Route path="/login" component={ LoginPage } exact={ true } />
                         <Route path="/archive" component={ ArchivePage } exact={ true } />
+                        <Route path="/settings" component={ SettingsPage } exact={ true } />
                         <Route path="/" component={() => <Redirect to="/home" />} exact={ true } />
                         <Redirect to="/login" />
                     </IonRouterOutlet>
