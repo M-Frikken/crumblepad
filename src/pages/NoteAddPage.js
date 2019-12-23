@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonBackButton, IonContent, IonRow, IonFab, IonFabButton, IonIcon } from '@ionic/react';
-import React, { useState, useEffect } from 'react';
-import NoteInputs from '../components/NoteInputs';
+import { IonBackButton, IonButtons, IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import { checkmark } from 'ionicons/icons';
-import { expirationOptions, TEMPORARY, PERMANENT } from '../components/Note';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
-import { useParams, Redirect } from 'react-router';
+import { Redirect, useParams } from 'react-router';
+import { expirationOptions, PERMANENT, TEMPORARY } from '../components/Note';
+import NoteInputs from '../components/NoteInputs';
 
 const NoteAddPage = ({ match: { url }, history }) => {
     const { noteId } = useParams() || TEMPORARY;
@@ -21,10 +21,8 @@ const NoteAddPage = ({ match: { url }, history }) => {
         else setNote((notes && notes[noteId]) || {});
     }, [url])
 
-    const { isLoaded, isEmpty } = useSelector(({ firebase }) => firebase.profile);
-    if (isLoaded && isEmpty) {
-      return <Redirect to='/login'/>
-    }
+    const uid = localStorage.getItem('uid');
+    if (!uid) return <Redirect to='/login' />
 
     const cancel = () => {
         history.push('/home');

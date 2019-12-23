@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { IonButton, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import React, { useState } from 'react';
-import { IonPage, IonHeader, IonToolbar, IonRow, IonTitle, IonContent, IonButton, IonItem, IonLabel, IonInput } from '@ionic/react';
 import { useFirebase } from 'react-redux-firebase';
+import { setItem } from '../utils/BrowserDB';
 
 const SignInPage = ({ history }) => {
     const firebase = useFirebase();
@@ -14,7 +15,10 @@ const SignInPage = ({ history }) => {
         firebase.login(
             { email, password }
         ).then(
-            () => history.push('/home')
+            user => {
+                setItem('uid', user.user.user.uid);
+                history.push('/home')
+            }
         ).catch(
             err => {
                 setError(err.message);
