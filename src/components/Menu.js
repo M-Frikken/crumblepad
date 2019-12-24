@@ -16,7 +16,7 @@ const Menu = ({ location: { pathname } }) => {
     const uid = localStorage.getItem('uid');
 
     useFirebaseConnect([
-        { path: 'notes', type: 'value', queryParams: ['orderByChild=updatedAt'] },
+        { path: `notes/${ uid }`, queryParams: ['orderByChild=updatedAt'] },
         { path: `settings/${ uid }/expirationOptions` }
     ]);
 
