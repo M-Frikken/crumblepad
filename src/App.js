@@ -13,6 +13,9 @@ import firebase from 'firebase/app';
 import 'firebase/database';
 import 'firebase/auth';
 import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
+import SignInPage from './pages/SignInPage';
+import LoginPage from './pages/LoginPage';
+import SettingsPage from './pages/SettingsPage';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -32,9 +35,6 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import SignInPage from './pages/SignInPage';
-import LoginPage from './pages/LoginPage';
-import SettingsPage from './pages/SettingsPage';
 
 try {
     firebase.initializeApp(firebaseConfig);
