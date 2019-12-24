@@ -5,24 +5,20 @@ import '../styles/NoteList.css';
 import { useSelector } from 'react-redux';
 
 const NoteList = () => {
-  const currentUserId = useSelector(state => state.firebase.auth.uid);
-  const notes = useSelector(state => state.firebase.data.notes) || {};
+  const uid = localStorage.getItem('uid');
+  const allNotes = useSelector(({ firebase }) => firebase.data.notes) || {};
+  const notes = allNotes[uid] || {};
 
   const activeNotes = Object.entries(notes).reduce((acc, [key, note]) => (
-    (!('expired' in note) || !note.expired) && note.userId === currentUserId
+    !('expired' in note) || !note.expired
     ? { ...acc, [key]: note }
     : acc
   ), {});
 
   if (!Object.keys(activeNotes).length) return <h4 className='empty' >Oops, no notes to crumble...</h4>
 
-  const renderAlert = () => (
-    null
-  );
-
   return (
     <IonList>
-      { renderAlert() }
       { Object.entries(activeNotes).reverse().map(([id, note]) => (
           <Note
             key={ id }

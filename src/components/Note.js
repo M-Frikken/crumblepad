@@ -31,6 +31,7 @@ export const expirationOptions = {
 }
 
 const Note = (props) => {
+  const uid = localStorage.getItem('uid');
   const firebase = useFirebase();
 
   const {
@@ -39,7 +40,7 @@ const Note = (props) => {
       expired: expiredInitial = false, expiresAt = new Date().getTime()
     }, id
   } = props;
-  const notePath = `notes/${ id }`;
+  const notePath = `notes/${ uid }/${ id }`;
   const [expired, setExpired] = useState(expiredInitial);
 
   const _dateToShow = () => {
@@ -89,7 +90,11 @@ const Note = (props) => {
       DELETE: () => firebase.remove(notePath),
       UPDATE_TO_EXPIRED: () => {
         setExpired(true);
-        firebase.update(notePath, { ...note, expired: true });
+        firebase.update(notePath, {
+          ...note,
+          expired: true,
+          updatedAt: new Date().getTime()
+        });
       }
     };
 
@@ -124,7 +129,7 @@ const Note = (props) => {
       <IonItem>
         <Link
           className="note"
-          to={ `/note/${id}` }
+          to={ `/note/${ id }` }
           onClick={ onLinkClick }
         >
           <IonLabel>

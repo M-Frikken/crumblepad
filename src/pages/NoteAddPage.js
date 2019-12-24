@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
 import { Redirect, useParams } from 'react-router';
-import { expirationOptions, PERMANENT, TEMPORARY } from '../components/Note';
+import { expirationOptions as defaultExpirationOptions, PERMANENT, TEMPORARY } from '../components/Note';
 import NoteInputs from '../components/NoteInputs';
 import { displayMessage } from '../store/Message.actions';
 
@@ -13,9 +13,16 @@ import { displayMessage } from '../store/Message.actions';
 const NoteAddPage = ({ match: { url }, history }) => {
     const { noteId } = useParams() || TEMPORARY;
     const firebase = useFirebase();
-    const notes = useSelector(state => state.firebase.data.notes);
-    const userId = useSelector(state => state.firebase.auth.uid);
+
+    const uid = localStorage.getItem('uid');
+    const allNotes = useSelector(({ firebase }) => firebase.data.notes) || {};
+    const notes = allNotes[uid] || {};
     const dispatch = useDispatch();
+
+    // const uid = localStorage.getItem('uid');
+    const settings = useSelector(({ firebase }) => firebase.data.settings) || {};
+    const { expirationOptions: userExpirationOptions } = settings[uid] || {};
+    const expirationOptions = userExpirationOptions || defaultExpirationOptions;
 
     const [note, setNote] = useState({})
 
@@ -24,7 +31,6 @@ const NoteAddPage = ({ match: { url }, history }) => {
         else setNote((notes && notes[noteId]) || {});
     }, [url])
 
-    const uid = localStorage.getItem('uid');
     if (!uid) return <Redirect to='/login' />
 
     const cancel = () => {
@@ -43,7 +49,8 @@ const NoteAddPage = ({ match: { url }, history }) => {
             ...note,
             ...temporaryNoteParams,
             updatedAt: new Date().getTime(),
-            userId
+            expired: false,
+            userId: uid
         };
 
         if (!newNote.title) {
@@ -53,11 +60,12 @@ const NoteAddPage = ({ match: { url }, history }) => {
             newNote.title = 'Untitled Note';
         }
 
-        dispatch(displayMessage('new note added'));
         if (noteId === TEMPORARY || noteId === PERMANENT) {
-            firebase.push('notes', newNote);
+            firebase.push(`notes/${ uid }`, newNote);
+            dispatch(displayMessage('New note was added'));
         } else {
-            firebase.update(`notes/${noteId}`, newNote);
+            firebase.update(`notes/${ uid }/${noteId}`, newNote);
+            dispatch(displayMessage('Note was updated'));
         }
 
         history.goBack();
@@ -81,7 +89,7 @@ const NoteAddPage = ({ match: { url }, history }) => {
                 </IonToolbar>
             </IonHeader>
             <IonContent>
-                <NoteInputs note={ note } setNote={ setNote } />
+                <NoteInputs note={note} setNote={setNote} expirationOptions={expirationOptions} />
                 <IonFab vertical="bottom" horizontal="end" slot="fixed">
                     <IonFabButton onClick={ addNoteAndRedirect } color="orange">
                         <IonIcon icon={ checkmark } />

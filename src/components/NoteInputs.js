@@ -1,10 +1,9 @@
-import React, { useEffect, useCallback } from 'react';
-import { IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonInput, IonItem, IonLabel, IonToggle, IonIcon, IonTextarea, IonSelect, IonSelectOption } from '@ionic/react';
-import { timer, lock } from 'ionicons/icons';
+import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIcon, IonInput, IonItem, IonLabel, IonSelect, IonSelectOption, IonTextarea, IonToggle } from '@ionic/react';
+import { lock, timer } from 'ionicons/icons';
+import React, { useCallback, useEffect } from 'react';
 import { PERMANENT, TEMPORARY } from './Note';
-import { expirationOptions } from '../components/Note';
 
-const NoteInputs = ({ note, setNote }) => {
+const NoteInputs = ({ note, setNote, expirationOptions }) => {
   const { expirationOption = 0, type, title, content: text } = note || {};
   const customActionSheetOptions = {
     header: 'Times',
