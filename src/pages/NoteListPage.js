@@ -15,23 +15,21 @@ const NoteListPage = ({ history }) => {
     return <Redirect to='/login'/>
   }
 
-  const renderButton = () => {
-    return (
-      <IonFabList side="top">
-        <Link to={ `/note/${ PERMANENT }` }>
-          <IonFabButton size="small"><IonIcon icon={ lock } /></IonFabButton>
-        </Link>
-        <Link to={ `/note/${ TEMPORARY }` }>
-          <IonFabButton size="small"><IonIcon icon={ timer } /></IonFabButton>
-        </Link>
-      </IonFabList>
-    )
-  }
-
   const logout = () => {
     firebase.logout();
     history.push('/login');
   }
+
+  const renderButton = () => (
+    <IonFabList side="top">
+      <Link to={ `/note/${ PERMANENT }` }>
+        <IonFabButton size="small"><IonIcon icon={ lock } /></IonFabButton>
+      </Link>
+      <Link to={ `/note/${ TEMPORARY }` }>
+        <IonFabButton size="small"><IonIcon icon={ timer } /></IonFabButton>
+      </Link>
+    </IonFabList>
+  );
 
   return (
     <IonPage>
