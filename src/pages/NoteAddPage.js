@@ -1,18 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonBackButton, IonContent, IonRow, IonFab, IonFabButton, IonIcon } from '@ionic/react';
-import React, { useState, useEffect } from 'react';
-import NoteInputs from '../components/NoteInputs';
+import { IonBackButton, IonButtons, IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import { checkmark } from 'ionicons/icons';
-import { expirationOptions, TEMPORARY, PERMANENT } from '../components/Note';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
-import { useParams, Redirect } from 'react-router';
+import { Redirect, useParams } from 'react-router';
+import { expirationOptions, PERMANENT, TEMPORARY } from '../components/Note';
+import NoteInputs from '../components/NoteInputs';
+import { displayMessage } from '../store/Message.actions';
 
 const NoteAddPage = ({ match: { url }, history }) => {
     const { noteId } = useParams() || TEMPORARY;
     const firebase = useFirebase();
     const notes = useSelector(state => state.firebase.data.notes);
     const userId = useSelector(state => state.firebase.auth.uid);
+    const dispatch = useDispatch();
 
     const [note, setNote] = useState({})
 
@@ -52,6 +54,7 @@ const NoteAddPage = ({ match: { url }, history }) => {
             newNote.title = 'Untitled Note';
         }
 
+        dispatch(displayMessage('new note added'));
         if (noteId === TEMPORARY || noteId === PERMANENT) {
             firebase.push('notes', newNote);
         } else {
