@@ -13,16 +13,22 @@ const pages = [
 ];
 
 const Menu = ({ location: { pathname } }) => {
+    const uid = localStorage.getItem('uid');
+
     useFirebaseConnect([
-        { path: 'notes', type: 'value', queryParams: [ 'orderByChild=updatedAt' ] }
+        { path: 'notes', type: 'value', queryParams: ['orderByChild=updatedAt'] },
+        { path: `settings/${ uid }/expirationOptions` }
     ]);
 
     const menuRef = useRef();
     const menuItemClick = (e) => {
         const locationTo = e.currentTarget.href.split('/');
         const pageNameTo = `/${ locationTo[locationTo.length-1] }`;
-        if (pathname !== pageNameTo ) menuRef.current.close();
+        if (pathname !== pageNameTo) menuRef.current.close();
+        else e.preventDefault();
     }
+
+    if (!uid) return null;
 
     return (
         <IonMenu ref={ menuRef } side="start" menu-id="main-menu" content-id="content" type="push">

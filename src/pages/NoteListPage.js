@@ -1,22 +1,22 @@
-import { IonMenuButton, IonMenuToggle, IonButtons, IonHeader, IonPage, IonTitle, IonToolbar, IonContent, IonFab, IonFabButton, IonFabList, IonIcon, IonButton } from '@ionic/react';
-import { add, timer, lock } from 'ionicons/icons';
+import { IonButton, IonButtons, IonContent, IonFab, IonFabButton, IonFabList, IonHeader, IonIcon, IonMenuButton, IonMenuToggle, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { add, lock, timer } from 'ionicons/icons';
 import React from 'react';
-import NoteList from '../components/NoteList';
-import { Link, Redirect } from 'react-router-dom';
-import { TEMPORARY, PERMANENT } from '../components/Note';
-import { useFirebase } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
+import { useFirebase } from 'react-redux-firebase';
+import { Link, Redirect } from 'react-router-dom';
+import { PERMANENT, TEMPORARY } from '../components/Note';
+import NoteList from '../components/NoteList';
 
 const NoteListPage = ({ history }) => {
   const firebase = useFirebase();
 
-  const { username, isLoaded, isEmpty } = useSelector(({ firebase }) => firebase.profile);
-  if (isLoaded && isEmpty) {
-    return <Redirect to='/login'/>
-  }
+  const { username } = useSelector(({ firebase }) => firebase.profile);
+  const uid = localStorage.getItem('uid');
+  if (!uid) return <Redirect to='/login' />
 
   const logout = () => {
     firebase.logout();
+    localStorage.removeItem('uid');
     history.push('/login');
   }
 
