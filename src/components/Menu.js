@@ -13,9 +13,11 @@ const pages = [
 ];
 
 const Menu = ({ location: { pathname } }) => {
+    const uid = localStorage.getItem('uid');
+
     useFirebaseConnect([
         { path: 'notes', type: 'value', queryParams: ['orderByChild=updatedAt'] },
-        { path: 'settings/common/expirationOptions' }
+        { path: `settings/${ uid }/expirationOptions` }
     ]);
 
     const menuRef = useRef();
@@ -26,7 +28,6 @@ const Menu = ({ location: { pathname } }) => {
         else e.preventDefault();
     }
 
-    const uid = localStorage.getItem('uid');
     if (!uid) return null;
 
     return (
