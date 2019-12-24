@@ -1,0 +1,417 @@
+{
+  "notes" : {
+    "-Lw8vc609zgK52u75mC7" : {
+      "content" : "512125",
+      "expired" : true,
+      "title" : "12412AAnother?",
+      "type" : "permanent",
+      "updatedAt" : 1576419661850,
+      "userId" : "XdRyt0N2rcW2xnkdvknIVwjsI9s1"
+    },
+    "-Lw8vnyRqXaD34j_W9eA" : {
+      "content" : "12351235",
+      "expired" : true,
+      "expiresAt" : 1576419682079,
+      "title" : "1235",
+      "type" : "temporary",
+      "updatedAt" : 1576419672079,
+      "userId" : "XdRyt0N2rcW2xnkdvknIVwjsI9s1"
+    },
+    "-Lw8vugSUI4FVYZQNxu0" : {
+      "expired" : true,
+      "expiresAt" : 1576419709596,
+      "title" : "23",
+      "type" : "temporary",
+      "updatedAt" : 1576419699596,
+      "userId" : "XdRyt0N2rcW2xnkdvknIVwjsI9s1"
+    },
+    "-Lw906I9q4nDn4LjJ_6b" : {
+      "expired" : false,
+      "title" : "heyy",
+      "type" : "permanent",
+      "updatedAt" : 1576421098324,
+      "userId" : "biUmjRSgKzefHmk0kNtknPsnDMC2"
+    },
+    "-Lw90CBWUahVlHFOf-s5" : {
+      "expired" : false,
+      "title" : "yiuiyu",
+      "type" : "permanent",
+      "updatedAt" : 1576421193581,
+      "userId" : "biUmjRSgKzefHmk0kNtknPsnDMC2"
+    },
+    "-Lw90PyOIEklITqgKN4f" : {
+      "expired" : false,
+      "title" : "124124",
+      "type" : "permanent",
+      "updatedAt" : 1576421193107,
+      "userId" : "biUmjRSgKzefHmk0kNtknPsnDMC2"
+    },
+    "-Lw90_1mYSfrHYp9d_SE" : {
+      "expired" : false,
+      "expiresAt" : 1576421193797,
+      "title" : "weqrtwert",
+      "type" : "permanent",
+      "updatedAt" : 1576421192598,
+      "userId" : "biUmjRSgKzefHmk0kNtknPsnDMC2"
+    },
+    "-Lw90tneyL4YHIYu82BQ" : {
+      "title" : "12351235",
+      "type" : "permanent",
+      "updatedAt" : 1576421268840,
+      "userId" : "aqWsUBxqs9P4VU90jm0vd1NITB22"
+    },
+    "-Lw99Ozj5iJtKATtP1qH" : {
+      "title" : "121213",
+      "type" : "permanent",
+      "updatedAt" : 1576423497806,
+      "userId" : "Dj5HpCbldChNViR4b48GQut9Avm1"
+    },
+    "-Lw99aosn-j6ujOZIOjz" : {
+      "content" : "jsjd",
+      "title" : "wjeh",
+      "type" : "permanent",
+      "updatedAt" : 1576423549425,
+      "userId" : "ECxwiXVs0HelsQ638cTzL14U7ej1"
+    },
+    "-Lw99cZ5xgKaUwnFOhjh" : {
+      "expired" : true,
+      "expiresAt" : 1576423566544,
+      "title" : "e",
+      "type" : "permanent",
+      "updatedAt" : 1576423572809,
+      "userId" : "ECxwiXVs0HelsQ638cTzL14U7ej1"
+    },
+    "-Lw99lGYy6H8BbVnyTVd" : {
+      "expired" : false,
+      "expiresAt" : 1576423603154,
+      "title" : "rrr",
+      "type" : "permanent",
+      "updatedAt" : 1576439937309,
+      "userId" : "Dj5HpCbldChNViR4b48GQut9Avm1"
+    },
+    "-Lw9BMGEcdfenS-Ny7UF" : {
+      "content" : "ssdsddss",
+      "expired" : false,
+      "expiresAt" : 1576425836758,
+      "title" : "Test Note",
+      "type" : "permanent",
+      "updatedAt" : 1576425926377,
+      "userId" : "IAQa6kvHn7fHX6of8zA8mlEf53z2"
+    },
+    "-Lw9CPDprzMSgEHS2GkA" : {
+      "content" : "hststsbsyssd",
+      "expired" : true,
+      "expiresAt" : 1576426016894,
+      "title" : "testet",
+      "type" : "temporary",
+      "updatedAt" : 1576426006894,
+      "userId" : "IAQa6kvHn7fHX6of8zA8mlEf53z2"
+    },
+    "-Lw9IUuWN63aIv82VOV5" : {
+      "content" : "sfassfaf",
+      "expirationOption" : 2,
+      "expired" : true,
+      "expiresAt" : 1576427378059,
+      "title" : "easd",
+      "type" : "temporary",
+      "updatedAt" : 1576427318060,
+      "userId" : "IAQa6kvHn7fHX6of8zA8mlEf53z2"
+    },
+    "-Lw9Ia2Vk-B_y3rVjxV4" : {
+      "content" : "asfaassa",
+      "expirationOption" : 3,
+      "expired" : false,
+      "expiresAt" : 1576426033247,
+      "title" : "awrffff",
+      "type" : "permanent",
+      "updatedAt" : 1576427301458,
+      "userId" : "IAQa6kvHn7fHX6of8zA8mlEf53z2"
+    },
+    "-Lw9oNWx8qpNAAgBb-VE" : {
+      "content" : "hhh",
+      "expired" : true,
+      "title" : "yhj",
+      "type" : "permanent",
+      "updatedAt" : 1576434500973,
+      "userId" : "3ndnPQPXbBRaGB17nRdQrUJkqHX2"
+    },
+    "-Lw9oOpfDttf5-qQerjT" : {
+      "content" : "kk",
+      "expired" : true,
+      "title" : "urbrh",
+      "type" : "permanent",
+      "updatedAt" : 1576434506331,
+      "userId" : "3ndnPQPXbBRaGB17nRdQrUJkqHX2"
+    },
+    "-Lw9oQSCsO7ryLxYqsVS" : {
+      "expired" : false,
+      "expiresAt" : 1576434522957,
+      "title" : "idjd",
+      "type" : "permanent",
+      "updatedAt" : 1577191302372,
+      "userId" : "3ndnPQPXbBRaGB17nRdQrUJkqHX2"
+    },
+    "-Lw9pu6AKRE-vwOxZDWS" : {
+      "content" : "4124124",
+      "expired" : true,
+      "title" : "12",
+      "type" : "permanent",
+      "updatedAt" : 1577191302272,
+      "userId" : "3ndnPQPXbBRaGB17nRdQrUJkqHX2"
+    },
+    "-Lw9q0JXz55agNUq49Ne" : {
+      "expired" : true,
+      "expiresAt" : 1576435736831,
+      "title" : "1",
+      "type" : "permanent",
+      "updatedAt" : 1577191301838,
+      "userId" : "3ndnPQPXbBRaGB17nRdQrUJkqHX2"
+    },
+    "-Lw9qTjNx5iacvHfgDlw" : {
+      "expired" : true,
+      "expiresAt" : 1576435756675,
+      "title" : "1",
+      "type" : "permanent",
+      "updatedAt" : 1577191301521,
+      "userId" : "3ndnPQPXbBRaGB17nRdQrUJkqHX2"
+    },
+    "-Lw9uZ6hdjh7u9qWvniv" : {
+      "content" : "124",
+      "expired" : true,
+      "expiresAt" : 1576444065700,
+      "title" : "124",
+      "type" : "permanent",
+      "updatedAt" : 1577191301110,
+      "userId" : "3ndnPQPXbBRaGB17nRdQrUJkqHX2"
+    },
+    "-Lw9uyUT5tU1PqEk1JAD" : {
+      "content" : "124124124",
+      "expirationOption" : 2,
+      "expired" : true,
+      "expiresAt" : 1576441745782,
+      "title" : "124",
+      "type" : "permanent",
+      "updatedAt" : 1576444290297,
+      "userId" : "3ndnPQPXbBRaGB17nRdQrUJkqHX2"
+    },
+    "-Lw9weEkjmC5kHccjToI" : {
+      "expirationOption" : 3,
+      "expired" : true,
+      "expiresAt" : 1576444205590,
+      "title" : "121",
+      "type" : "permanent",
+      "updatedAt" : 1576444290714,
+      "userId" : "3ndnPQPXbBRaGB17nRdQrUJkqHX2"
+    },
+    "-Lw9x_er5oAdb8M0Ahy4" : {
+      "expired" : true,
+      "expiresAt" : 1576444304596,
+      "title" : "124124",
+      "type" : "permanent",
+      "updatedAt" : 1577127147015,
+      "userId" : "3ndnPQPXbBRaGB17nRdQrUJkqHX2"
+    },
+    "-LwA7uQB_KHEfxPgwt5Y" : {
+      "content" : "1235",
+      "expirationOption" : 3,
+      "expired" : true,
+      "expiresAt" : 1576440331245,
+      "title" : "emma@g.co1235235m1235",
+      "type" : "temporary",
+      "updatedAt" : 1576440211245,
+      "userId" : "Dj5HpCbldChNViR4b48GQut9Avm1"
+    },
+    "-LwA962A-sWx6srmBSrP" : {
+      "content" : "124124124",
+      "expired" : true,
+      "expiresAt" : 1576440226470,
+      "title" : "124",
+      "type" : "temporary",
+      "updatedAt" : 1576440216470,
+      "userId" : "Dj5HpCbldChNViR4b48GQut9Avm1"
+    },
+    "-LwANlxH-tQXBP39yTNS" : {
+      "expired" : true,
+      "title" : "n",
+      "type" : "permanent",
+      "updatedAt" : 1577127146503,
+      "userId" : "3ndnPQPXbBRaGB17nRdQrUJkqHX2"
+    },
+    "-LwCthlJqgpvxnMCSWB2" : {
+      "title" : "Test",
+      "type" : "permanent",
+      "updatedAt" : 1576486230695,
+      "userId" : "IAQa6kvHn7fHX6of8zA8mlEf53z2"
+    },
+    "-LwD1XDSdednWDLd75M4" : {
+      "content" : "demo",
+      "expired" : true,
+      "title" : "demo",
+      "type" : "permanent",
+      "updatedAt" : 1576488594439,
+      "userId" : "AtFMpBN5iiZI95gKqnEc9hof8F73"
+    },
+    "-LwDB3y57xsl0FLlCu8j" : {
+      "content" : "hdhsgs",
+      "expirationOption" : 3,
+      "expired" : true,
+      "expiresAt" : 1576491165276,
+      "title" : "Untitled Note",
+      "type" : "temporary",
+      "updatedAt" : 1576491045276,
+      "userId" : "HEfE0cXkarVrNeaaN4U13iairz93"
+    },
+    "-LwKtilbzV4kYBWacZiU" : {
+      "content" : "test",
+      "title" : "test",
+      "type" : "permanent",
+      "updatedAt" : 1576620452506,
+      "userId" : "IAQa6kvHn7fHX6of8zA8mlEf53z2"
+    },
+    "-LwON7t3gyazPd4JIqOl" : {
+      "content" : "REMOVE THIS NOTE!!!",
+      "expirationOption" : 2,
+      "expired" : true,
+      "expiresAt" : 1576678868300,
+      "title" : "REMOVE THIS",
+      "type" : "temporary",
+      "updatedAt" : 1576678808300,
+      "userId" : "13PnBQeqYxbzFY3HyqI4YAEdbZn2"
+    },
+    "-LwONULOTEpiJnpfONuv" : {
+      "content" : "don't forget",
+      "title" : "Enjoy the holidays",
+      "type" : "permanent",
+      "updatedAt" : 1576678848623,
+      "userId" : "13PnBQeqYxbzFY3HyqI4YAEdbZn2"
+    },
+    "-LwTsz019-WQoAwVJ1fb" : {
+      "content" : "- klein steel kookpannetje\n- rubbertjes voor oortjes\n- herbruikbaar waterflesje (geen dopper)\n- (goedkope) happy socks\n- iets voor ruurd is ook altijd prima\n- IKEA ivrig wijnglazen\n- Speciaalbierglazen van lekkere bieren",
+      "title" : "verlanglijstje",
+      "type" : "permanent",
+      "updatedAt" : 1576771251254,
+      "userId" : "IAQa6kvHn7fHX6of8zA8mlEf53z2"
+    },
+    "-LwmUAk5inIx552MfgKX" : {
+      "content" : "blababll",
+      "expirationOption" : 2,
+      "expiresAt" : 1577100093901,
+      "title" : "Blalabal",
+      "type" : "permanent",
+      "updatedAt" : 1577100073772,
+      "userId" : "13PnBQeqYxbzFY3HyqI4YAEdbZn2"
+    },
+    "-Lws-6bvK9bz8YnEAgIe" : {
+      "expired" : false,
+      "expiresAt" : 1577192562951,
+      "title" : "124",
+      "type" : "permanent",
+      "updatedAt" : 1577192580188,
+      "userId" : "3ndnPQPXbBRaGB17nRdQrUJkqHX2"
+    },
+    "-Lws-HZfHr4HJpPzrGFI" : {
+      "content" : "121212",
+      "title" : "Untitled Note",
+      "type" : "permanent",
+      "updatedAt" : 1577192573668,
+      "userId" : "3ndnPQPXbBRaGB17nRdQrUJkqHX2"
+    },
+    "user1" : {
+      "expired" : false,
+      "note" : {
+        "content" : "content",
+        "title" : "something"
+      },
+      "type" : "permanent",
+      "updatedAt" : 1576865906719
+    }
+  },
+  "settings" : {
+    "13PnBQeqYxbzFY3HyqI4YAEdbZn2" : [ null, 1 ],
+    "common" : {
+      "expirationOptions" : [ {
+        "title" : "10 seconds",
+        "val" : 10000
+      }, {
+        "title" : "20 seconds",
+        "val" : 20000
+      }, {
+        "title" : "1 minute",
+        "val" : 60000
+      }, {
+        "title" : "2 minutes",
+        "val" : 120000
+      } ]
+    }
+  },
+  "users" : {
+    "13PnBQeqYxbzFY3HyqI4YAEdbZn2" : {
+      "email" : "ethan@ethan.com",
+      "username" : "ethan"
+    },
+    "1cGgrB5nN0VctbTjq5AYfMmiTUP2" : {
+      "email" : "demo3@gmail.com",
+      "username" : "demo3"
+    },
+    "3ndnPQPXbBRaGB17nRdQrUJkqHX2" : {
+      "email" : "dm@g.com",
+      "username" : "dm"
+    },
+    "AtFMpBN5iiZI95gKqnEc9hof8F73" : {
+      "email" : "demo2@demo.com",
+      "username" : "demo2"
+    },
+    "Dj5HpCbldChNViR4b48GQut9Avm1" : {
+      "email" : "emma@g.com",
+      "username" : "emma"
+    },
+    "ECxwiXVs0HelsQ638cTzL14U7ej1" : {
+      "email" : "ddd@g.com",
+      "username" : "ddd"
+    },
+    "HEfE0cXkarVrNeaaN4U13iairz93" : {
+      "email" : "z@a.nl",
+      "username" : "c"
+    },
+    "IAQa6kvHn7fHX6of8zA8mlEf53z2" : {
+      "email" : "nikdijkema@hotmail.com",
+      "username" : "nikd"
+    },
+    "XVOum8ErbvPKKnY0SENtdKe6Tls1" : {
+      "email" : "merlijnfrikken@gmail.com",
+      "username" : "Merlin"
+    },
+    "XdRyt0N2rcW2xnkdvknIVwjsI9s1" : {
+      "email" : "me@g.com",
+      "username" : "username"
+    },
+    "aqWsUBxqs9P4VU90jm0vd1NITB22" : {
+      "email" : "d.voronovs@scandiweb.com",
+      "username" : "dmitrijs"
+    },
+    "biUmjRSgKzefHmk0kNtknPsnDMC2" : {
+      "email" : "124124@g.com",
+      "username" : "What is that24124124"
+    },
+    "d8XDQNfr94YnBWlZmKCddzJuo5H2" : {
+      "email" : "d@g.com",
+      "username" : "dddd"
+    },
+    "ex1RP4u1ptZdWst7CUl3oun5OP92" : {
+      "email" : "user@user.com",
+      "username" : "user"
+    },
+    "gbKGOtDihyNwNY26mBzTuB62S9C2" : {
+      "email" : "demotest@demotest.nl",
+      "username" : "demotest"
+    },
+    "oALoBs5BPtSvXvCE9CtIrkbtK9n2" : {
+      "email" : "edvards.janis.recickis@gmail.com",
+      "username" : "edvards"
+    },
+    "tpOfskAmMfVD2VGdHOdfo2TsETo1" : {
+      "email" : "demo@demo.com",
+      "username" : "demo"
+    }
+  }
+}
