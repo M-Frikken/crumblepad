@@ -1,16 +1,13 @@
 import { IonContent, IonFab, IonFabButton, IonFabList, IonIcon, IonPage } from '@ionic/react';
 import { add, lock, timer } from 'ionicons/icons';
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import NoteListArchive from '../components/NoteListArchive';
 import PageHeader from '../components/PageHeader';
 
 const ArchivePage = () => {
-  const { isLoaded, isEmpty } = useSelector(({ firebase }) => firebase.profile);
-  if (isLoaded && isEmpty) {
-    return <Redirect to='/login'/>
-  }
+  const uid = localStorage.getItem('uid');
+  if (!uid) return <Redirect to='/login' />
 
   function renderButton() {
     return (

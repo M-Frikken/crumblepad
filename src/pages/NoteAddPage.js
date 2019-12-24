@@ -9,6 +9,7 @@ import { expirationOptions, PERMANENT, TEMPORARY } from '../components/Note';
 import NoteInputs from '../components/NoteInputs';
 import { displayMessage } from '../store/Message.actions';
 
+
 const NoteAddPage = ({ match: { url }, history }) => {
     const { noteId } = useParams() || TEMPORARY;
     const firebase = useFirebase();
@@ -23,10 +24,8 @@ const NoteAddPage = ({ match: { url }, history }) => {
         else setNote((notes && notes[noteId]) || {});
     }, [url])
 
-    const { isLoaded, isEmpty } = useSelector(({ firebase }) => firebase.profile);
-    if (isLoaded && isEmpty) {
-      return <Redirect to='/login'/>
-    }
+    const uid = localStorage.getItem('uid');
+    if (!uid) return <Redirect to='/login' />
 
     const cancel = () => {
         history.push('/home');
