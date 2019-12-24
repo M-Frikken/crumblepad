@@ -2,17 +2,20 @@
 import { IonBackButton, IonButtons, IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import { checkmark } from 'ionicons/icons';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
 import { Redirect, useParams } from 'react-router';
 import { expirationOptions, PERMANENT, TEMPORARY } from '../components/Note';
 import NoteInputs from '../components/NoteInputs';
+import { displayMessage } from '../store/Message.actions';
+
 
 const NoteAddPage = ({ match: { url }, history }) => {
     const { noteId } = useParams() || TEMPORARY;
     const firebase = useFirebase();
     const notes = useSelector(state => state.firebase.data.notes);
     const userId = useSelector(state => state.firebase.auth.uid);
+    const dispatch = useDispatch();
 
     const [note, setNote] = useState({})
 
@@ -50,6 +53,7 @@ const NoteAddPage = ({ match: { url }, history }) => {
             newNote.title = 'Untitled Note';
         }
 
+        dispatch(displayMessage('new note added'));
         if (noteId === TEMPORARY || noteId === PERMANENT) {
             firebase.push('notes', newNote);
         } else {
