@@ -20,6 +20,8 @@ const ExpirationTimePicker = ({ isPickerOpen, setIsPickerOpen, updateExpiratonOp
         const timeString = getTimeStringFromNumbers(
             days.value, hours.value, minutes.value, seconds.value
         );
+        if (!timeString.length) return;
+
         const timeValue = getMsValueFromNumber(
             days.value, hours.value, minutes.value, seconds.value
         )
