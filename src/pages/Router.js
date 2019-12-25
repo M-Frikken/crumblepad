@@ -11,7 +11,7 @@ import SignInPage from './SignInPage';
 import { hideMessage } from '../store/Message.actions';
 
 const Router = () => {
-    const { text, isActive } = useSelector(({ message }) => message);
+    const { message, isActive } = useSelector(({ message }) => message);
     const dispatch = useDispatch();
 
     return (
@@ -19,7 +19,7 @@ const Router = () => {
         <IonToast
             isOpen={ isActive }
             onDidDismiss={ () => dispatch(hideMessage()) }
-            message={ text }
+            message={ message }
             duration={ 600 }
             position="top"
         />

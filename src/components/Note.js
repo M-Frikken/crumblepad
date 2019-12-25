@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import '../styles/Note.css';
 import { timer, lock, pulse, close } from 'ionicons/icons';
 import { timeLeft } from '../utils/time';
-import { SECONDS_IN_MS, MINUTE_IN_MS } from '../utils/time';
+import { SECOND_IN_MS, MINUTE_IN_MS } from '../utils/time';
 import { useFirebase } from 'react-redux-firebase';
 
 export const TEMPORARY = 'temporary';
@@ -14,11 +14,11 @@ export const PERMANENT = 'permanent';
 export const expirationOptions = {
   0: {
     title: '10 seconds',
-    val: SECONDS_IN_MS * 10,
+    val: SECOND_IN_MS * 10,
   },
   1: {
     title: '20 seconds',
-    val: SECONDS_IN_MS * 20,
+    val: SECOND_IN_MS * 20,
   },
   2: {
     title: '1 minute',
