@@ -1,4 +1,4 @@
-import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIcon, IonInput, IonItem, IonLabel, IonSelect, IonSelectOption, IonTextarea, IonToggle, IonRow, IonCol } from '@ionic/react';
+import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonIcon, IonInput, IonLabel, IonRow, IonSelect, IonSelectOption, IonTextarea, IonToggle } from '@ionic/react';
 import { lock, timer } from 'ionicons/icons';
 import React, { useCallback, useEffect } from 'react';
 import { PERMANENT, TEMPORARY } from './Note';

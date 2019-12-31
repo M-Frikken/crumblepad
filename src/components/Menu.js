@@ -1,10 +1,12 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { IonMenu, IonList, IonItem, IonHeader, IonToolbar, IonTitle, IonContent, IonIcon } from '@ionic/react';
 import { listBox, archive, settings } from 'ionicons/icons';
 import { withRouter } from "react-router";
 import '../styles/Menu.css';
-import { useFirebaseConnect } from 'react-redux-firebase';
+import { useSelector } from 'react-redux';
+import { expirationOptions as defaultExpirationOptions } from '../components/Note';
+import { useFirebaseConnect, useFirebase } from 'react-redux-firebase';
 
 const pages = [
     { title: 'Home', path: '/home', icon: listBox },
@@ -14,11 +16,24 @@ const pages = [
 
 const Menu = ({ location: { pathname } }) => {
     const uid = localStorage.getItem('uid');
+    const firebase = useFirebase();
 
     useFirebaseConnect([
         { path: `notes/${ uid }`, queryParams: ['orderByChild=updatedAt'] },
         { path: `settings/${ uid }/expirationOptions` }
     ]);
+
+    const settings = useSelector(({ firebase }) => firebase.data.settings) || {};
+    const { expirationOptions = {} } = settings[uid] || {};
+    const isRequested = useSelector(({ firebase }) => firebase.requested[`settings/${uid}/expirationOptions`]);
+
+    useEffect(() => {
+        if (isRequested && (expirationOptions && !Object.keys(expirationOptions).length)) {
+            console.log('gonna set somethings stupid', expirationOptions, isRequested);
+
+            firebase.set(`settings/${uid}/expirationOptions`, defaultExpirationOptions);
+        }
+    }, [expirationOptions])
 
     const menuRef = useRef();
     const menuItemClick = (e) => {
@@ -40,12 +55,12 @@ const Menu = ({ location: { pathname } }) => {
             <IonContent>
                 <IonList>
                     { Object.values(pages).map(({ title, path, icon }) => (
-                            <Link className="link" onClick={ menuItemClick } key={ title } to={ path }>
-                                <IonItem color={ path === pathname ? "orange" : "" }>
-                                    <IonIcon icon={ icon } />
-                                    <IonTitle>{ title }</IonTitle>
-                                </IonItem>
-                            </Link>
+                        <Link className="link" onClick={ menuItemClick } key={ title } to={ path }>
+                            <IonItem color={ path === pathname ? "orange" : "" }>
+                                <IonIcon icon={ icon } />
+                                <IonTitle>{ title }</IonTitle>
+                            </IonItem>
+                        </Link>
                     ))}
                 </IonList>
             </IonContent>

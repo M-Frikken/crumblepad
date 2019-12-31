@@ -1,29 +1,28 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { IonCard, IonCardContent, IonCardHeader, IonContent, IonItem, IonLabel, IonPage, IonReorder, IonReorderGroup, IonInput, IonDatetime, IonButton, IonPicker } from '@ionic/react';
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import { IonButton, IonCard, IonCardContent, IonCardHeader, IonContent, IonItem, IonLabel, IonPage, IonReorder, IonReorderGroup } from '@ionic/react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
 import { withRouter } from 'react-router';
 import { Redirect } from 'react-router-dom';
-import Loader from '../components/Loader';
-import { expirationOptions as defaultExpirationOptions } from '../components/Note';
-import PageHeader from '../components/PageHeader';
 import ExpirationTimePicker from '../components/ExpirationTimePicker';
+import Loader from '../components/Loader';
+import PageHeader from '../components/PageHeader';
 
-const SettingsPage = ({ location: { pathname }, match: { path } }) => {
+const SettingsPage = ({ location: { pathname = '' }, match: { path = '' } }) => {
   const firebase = useFirebase();
   const uid = localStorage.getItem('uid');
   const settings = useSelector(({ firebase }) => firebase.data.settings) || {};
-  const isLoading = useSelector(({ firebase }) => firebase.requesting[`settings/${uid}/expirationOptions`]);
+  const isRequested = useSelector(({ firebase }) => firebase.requesting[`settings/${uid}/expirationOptions`]) || false;
 
-  const { expirationOptions: userExpirationOptions } = settings[uid] || {};
-  const expirationOptions = userExpirationOptions || defaultExpirationOptions;
-  const [expOptionOrder, setExpOptionOrder] = useState(Object.keys(expirationOptions));
+  const { expirationOptions = {} } = settings[uid] || {};
+  const [expOpts, setExpOpts] = useState(expirationOptions);
+  const [expOptionOrder, setExpOptionOrder] = useState(Object.keys(expirationOptions) || []);
 
   const doReorder = event => {
     const from = event.detail.from;
     // fix bug with more places then elements
-    const to = event.detail.to === Object.keys(expirationOptions).length ? event.detail.to - 1 : event.detail.to;
+    const to = event.detail.to === Object.keys(expOpts).length ? event.detail.to - 1 : event.detail.to;
     if (from === to) return event.detail.complete();
 
     const newOrder = expOptionOrder;
@@ -34,26 +33,37 @@ const SettingsPage = ({ location: { pathname }, match: { path } }) => {
     event.detail.complete();
   }
 
+  useEffect(() => {
+    if (!isRequested) console.log(expirationOptions);
+    // setExpOpts(expirationOptions);
+  }, [isRequested])
+
   const [isOnSettingsPage, setIsOnSettingsPage] = useState(true);
 
   useEffect(() => {
-    // in order to render correctly expiration options after settings got chaged
+    // in order to render correctly expiration options after settings got changed
     if (pathname === path) {
       setIsOnSettingsPage(true);
-      setExpOptionOrder(Object.keys(expirationOptions));
+      setExpOptionOrder(Object.keys(expOpts));
     }
-    else setIsOnSettingsPage(false);
 
     return () => {
       if (pathname === path) {
-        console.log('before change', expOptionOrder, expirationOptions);
+        console.log('before change', expOptionOrder, expOpts);
         const convertedOptions = expOptionOrder.reduce((acc, pos, i) => (
-          { ...acc, [i]: expirationOptions[pos] }
+          { ...acc, [i]: expOpts[pos] }
         ), {});
+        console.log('after changes', convertedOptions, expOpts);
         firebase.set(`settings/${uid}/expirationOptions`, convertedOptions);
+        setIsOnSettingsPage(false);
       }
     }
-  }, [pathname, path]);
+  }, [expOpts, pathname, path]);
+
+  useEffect(() => {
+    setExpOptionOrder(Object.keys(expOpts));
+    setIsOnSettingsPage(false);
+  }, [expOpts]);
 
   const [isPickerOpen, setIsPickerOpen] = useState(false);
 
@@ -63,6 +73,7 @@ const SettingsPage = ({ location: { pathname }, match: { path } }) => {
       ...expirationOptions,
       [expOptCount]: customExpirationTime
     }
+    setExpOpts(allExpirationOptions);
     setExpOptionOrder([...expOptionOrder, `${expOptCount}`]);
     firebase.set(`settings/${uid}/expirationOptions`, allExpirationOptions);
   };
@@ -85,7 +96,11 @@ const SettingsPage = ({ location: { pathname }, match: { path } }) => {
   }
 
   const renderExpirationOptionSettings = () => {
-    if (!isOnSettingsPage) return null;
+    // trick to rerender options
+    if (!isOnSettingsPage) {
+      setIsOnSettingsPage(true);
+      return null;
+    }
 
     return (
       <IonCard>
@@ -103,9 +118,9 @@ const SettingsPage = ({ location: { pathname }, match: { path } }) => {
   };
 
   const renderExpirationOptions = () => {
-    if (isLoading) return <Loader />;
+    if (!isRequested) return <Loader />;
 
-    return Object.entries(expirationOptions).map(([id, { title }]) => (
+    return Object.entries(expOpts).map(([id, { title }]) => (
       <IonItem key={id}>
         <IonLabel>{`${id} | ${title}`}</IonLabel>
         {/* <IonReorder slot="end" /> */}
