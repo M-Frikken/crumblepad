@@ -6,6 +6,7 @@ import { useFirebase } from 'react-redux-firebase';
 import { Link, Redirect } from 'react-router-dom';
 import { PERMANENT, TEMPORARY } from '../components/Note';
 import NoteList from '../components/NoteList';
+import UpgradeToPremiumButton from '../components/UpgradeToPremiumButton';
 
 const NoteListPage = ({ history }) => {
   const firebase = useFirebase();
@@ -48,6 +49,7 @@ const NoteListPage = ({ history }) => {
       </IonHeader>
       <IonContent>
         <NoteList />
+        <UpgradeToPremiumButton show={ false } />
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
           <IonFabButton color="orange">
             <IonIcon icon={ add } />
