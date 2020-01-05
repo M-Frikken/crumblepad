@@ -13,8 +13,8 @@ const SettingsPage = ({ location: { pathname }, match: { path } }) => {
   const firebase = useFirebase();
   const uid = localStorage.getItem('uid');
   const settings = useSelector(({ firebase }) => firebase.data.settings) || {};
-  const isLoading = useSelector(({ firebase }) => firebase.requesting['settings/3ndnPQPXbBRaGB17nRdQrUJkqHX2/expirationOptions']);
-  
+  const isLoading = useSelector(({ firebase }) => firebase.requesting[`settings/${uid}`]);
+
   const { expirationOptions: userExpirationOptions } = settings[uid] || {};
   const expirationOptions = userExpirationOptions || defaultExpirationOptions;
   const [expOptionOrder, setExpOptionOrder] = useState(Object.keys(expirationOptions));
@@ -24,7 +24,7 @@ const SettingsPage = ({ location: { pathname }, match: { path } }) => {
     // fix bug with more places then elements
     const to = event.detail.to === Object.keys(expirationOptions).length ? event.detail.to - 1 : event.detail.to;
     if (from === to) return event.detail.complete();
-    
+
     const newOrder = expOptionOrder;
     const moving = expOptionOrder.splice(from, 1);
     newOrder.splice(to, 0, ...moving);
@@ -52,7 +52,7 @@ const SettingsPage = ({ location: { pathname }, match: { path } }) => {
 
   const renderExpirationOptionSettings = () => {
     if (!isOnSettingsPage) return null;
-   
+
     return (
       <IonReorderGroup disabled={false} onIonItemReorder={doReorder}>
         {renderExpirationOptions()}

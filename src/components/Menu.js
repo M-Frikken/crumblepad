@@ -17,7 +17,7 @@ const Menu = ({ location: { pathname } }) => {
 
     useFirebaseConnect([
         { path: `notes/${ uid }`, queryParams: ['orderByChild=updatedAt'] },
-        { path: `settings/${ uid }/expirationOptions` }
+        { path: `settings/${ uid }` }
     ]);
 
     const menuRef = useRef();
