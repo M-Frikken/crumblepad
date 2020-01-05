@@ -34,6 +34,7 @@ Let's get ready to crumble!
 
 ## to deploy
 
-1. `npm run build`
-2. `firebase login`
-3. `firebase deploy`
+> In case you are not logged into firebase run
+`firebase login`
+
+`npm run deploy`

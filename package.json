@@ -25,6 +25,7 @@
     "typescript": "3.6.3"
   },
   "scripts": {
+    "deploy": "npm run build && firebase deploy",
     "devapp": "ionic serve --devapp",
     "start": "react-scripts start --env:.env",
     "build": "react-scripts build --env:.env",
