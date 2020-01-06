@@ -4,6 +4,7 @@ import { IonButton, IonAlert } from '@ionic/react';
 import '../styles/UpgradeToPremiumButton.css';
 import { useFirebase } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
+import Loader from './Loader';
 
 const UpgradeToPremiumButton = () => {
   const firebase = useFirebase();
@@ -31,7 +32,9 @@ const UpgradeToPremiumButton = () => {
     }
   }, [isLoading])
 
-  if (isLoading || !isShowButton) return null;
+  if (isLoading) return <Loader />
+
+  if (!isShowButton) return null;
 
   return (
     <>
