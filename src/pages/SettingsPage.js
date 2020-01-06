@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
 import { withRouter } from 'react-router';
 import { Redirect } from 'react-router-dom';
+import { expirationOptions as defaultExpirationOptions } from '../components/Note';
 import ExpirationTimePicker from '../components/ExpirationTimePicker';
 import Loader from '../components/Loader';
 import PageHeader from '../components/PageHeader';
@@ -13,11 +14,13 @@ const SettingsPage = ({ location: { pathname = '' }, match: { path = '' } }) => 
   const firebase = useFirebase();
   const uid = localStorage.getItem('uid');
   const settings = useSelector(({ firebase }) => firebase.data.settings) || {};
-  const isRequested = useSelector(({ firebase }) => firebase.requesting[`settings/${uid}/expirationOptions`]) || false;
+  const isRequested = useSelector(({ firebase }) => firebase.requesting[`settings/${uid}`]);
 
-  const { expirationOptions = {} } = settings[uid] || {};
-  const [expOpts, setExpOpts] = useState(expirationOptions);
+  const { expirationOptions: userExpirationOptions } = settings[uid] || {};
+  const expirationOptions = userExpirationOptions || defaultExpirationOptions;
   const [expOptionOrder, setExpOptionOrder] = useState(Object.keys(expirationOptions) || []);
+
+  const [expOpts, setExpOpts] = useState(expirationOptions);
 
   const doReorder = event => {
     const from = event.detail.from;
@@ -96,11 +99,7 @@ const SettingsPage = ({ location: { pathname = '' }, match: { path = '' } }) => 
   }
 
   const renderExpirationOptionSettings = () => {
-    // trick to rerender options
-    if (!isOnSettingsPage) {
-      setIsOnSettingsPage(true);
-      return null;
-    }
+    if (!isOnSettingsPage) return null;
 
     return (
       <IonCard>
