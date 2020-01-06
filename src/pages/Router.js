@@ -7,6 +7,7 @@ import LoginPage from './LoginPage';
 import NoteAddPage from './NoteAddPage';
 import NoteListPage from './NoteListPage';
 import SettingsPage from './SettingsPage';
+import PremiumUsersPage from './PremiumUsersPage';
 import SignInPage from './SignInPage';
 import { hideMessage } from '../store/Message.actions';
 
@@ -25,6 +26,7 @@ const Router = () => {
         />
         <IonRouterOutlet id="content">
             <Route path="/note/:noteId" component={ NoteAddPage } />
+            <Route path="/premium/users" component={ PremiumUsersPage } />
             <Route path="/home" component={ NoteListPage } exact={ true } />
             <Route path="/signin" component={ SignInPage } exact={ true } />
             <Route path="/login" component={ LoginPage } exact={ true } />
