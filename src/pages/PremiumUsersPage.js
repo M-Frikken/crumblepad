@@ -18,7 +18,6 @@ const PremiumUsersPage = ({ history }) => {
     );
 
     useEffect(() => {
-        console.log(settings);
         if (Object.keys(settings).length > 1) {
             setIsLoading(false);
         }
