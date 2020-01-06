@@ -25,11 +25,11 @@ const Menu = ({ location: { pathname } }) => {
 
     const settings = useSelector(({ firebase }) => firebase.data.settings) || {};
     const { expirationOptions = {} } = settings[uid] || {};
-    const isRequested = useSelector(({ firebase }) => firebase.requested[`settings/${uid}/expirationOptions`]);
+    const isRequesting = useSelector(({ firebase }) => firebase.requested[`settings/${uid}/expirationOptions`]);
 
     useEffect(() => {
-        if (isRequested && (expirationOptions && !Object.keys(expirationOptions).length)) {
-            console.log('gonna set somethings stupid', expirationOptions, isRequested);
+        if (isRequesting && (expirationOptions && !Object.keys(expirationOptions).length)) {
+            console.log('gonna set somethings stupid', expirationOptions, isRequesting);
 
             firebase.set(`settings/${uid}/expirationOptions`, defaultExpirationOptions);
         }

@@ -14,9 +14,9 @@ const SettingsPage = ({ location: { pathname = '' }, match: { path = '' } }) => 
   const firebase = useFirebase();
   const uid = localStorage.getItem('uid');
   const settings = useSelector(({ firebase }) => firebase.data.settings) || {};
-  const isRequested = useSelector(({ firebase }) => firebase.requesting[`settings/${uid}`]);
+  const isRequesting = useSelector(({ firebase }) => firebase.requesting[`settings/${uid}`]);
 
-  const { expirationOptions: userExpirationOptions } = settings[uid] || {};
+  const { [uid]: userExpirationOptions } = settings || {};
   const expirationOptions = userExpirationOptions || defaultExpirationOptions;
   const [expOptionOrder, setExpOptionOrder] = useState(Object.keys(expirationOptions) || []);
 
@@ -35,11 +35,6 @@ const SettingsPage = ({ location: { pathname = '' }, match: { path = '' } }) => 
 
     event.detail.complete();
   }
-
-  useEffect(() => {
-    if (!isRequested) console.log(expirationOptions);
-    // setExpOpts(expirationOptions);
-  }, [isRequested])
 
   const [isOnSettingsPage, setIsOnSettingsPage] = useState(true);
 
@@ -99,6 +94,7 @@ const SettingsPage = ({ location: { pathname = '' }, match: { path = '' } }) => 
   }
 
   const renderExpirationOptionSettings = () => {
+    console.log(isOnSettingsPage)
     if (!isOnSettingsPage) return null;
 
     return (
@@ -117,7 +113,7 @@ const SettingsPage = ({ location: { pathname = '' }, match: { path = '' } }) => 
   };
 
   const renderExpirationOptions = () => {
-    if (!isRequested) return <Loader />;
+    if (!isRequesting) return <Loader />;
 
     return Object.entries(expOpts).map(([id, { title }]) => (
       <IonItem key={id}>
