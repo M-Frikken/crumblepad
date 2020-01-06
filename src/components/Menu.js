@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { IonMenu, IonList, IonItem, IonHeader, IonToolbar, IonTitle, IonContent, IonIcon } from '@ionic/react';
-import { listBox, archive, settings } from 'ionicons/icons';
+import { listBox, archive, settings, information } from 'ionicons/icons';
 import { withRouter } from "react-router";
 import '../styles/Menu.css';
 import { useSelector } from 'react-redux';
@@ -49,7 +49,12 @@ const Menu = ({ location: { pathname } }) => {
         <IonMenu ref={ menuRef } side="start" menu-id="main-menu" content-id="content" type="push">
             <IonHeader>
                 <IonToolbar color="light">
-                    <IonTitle>CrumblePad</IonTitle>
+                    <IonTitle>
+                        CrumblePad
+                        <Link to="premium/users">
+                            <IonIcon icon={information} />
+                        </Link>
+                    </IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent>

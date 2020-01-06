@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import PageHeader from '../components/PageHeader';
 import { useFirebaseConnect } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
+import Loader from '../components/Loader';
 
 const PremiumUsersPage = ({ history }) => {
     const [isLoading, setIsLoading] = useState(true)
@@ -24,7 +25,7 @@ const PremiumUsersPage = ({ history }) => {
     }, [settings])
 
     const renderPremiumUsers = () => {
-        if (isLoading) return 'Loading';
+        if (isLoading) return <Loader />;
 
         if (!premiumUsers.length) return 'No premium users';
 
