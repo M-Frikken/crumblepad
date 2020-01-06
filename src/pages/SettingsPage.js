@@ -60,7 +60,7 @@ const SettingsPage = ({ location: { pathname = '' }, match: { path = '' } }) => 
 
   useEffect(() => {
     setExpOptionOrder(Object.keys(expOpts));
-    setIsOnSettingsPage(false);
+    // setIsOnSettingsPage(false);
   }, [expOpts]);
 
   const [isPickerOpen, setIsPickerOpen] = useState(false);
@@ -93,8 +93,19 @@ const SettingsPage = ({ location: { pathname = '' }, match: { path = '' } }) => 
     );
   }
 
+  const renderExpirationOptions = () => {
+    if (isRequesting) return <Loader />;
+
+    return Object.entries(expOpts).map(([id, { title }]) => (
+      <IonItem key={id}>
+        <IonLabel>{`${id} | ${title}`}</IonLabel>
+        {/* <IonReorder slot="end" /> */}
+        <IonReorder slot="start" />
+      </IonItem>
+    ));
+  };
+
   const renderExpirationOptionSettings = () => {
-    console.log(isOnSettingsPage)
     if (!isOnSettingsPage) return null;
 
     return (
@@ -110,18 +121,6 @@ const SettingsPage = ({ location: { pathname = '' }, match: { path = '' } }) => 
         </IonCardContent>
       </IonCard>
     );
-  };
-
-  const renderExpirationOptions = () => {
-    if (!isRequesting) return <Loader />;
-
-    return Object.entries(expOpts).map(([id, { title }]) => (
-      <IonItem key={id}>
-        <IonLabel>{`${id} | ${title}`}</IonLabel>
-        {/* <IonReorder slot="end" /> */}
-        <IonReorder slot="start" />
-      </IonItem>
-    ));
   };
 
   if (!uid) return <Redirect to='/login' />
