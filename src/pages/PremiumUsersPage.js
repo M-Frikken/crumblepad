@@ -10,9 +10,9 @@ const PremiumUsersPage = ({ history }) => {
     const [isLoading, setIsLoading] = useState(true)
     useFirebaseConnect(['settings']);
     const settings = useSelector(({ firebase }) => firebase.data.settings) || {};
-    const premiumUsers = settings && Object.keys(settings).reduce(
+    const premiumUsers = settings && Object.keys(settings || {}).reduce(
         (acc, key) => {
-            const { premium = false } = settings[key];
+            const { premium = false } = settings[key] || {};
             return premium ? [ ...acc, key ] : acc
         }, []
     );
