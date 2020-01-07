@@ -42,7 +42,7 @@ const NoteListPage = ({ history }) => {
           <IonTitle>
             Notes for { username }
           </IonTitle>
-          <IonButton onClick={ logout } slot="end">
+          <IonButton color="secondary" onClick={ logout } slot="end">
             Log out
           </IonButton>
         </IonToolbar>

@@ -38,7 +38,7 @@ const SignInPage = ({ history }) => {
                     <IonRow>
                         <IonTitle>Login</IonTitle>
                     </IonRow>
-                    <IonButton onClick={ () => history.push('/signin') } slot="end">
+                    <IonButton color="secondary" onClick={ () => history.push('/signin') } slot="end">
                         SignIn page
                     </IonButton>
                 </IonToolbar>

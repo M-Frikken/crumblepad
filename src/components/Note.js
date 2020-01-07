@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
-import { IonLabel, IonItem, IonIcon, IonButton } from '@ionic/react';
+import { IonLabel, IonItem, IonIcon, IonButton, IonNote, IonTitle, IonItemDivider } from '@ionic/react';
 import { Link } from 'react-router-dom';
 import '../styles/Note.css';
 import { timer, lock, pulse, close } from 'ionicons/icons';
@@ -36,7 +36,7 @@ const Note = (props) => {
 
   const {
     note, note: {
-      type, title,
+      type, title, content,
       expired: expiredInitial = false, expiresAt = new Date().getTime()
     }, id
   } = props;
@@ -78,11 +78,30 @@ const Note = (props) => {
   };
 
   const renderLabel = () => {
-    if (type === PERMANENT) return ` ${ title } `;
+    var titleShort = title
+    if (title.length > 50) titleShort = title.substring(0,47).concat("...");
+    
+    if (type === PERMANENT) return ` ${ titleShort } `;
 
     return !expired
-      ? ` ${ time } | ${ title } `
-      : ` ${ title } `;
+      ? ` ${ time } | ${ titleShort } `
+      : ` ${ titleShort } `;
+  }
+
+  const renderShort = () => {
+    var text = content.substring(0,100);
+
+    var lines = text.split("\n");
+    text = "";
+    for ( var i = 0; i < 4 && i < lines.length; i++ ) {
+      text += lines[i];
+      if ( i < 3 ) text += "\n";
+    }
+
+    if (content.length > 100) text = text.substring(0,97).concat("...");
+    // text = "...";
+
+    return ` ${ text } `;
   }
 
   const renderDeleteButton = () => {
@@ -99,7 +118,7 @@ const Note = (props) => {
     };
 
     return (
-      <IonButton onClick={ expired ? actions.DELETE : actions.UPDATE_TO_EXPIRED }>
+      <IonButton color="secondary" slot="end" onClick={ expired ? actions.DELETE : actions.UPDATE_TO_EXPIRED }>
         <IonIcon icon={ close }></IonIcon>
       </IonButton>
     )
@@ -119,27 +138,31 @@ const Note = (props) => {
     }
 
     return (
-      <IonButton onClick={ restore }>
+      <IonButton color="secondary" slot="end" onClick={ restore }>
         <IonIcon icon={ pulse }></IonIcon>
       </IonButton>
     )
   }
 
   return (
-      <IonItem>
+      <IonItemDivider class="ion-padding">
         <Link
           className="note"
           to={ `/note/${ id }` }
           onClick={ onLinkClick }
+          style={{ color: '#222428', textDecoration: 'none' }}
         >
-          <IonLabel>
+          <IonTitle class="ion-no-padding ion-padding-bottom">
             { renderIcon() }
             { renderLabel() }
+          </IonTitle>
+          <IonLabel style={{ whiteSpace: 'pre-line' }}>
+            { renderShort() }
           </IonLabel>
         </Link>
-        { renderDeleteButton() }
-        { renderRestoreButton() }
-      </IonItem>
+          { renderRestoreButton() }
+          { renderDeleteButton() }
+      </IonItemDivider>
   );
 };
 

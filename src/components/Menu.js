@@ -36,7 +36,7 @@ const Menu = ({ location: { pathname } }) => {
                 <IonToolbar color="light">
                     <IonTitle>
                         CrumblePad
-                        <Link to="premium/users">
+                        <Link color="secondary" to="premium/users">
                             <IonIcon icon={information} />
                         </Link>
                     </IonTitle>
