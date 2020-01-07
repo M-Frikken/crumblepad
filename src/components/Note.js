@@ -1,12 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react';
-import { IonLabel, IonItem, IonIcon, IonButton, IonNote, IonTitle, IonItemDivider } from '@ionic/react';
+import { IonButton, IonIcon, IonItemDivider, IonLabel, IonTitle } from '@ionic/react';
+import { closeCircle, lock, timer, trash, undo } from 'ionicons/icons';
+import React, { useEffect, useState } from 'react';
+import { useFirebase } from 'react-redux-firebase';
 import { Link } from 'react-router-dom';
 import '../styles/Note.css';
-import { timer, lock, pulse, closeCircle, undo, trash } from 'ionicons/icons';
-import { timeLeft } from '../utils/time';
-import { SECONDS_IN_MS, MINUTE_IN_MS } from '../utils/time';
-import { useFirebase } from 'react-redux-firebase';
+import { MINUTE_IN_MS, SECONDS_IN_MS, timeLeft } from '../utils/time';
 
 export const TEMPORARY = 'temporary';
 export const PERMANENT = 'permanent';
@@ -36,7 +35,7 @@ const Note = (props) => {
 
   const {
     note, note: {
-      type, title, content,
+      type, title, content = "",
       expired: expiredInitial = false, expiresAt = new Date().getTime()
     }, id
   } = props;
@@ -76,7 +75,7 @@ const Note = (props) => {
   const renderLabel = () => {
     let titleShort = title
     if (title.length > 50) titleShort = title.substring(0,47).concat("...");
-    
+
     if (type === PERMANENT) return ` ${ titleShort } `;
 
     return !expired
