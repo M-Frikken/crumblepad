@@ -1,7 +1,9 @@
 import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { IonMenu, IonList, IonItem, IonHeader, IonToolbar, IonTitle, IonContent, IonIcon } from '@ionic/react';
+import { IonMenu, IonList, IonItem, IonHeader, IonToolbar, IonTitle, IonContent, IonIcon, IonImg, IonButton } from '@ionic/react';
 import { listBox, archive, settings, information, trash } from 'ionicons/icons';
+import { useSelector } from 'react-redux';
+import { useFirebase } from 'react-redux-firebase';
 import { withRouter } from "react-router";
 import '../styles/Menu.css';
 import { useFirebaseConnect } from 'react-redux-firebase';
@@ -12,13 +14,22 @@ const pages = [
     { title: 'Settings', path: '/settings', icon: settings }
 ];
 
-const Menu = ({ location: { pathname } }) => {
+const Menu = ({ location: { pathname }, history }) => {
+    const firebase = useFirebase();
+
+    const { username } = useSelector(({ firebase }) => firebase.profile);
     const uid = localStorage.getItem('uid');
 
     useFirebaseConnect([
         { path: `notes/${ uid }`, queryParams: ['orderByChild=updatedAt'] },
         { path: `settings/${ uid }` }
     ]);
+
+    const logout = () => {
+        firebase.logout();
+        localStorage.removeItem('uid');
+        history.push('/login');
+    }
 
     const menuRef = useRef();
     const menuItemClick = (e) => {
@@ -35,10 +46,7 @@ const Menu = ({ location: { pathname } }) => {
             <IonHeader>
                 <IonToolbar color="light">
                     <IonTitle>
-                        CrumblePad
-                        <Link color="secondary" to="premium/users">
-                            <IonIcon icon={information} />
-                        </Link>
+                        <IonImg class="ion-padding" src={ process.env.PUBLIC_URL + 'images/cp-logo-text.png'} alt="CrumblePad" />
                     </IonTitle>
                 </IonToolbar>
             </IonHeader>
@@ -46,7 +54,7 @@ const Menu = ({ location: { pathname } }) => {
                 <IonList>
                     { Object.values(pages).map(({ title, path, icon }) => (
                             <Link className="link" onClick={ menuItemClick } key={ title } to={ path }>
-                                <IonItem color={ path === pathname ? "orange" : "" }>
+                                <IonItem color={ path === pathname ? "secondary" : "" }>
                                     <IonIcon icon={ icon } />
                                     <IonTitle>{ title }</IonTitle>
                                 </IonItem>
@@ -54,6 +62,12 @@ const Menu = ({ location: { pathname } }) => {
                     ))}
                 </IonList>
             </IonContent>
+            <IonButton class="ion-padding-start ion-padding-end" color="secondary" onClick={ logout }>
+                Log out
+            </IonButton>
+            <Link color="secondary" to="premium/users" style={{ display: 'inline' }}>
+                <IonIcon icon={information} />
+            </Link>
         </IonMenu>
     )
 }

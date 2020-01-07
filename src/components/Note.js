@@ -68,7 +68,7 @@ const Note = (props) => {
   }, [type, expired, expiresAt])
 
   const onLinkClick = (e) => {
-    if (expired) e.preventDefault();
+    // if (expired) e.preventDefault();
   }
 
   const renderIcon = () => {
@@ -118,7 +118,7 @@ const Note = (props) => {
     };
 
     return (
-      <IonButton color="secondary" slot="end" onClick={ expired ? actions.DELETE : actions.UPDATE_TO_EXPIRED }>
+      <IonButton class="ion-no-margin ion-margin-start" color="secondary" slot="end" onClick={ expired ? actions.DELETE : actions.UPDATE_TO_EXPIRED }>
         <IonIcon icon={ expired ? closeCircle : trash }></IonIcon>
       </IonButton>
     )
@@ -138,7 +138,7 @@ const Note = (props) => {
     }
 
     return (
-      <IonButton color="secondary" slot="end" onClick={ restore }>
+      <IonButton class="ion-no-margin" color="secondary" slot="end" onClick={ restore }>
         <IonIcon icon={ undo }></IonIcon>
       </IonButton>
     )

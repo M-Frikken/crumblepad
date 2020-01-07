@@ -8,18 +8,11 @@ import { PERMANENT, TEMPORARY } from '../components/Note';
 import NoteList from '../components/NoteList';
 import UpgradeToPremiumButton from '../components/UpgradeToPremiumButton';
 
-const NoteListPage = ({ history }) => {
-  const firebase = useFirebase();
+const NoteListPage = () => {
 
   const { username } = useSelector(({ firebase }) => firebase.profile);
   const uid = localStorage.getItem('uid');
   if (!uid) return <Redirect to='/login' />
-
-  const logout = () => {
-    firebase.logout();
-    localStorage.removeItem('uid');
-    history.push('/login');
-  }
 
   const renderButton = () => (
     <IonFabList side="top">
@@ -42,9 +35,6 @@ const NoteListPage = ({ history }) => {
           <IonTitle>
             Notes for { username }
           </IonTitle>
-          <IonButton color="secondary" onClick={ logout } slot="end">
-            Log out
-          </IonButton>
         </IonToolbar>
       </IonHeader>
       <IonContent>

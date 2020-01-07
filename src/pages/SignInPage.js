@@ -37,8 +37,8 @@ const SignInPage = ({ history }) => {
                     <IonRow>
                         <IonTitle>Register</IonTitle>
                     </IonRow>
-                    <IonButton color="secondary" onClick={ () => history.push('/login') } slot="end">
-                        Login page
+                    <IonButton class="ion-margin-end" color="secondary" onClick={ () => history.push('/login') } slot="end">
+                        Log In
                     </IonButton>
                 </IonToolbar>
             </IonHeader>
@@ -46,22 +46,25 @@ const SignInPage = ({ history }) => {
                 { renderError() }
                 <IonItem>
                     <IonLabel position="floating">Username</IonLabel>
-                    <IonInput value={ username } onInput={ e => setUsername(e.currentTarget.value) }></IonInput>
+                    <IonInput class="ion-margin-top" value={ username } onInput={ e => setUsername(e.currentTarget.value) }></IonInput>
                 </IonItem>
                 <IonItem>
                     <IonLabel position="floating">Email</IonLabel>
-                    <IonInput value={ email } onInput={ e => setEmail(e.currentTarget.value) }></IonInput>
+                    <IonInput class="ion-margin-top" value={ email } onInput={ e => setEmail(e.currentTarget.value) }></IonInput>
                 </IonItem>
                 <IonItem>
                     <IonLabel position="floating">Password</IonLabel>
                     <IonInput
+                      class="ion-margin-top"
                       value={ password }
                       type="password"
                       clearOnEdit={ false }
                       onInput={ e => setPassword(e.currentTarget.value) }>
                     </IonInput>
                 </IonItem>
-                <IonButton onClick={ buttonClick } color="orange">Login</IonButton>
+                <IonItem class="ion-no-margin" lines="none">
+                    <IonButton class="ion-inner-padding ion-margin-top" onClick={ buttonClick } size="default" color="secondary">Register</IonButton>
+                </IonItem>
             </IonContent>
         </IonPage>
     );
