@@ -10,7 +10,7 @@ const NoteList = () => {
   const isLoading = useSelector(({ firebase }) => firebase.requesting[`notes/${uid}`]);
   const { [uid]: notes = {} } = useSelector(({ firebase }) => firebase.data.notes) || {};
 
-  const activeNotes = Object.entries(notes).reduce((acc, [key, note]) => (
+  const activeNotes = Object.entries(notes || {}).reduce((acc, [key, note]) => (
     !('expired' in note) || !note.expired
     ? { ...acc, [key]: note }
     : acc
