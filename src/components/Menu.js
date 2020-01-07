@@ -1,12 +1,10 @@
+import { IonButton, IonContent, IonHeader, IonIcon, IonImg, IonItem, IonList, IonMenu, IonTitle, IonToolbar } from '@ionic/react';
+import { information, listBox, settings, trash } from 'ionicons/icons';
 import React, { useRef } from 'react';
-import { Link } from 'react-router-dom';
-import { IonMenu, IonList, IonItem, IonHeader, IonToolbar, IonTitle, IonContent, IonIcon, IonImg, IonButton } from '@ionic/react';
-import { listBox, archive, settings, information, trash } from 'ionicons/icons';
-import { useSelector } from 'react-redux';
-import { useFirebase } from 'react-redux-firebase';
+import { useFirebase, useFirebaseConnect } from 'react-redux-firebase';
 import { withRouter } from "react-router";
+import { Link } from 'react-router-dom';
 import '../styles/Menu.css';
-import { useFirebaseConnect } from 'react-redux-firebase';
 
 const pages = [
     { title: 'Home', path: '/home', icon: listBox },
@@ -17,7 +15,6 @@ const pages = [
 const Menu = ({ location: { pathname }, history }) => {
     const firebase = useFirebase();
 
-    const { username } = useSelector(({ firebase }) => firebase.profile);
     const uid = localStorage.getItem('uid');
 
     useFirebaseConnect([

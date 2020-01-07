@@ -1,9 +1,9 @@
+import { IonList } from '@ionic/react';
 import React from 'react';
-import Note from './Note';
-import { IonList, IonItemDivider } from '@ionic/react';
-import '../styles/NoteList.css';
 import { useSelector } from 'react-redux';
+import '../styles/NoteList.css';
 import Loader from './Loader';
+import Note from './Note';
 
 const NoteList = () => {
   const uid = localStorage.getItem('uid');

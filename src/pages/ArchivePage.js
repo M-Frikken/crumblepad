@@ -1,7 +1,6 @@
-import { IonContent, IonFab, IonFabButton, IonFabList, IonIcon, IonPage } from '@ionic/react';
-import { add, lock, timer } from 'ionicons/icons';
+import { IonContent, IonPage } from '@ionic/react';
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import NoteListArchive from '../components/NoteListArchive';
 import PageHeader from '../components/PageHeader';
 

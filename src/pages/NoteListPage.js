@@ -1,8 +1,7 @@
-import { IonButton, IonButtons, IonContent, IonFab, IonFabButton, IonFabList, IonHeader, IonIcon, IonMenuButton, IonMenuToggle, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButtons, IonContent, IonFab, IonFabButton, IonFabList, IonHeader, IonIcon, IonMenuButton, IonMenuToggle, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import { add, lock, timer } from 'ionicons/icons';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useFirebase } from 'react-redux-firebase';
 import { Link, Redirect } from 'react-router-dom';
 import { PERMANENT, TEMPORARY } from '../components/Note';
 import NoteList from '../components/NoteList';

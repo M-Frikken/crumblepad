@@ -71,11 +71,6 @@ const NoteAddPage = ({ match: { url }, history }) => {
         history.goBack();
     }
 
-    if (
-        // TODO: test
-        (note.type === TEMPORARY && note.expired)
-    ) return history.push('/home');
-
     return (
         <IonPage>
             <IonHeader>
