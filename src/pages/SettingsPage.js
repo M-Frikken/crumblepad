@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { IonButton, IonCard, IonCardContent, IonCardHeader, IonContent, IonItem, IonLabel, IonPage, IonReorder, IonReorderGroup } from '@ionic/react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
 import { withRouter } from 'react-router';
@@ -16,27 +16,43 @@ const SettingsPage = ({ location: { pathname = '' }, match: { path = '' } }) => 
   const settings = useSelector(({ firebase }) => firebase.data.settings) || {};
   const isRequesting = useSelector(({ firebase }) => firebase.requesting[`settings/${uid}`]);
 
-  const { [uid]: userExpirationOptions } = settings || {};
-  const expirationOptions = userExpirationOptions || defaultExpirationOptions;
+  const { [uid]: expirationOptions = defaultExpirationOptions } = settings || {};
   const [expOptionOrder, setExpOptionOrder] = useState(Object.keys(expirationOptions) || []);
 
   const [expOpts, setExpOpts] = useState(expirationOptions);
 
-  const doReorder = event => {
+  function doReorder (event) {
     const from = event.detail.from;
     // fix bug with more places then elements
     const to = event.detail.to === Object.keys(expOpts).length ? event.detail.to - 1 : event.detail.to;
     if (from === to) return event.detail.complete();
 
-    const newOrder = expOptionOrder;
-    const moving = expOptionOrder.splice(from, 1);
+    const newOrder = [...expOptionOrder];
+    const moving = newOrder.splice(from, 1);
     newOrder.splice(to, 0, ...moving);
     setExpOptionOrder(newOrder);
 
     event.detail.complete();
   }
 
+  // useEffect(
+  //   () => console.log('orderInEffect', expOptionOrder),
+  //   [expOptionOrder]
+  // )
+
   const [isOnSettingsPage, setIsOnSettingsPage] = useState(true);
+
+  const saveExpOpts = useCallback(
+    () => {
+      console.log('before change', expOptionOrder, expOpts);
+      const convertedOptions = expOptionOrder.reduce((acc, pos, i) => (
+        { ...acc, [i]: expOpts[pos] }
+      ), {});
+      console.log('after changes', convertedOptions);
+      firebase.set(`settings/${uid}/expirationOptions`, convertedOptions);
+    },
+    [expOpts, expOptionOrder],
+  )
 
   useEffect(() => {
     // in order to render correctly expiration options after settings got changed
@@ -47,21 +63,17 @@ const SettingsPage = ({ location: { pathname = '' }, match: { path = '' } }) => 
 
     return () => {
       if (pathname === path) {
-        console.log('before change', expOptionOrder, expOpts);
-        const convertedOptions = expOptionOrder.reduce((acc, pos, i) => (
-          { ...acc, [i]: expOpts[pos] }
-        ), {});
-        console.log('after changes', convertedOptions, expOpts);
-        firebase.set(`settings/${uid}/expirationOptions`, convertedOptions);
+        saveExpOpts();
         setIsOnSettingsPage(false);
       }
     }
-  }, [expOpts, pathname, path]);
+  }, [pathname, path]);
+  // }, [saveExpOpts, pathname, path]);
 
-  useEffect(() => {
-    setExpOptionOrder(Object.keys(expOpts));
-    // setIsOnSettingsPage(false);
-  }, [expOpts]);
+  // useEffect(() => {
+  //   setExpOptionOrder(Object.keys(expOpts));
+  //   // setIsOnSettingsPage(false);
+  // }, [expOpts]);
 
   const [isPickerOpen, setIsPickerOpen] = useState(false);
 
@@ -124,6 +136,7 @@ const SettingsPage = ({ location: { pathname = '' }, match: { path = '' } }) => 
   };
 
   if (!uid) return <Redirect to='/login' />
+  console.log('expopts', expOpts, 'order', expOptionOrder);
   return (
     <IonPage>
       <PageHeader title='Settings'/>
