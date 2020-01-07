@@ -1,4 +1,4 @@
-import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIcon, IonInput, IonItem, IonLabel, IonSelect, IonSelectOption, IonTextarea, IonToggle } from '@ionic/react';
+import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIcon, IonInput, IonItem, IonLabel, IonSelect, IonSelectOption, IonTextarea, IonToggle, IonTitle } from '@ionic/react';
 import { lock, timer } from 'ionicons/icons';
 import React, { useCallback, useEffect } from 'react';
 import { PERMANENT, TEMPORARY } from './Note';
@@ -6,8 +6,8 @@ import { PERMANENT, TEMPORARY } from './Note';
 const NoteInputs = ({ note, setNote, expirationOptions }) => {
   const { expirationOption = 0, type, title, content: text } = note || {};
   const customActionSheetOptions = {
-    header: 'Times',
-    subHeader: 'Select note destruction time'
+    header: 'Expiration time',
+    subHeader: 'Select note expiration time'
   };
 
   const onTypeChange = (e) => {
@@ -45,13 +45,13 @@ const NoteInputs = ({ note, setNote, expirationOptions }) => {
   const renderSelect = () => {
     if (type === PERMANENT) return null;
     return (
-      <>
-        <IonLabel>Time</IonLabel>
+      <IonItem class="ion-no-margin">
+        <IonLabel position="floating">Expiration</IonLabel>
         <IonSelect
           onChange={ onSelectChange }
           interfaceOptions={customActionSheetOptions}
           interface="alert"
-          placeholder="Select One"
+          placeholder="Select"
         >
           { Object.entries(expirationOptions).map(([name, { title }], i) => (
             <IonSelectOption key={ name } selected={ i === expirationOption } value={ name }>
@@ -59,23 +59,22 @@ const NoteInputs = ({ note, setNote, expirationOptions }) => {
             </IonSelectOption>
           )) }
         </IonSelect>
-      </>
+      </IonItem>
     );
   }
 
   const renderHeader = () => (
     <IonCardHeader>
       <IonItem>
+        <IonIcon icon={ timer } />
         <IonToggle
           value="permanent"
           checked={ type === PERMANENT }
           onClick={ onTypeChange }
           color="orange" />
-        <IonLabel>
-          <IonIcon icon={ timer } /> | <IonIcon icon={ lock } />
-        </IonLabel>
-        { renderSelect() }
+        <IonIcon icon={ lock } />
       </IonItem>
+      { renderSelect() }
       <IonCardTitle>
         <IonInput autofocus value={ title } onInput={ onTitleChange } placeholder="Title" />
       </IonCardTitle>
