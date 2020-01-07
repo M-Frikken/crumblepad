@@ -1,6 +1,6 @@
 import React from 'react';
 import Note from './Note';
-import { IonList } from '@ionic/react';
+import { IonList, IonItemDivider } from '@ionic/react';
 import '../styles/NoteList.css';
 import { useSelector } from 'react-redux';
 import Loader from './Loader';
