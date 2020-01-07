@@ -46,7 +46,6 @@ const NoteInputs = ({ note, setNote, expirationOptions }) => {
     if (type === PERMANENT) return null;
     return (
       <>
-        <IonLabel>Time</IonLabel>
         <IonSelect
           onChange={ onSelectChange }
           interfaceOptions={customActionSheetOptions}
