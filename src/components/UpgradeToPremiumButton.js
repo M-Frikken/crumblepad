@@ -1,10 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react';
-import { IonButton, IonAlert } from '@ionic/react';
-import '../styles/UpgradeToPremiumButton.css';
-import { useFirebase } from 'react-redux-firebase';
+import { IonAlert, IonButton } from '@ionic/react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import Loader from './Loader';
+import { useFirebase } from 'react-redux-firebase';
+import '../styles/UpgradeToPremiumButton.css';
 
 const UpgradeToPremiumButton = () => {
   const firebase = useFirebase();
@@ -32,9 +31,7 @@ const UpgradeToPremiumButton = () => {
     }
   }, [isLoading])
 
-  if (isLoading) return <Loader />
-
-  if (!isShowButton) return null;
+  if (isLoading || !isShowButton) return null;
 
   return (
     <>

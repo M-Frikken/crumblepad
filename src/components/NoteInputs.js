@@ -26,7 +26,6 @@ const NoteInputs = ({ note, setNote, expirationOptions }) => {
         }, [note, setNote]
     );
 
-
     useEffect(() => {
         window.addEventListener('ionChange', onSelectChange);
         return () => {
@@ -43,23 +42,23 @@ const NoteInputs = ({ note, setNote, expirationOptions }) => {
     }
 
     const renderSelect = () => {
-        if (type === PERMANENT) return null;
-        return (
-            <>
-                <IonSelect
-                  onChange={ onSelectChange }
-                  interfaceOptions={customActionSheetOptions}
-                  interface="action-sheet"
-                  placeholder="Select One"
-                >
-                    { Object.entries(expirationOptions).map(([name, { title }], i) => (
-                      <IonSelectOption key={ name } selected={ i === expirationOption } value={ name }>
-                        { title }
-                      </IonSelectOption>
-                    )) }
-                </IonSelect>
-            </>
-        );
+      if (type === PERMANENT) return null;
+      return (
+        <>
+          <IonSelect
+            onChange={ onSelectChange }
+            interfaceOptions={customActionSheetOptions}
+            interface="alert"
+            placeholder="Select One"
+          >
+            { Object.entries(expirationOptions).map(([name, { title }], i) => (
+              <IonSelectOption key={ name } selected={ i === expirationOption } value={ name }>
+                { title }
+              </IonSelectOption>
+            )) }
+          </IonSelect>
+        </>
+      );
     }
 
     const renderHeader = () => (
