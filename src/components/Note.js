@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { IonLabel, IonItem, IonIcon, IonButton, IonNote, IonTitle, IonItemDivider } from '@ionic/react';
 import { Link } from 'react-router-dom';
 import '../styles/Note.css';
-import { timer, lock, pulse, close } from 'ionicons/icons';
+import { timer, lock, pulse, closeCircle, undo, trash } from 'ionicons/icons';
 import { timeLeft } from '../utils/time';
 import { SECONDS_IN_MS, MINUTE_IN_MS } from '../utils/time';
 import { useFirebase } from 'react-redux-firebase';
@@ -119,7 +119,7 @@ const Note = (props) => {
 
     return (
       <IonButton color="secondary" slot="end" onClick={ expired ? actions.DELETE : actions.UPDATE_TO_EXPIRED }>
-        <IonIcon icon={ close }></IonIcon>
+        <IonIcon icon={ expired ? closeCircle : trash }></IonIcon>
       </IonButton>
     )
   }
@@ -139,7 +139,7 @@ const Note = (props) => {
 
     return (
       <IonButton color="secondary" slot="end" onClick={ restore }>
-        <IonIcon icon={ pulse }></IonIcon>
+        <IonIcon icon={ undo }></IonIcon>
       </IonButton>
     )
   }

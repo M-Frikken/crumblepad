@@ -1,14 +1,14 @@
 import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { IonMenu, IonList, IonItem, IonHeader, IonToolbar, IonTitle, IonContent, IonIcon } from '@ionic/react';
-import { listBox, archive, settings, information } from 'ionicons/icons';
+import { listBox, archive, settings, information, trash } from 'ionicons/icons';
 import { withRouter } from "react-router";
 import '../styles/Menu.css';
 import { useFirebaseConnect } from 'react-redux-firebase';
 
 const pages = [
     { title: 'Home', path: '/home', icon: listBox },
-    { title: 'Archive', path: '/archive', icon: archive },
+    { title: 'Archive', path: '/archive', icon: trash },
     { title: 'Settings', path: '/settings', icon: settings }
 ];
 
