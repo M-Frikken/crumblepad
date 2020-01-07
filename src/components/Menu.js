@@ -1,39 +1,31 @@
-import React, { useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { IonMenu, IonList, IonItem, IonHeader, IonToolbar, IonTitle, IonContent, IonIcon } from '@ionic/react';
-import { listBox, archive, settings, information } from 'ionicons/icons';
+import { IonButton, IonContent, IonHeader, IonIcon, IonImg, IonItem, IonList, IonMenu, IonTitle, IonToolbar } from '@ionic/react';
+import { information, listBox, settings, trash } from 'ionicons/icons';
+import React, { useRef } from 'react';
+import { useFirebase, useFirebaseConnect } from 'react-redux-firebase';
 import { withRouter } from "react-router";
+import { Link } from 'react-router-dom';
 import '../styles/Menu.css';
-import { useSelector } from 'react-redux';
-import { expirationOptions as defaultExpirationOptions } from '../components/Note';
-import { useFirebaseConnect, useFirebase } from 'react-redux-firebase';
 
 const pages = [
     { title: 'Home', path: '/home', icon: listBox },
-    { title: 'Archive', path: '/archive', icon: archive },
+    { title: 'Archive', path: '/archive', icon: trash },
     { title: 'Settings', path: '/settings', icon: settings }
 ];
 
-const Menu = ({ location: { pathname } }) => {
-    const uid = localStorage.getItem('uid');
+const Menu = ({ location: { pathname }, history }) => {
     const firebase = useFirebase();
+    const uid = localStorage.getItem('uid');
 
     useFirebaseConnect([
         { path: `notes/${ uid }`, queryParams: ['orderByChild=updatedAt'] },
         { path: `settings/${ uid }` }
     ]);
 
-    const settings = useSelector(({ firebase }) => firebase.data.settings) || {};
-    const { expirationOptions = {} } = settings[uid] || {};
-    const isRequesting = useSelector(({ firebase }) => firebase.requested[`settings/${uid}/expirationOptions`]);
-
-    useEffect(() => {
-        if (isRequesting && (expirationOptions && !Object.keys(expirationOptions).length)) {
-            console.log('gonna set somethings stupid', expirationOptions, isRequesting);
-
-            firebase.set(`settings/${uid}/expirationOptions`, defaultExpirationOptions);
-        }
-    }, [expirationOptions])
+    const logout = () => {
+        firebase.logout();
+        localStorage.removeItem('uid');
+        history.push('/login');
+    }
 
     const menuRef = useRef();
     const menuItemClick = (e) => {
@@ -50,10 +42,7 @@ const Menu = ({ location: { pathname } }) => {
             <IonHeader>
                 <IonToolbar color="light">
                     <IonTitle>
-                        CrumblePad
-                        <Link to="/premium/users">
-                            <IonIcon icon={information} />
-                        </Link>
+                        <IonImg className="ion-padding" src={ process.env.PUBLIC_URL + 'images/cp-logo-text.png'} alt="CrumblePad" />
                     </IonTitle>
                 </IonToolbar>
             </IonHeader>
@@ -61,7 +50,7 @@ const Menu = ({ location: { pathname } }) => {
                 <IonList>
                     { Object.values(pages).map(({ title, path, icon }) => (
                         <Link className="link" onClick={ menuItemClick } key={ title } to={ path }>
-                            <IonItem color={ path === pathname ? "orange" : "" }>
+                            <IonItem color={ path === pathname ? "secondary" : "" }>
                                 <IonIcon icon={ icon } />
                                 <IonTitle>{ title }</IonTitle>
                             </IonItem>
@@ -69,6 +58,12 @@ const Menu = ({ location: { pathname } }) => {
                     ))}
                 </IonList>
             </IonContent>
+            <IonButton className="ion-padding-start ion-padding-end" color="secondary" onClick={ logout }>
+                Log out
+            </IonButton>
+            <Link color="secondary" to="premium/users" style={{ display: 'inline' }}>
+                <IonIcon icon={information} />
+            </Link>
         </IonMenu>
     )
 }
