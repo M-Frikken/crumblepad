@@ -38,7 +38,7 @@ const SignInPage = ({ history }) => {
                     <IonRow>
                         <IonTitle>Login</IonTitle>
                     </IonRow>
-                    <IonButton class="ion-margin-end" color="secondary" onClick={ () => history.push('/signin') } slot="end">
+                    <IonButton className="ion-margin-end" color="secondary" onClick={ () => history.push('/signin') } slot="end">
                         Create Account
                     </IonButton>
                 </IonToolbar>
@@ -47,20 +47,20 @@ const SignInPage = ({ history }) => {
                 { renderError() }
                 <IonItem>
                     <IonLabel position="floating">Email</IonLabel>
-                    <IonInput class="ion-margin-top" value={ email } onInput={ e => setEmail(e.currentTarget.value) }></IonInput>
+                    <IonInput className="ion-margin-top" value={ email } onInput={ e => setEmail(e.currentTarget.value) }></IonInput>
                 </IonItem>
                 <IonItem>
                     <IonLabel position="floating">Password</IonLabel>
                     <IonInput
-                      class="ion-margin-top"
+                      className="ion-margin-top"
                       value={ password }
                       type="password"
                       clearOnEdit={ false }
                       onInput={ e => setPassword(e.currentTarget.value) }>
                     </IonInput>
                 </IonItem>
-                <IonItem class="ion-no-margin" lines="none">
-                    <IonButton class="ion-inner-padding ion-margin-top" size="default" onClick={ buttonClick } color="secondary">Log In</IonButton>
+                <IonItem className="ion-no-margin" lines="none">
+                    <IonButton className="ion-inner-padding ion-margin-top" size="default" onClick={ buttonClick } color="secondary">Log In</IonButton>
                 </IonItem>
             </IonContent>
         </IonPage>

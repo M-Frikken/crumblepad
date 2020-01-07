@@ -46,7 +46,7 @@ const Menu = ({ location: { pathname }, history }) => {
             <IonHeader>
                 <IonToolbar color="light">
                     <IonTitle>
-                        <IonImg class="ion-padding" src={ process.env.PUBLIC_URL + 'images/cp-logo-text.png'} alt="CrumblePad" />
+                        <IonImg className="ion-padding" src={ process.env.PUBLIC_URL + 'images/cp-logo-text.png'} alt="CrumblePad" />
                     </IonTitle>
                 </IonToolbar>
             </IonHeader>
@@ -62,7 +62,7 @@ const Menu = ({ location: { pathname }, history }) => {
                     ))}
                 </IonList>
             </IonContent>
-            <IonButton class="ion-padding-start ion-padding-end" color="secondary" onClick={ logout }>
+            <IonButton className="ion-padding-start ion-padding-end" color="secondary" onClick={ logout }>
                 Log out
             </IonButton>
             <Link color="secondary" to="premium/users" style={{ display: 'inline' }}>

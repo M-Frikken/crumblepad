@@ -67,10 +67,6 @@ const Note = (props) => {
     };
   }, [type, expired, expiresAt])
 
-  const onLinkClick = (e) => {
-    // if (expired) e.preventDefault();
-  }
-
   const renderIcon = () => {
     return type === TEMPORARY
       ? <IonIcon icon={ timer } />
@@ -78,7 +74,7 @@ const Note = (props) => {
   };
 
   const renderLabel = () => {
-    var titleShort = title
+    let titleShort = title
     if (title.length > 50) titleShort = title.substring(0,47).concat("...");
     
     if (type === PERMANENT) return ` ${ titleShort } `;
@@ -89,17 +85,16 @@ const Note = (props) => {
   }
 
   const renderShort = () => {
-    var text = content.substring(0,100);
+    let text = content.substring(0,100);
 
-    var lines = text.split("\n");
+    let lines = text.split("\n");
     text = "";
-    for ( var i = 0; i < 4 && i < lines.length; i++ ) {
+    for ( let i = 0; i < 4 && i < lines.length; i++ ) {
       text += lines[i];
       if ( i < 3 ) text += "\n";
     }
 
     if (content.length > 100) text = text.substring(0,97).concat("...");
-    // text = "...";
 
     return ` ${ text } `;
   }
@@ -118,7 +113,7 @@ const Note = (props) => {
     };
 
     return (
-      <IonButton class="ion-no-margin ion-margin-start" color="secondary" slot="end" onClick={ expired ? actions.DELETE : actions.UPDATE_TO_EXPIRED }>
+      <IonButton className="ion-no-margin ion-margin-start" color="secondary" slot="end" onClick={ expired ? actions.DELETE : actions.UPDATE_TO_EXPIRED }>
         <IonIcon icon={ expired ? closeCircle : trash }></IonIcon>
       </IonButton>
     )
@@ -138,21 +133,20 @@ const Note = (props) => {
     }
 
     return (
-      <IonButton class="ion-no-margin" color="secondary" slot="end" onClick={ restore }>
+      <IonButton className="ion-no-margin" color="secondary" slot="end" onClick={ restore }>
         <IonIcon icon={ undo }></IonIcon>
       </IonButton>
     )
   }
 
   return (
-      <IonItemDivider class="ion-padding">
+      <IonItemDivider className="ion-padding">
         <Link
           className="note"
           to={ `/note/${ id }` }
-          onClick={ onLinkClick }
           style={{ color: '#222428', textDecoration: 'none' }}
         >
-          <IonTitle class="ion-no-padding ion-padding-bottom">
+          <IonTitle className="ion-no-padding ion-padding-bottom">
             { renderIcon() }
             { renderLabel() }
           </IonTitle>

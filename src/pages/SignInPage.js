@@ -37,7 +37,7 @@ const SignInPage = ({ history }) => {
                     <IonRow>
                         <IonTitle>Register</IonTitle>
                     </IonRow>
-                    <IonButton class="ion-margin-end" color="secondary" onClick={ () => history.push('/login') } slot="end">
+                    <IonButton className="ion-margin-end" color="secondary" onClick={ () => history.push('/login') } slot="end">
                         Log In
                     </IonButton>
                 </IonToolbar>
@@ -46,24 +46,24 @@ const SignInPage = ({ history }) => {
                 { renderError() }
                 <IonItem>
                     <IonLabel position="floating">Username</IonLabel>
-                    <IonInput class="ion-margin-top" value={ username } onInput={ e => setUsername(e.currentTarget.value) }></IonInput>
+                    <IonInput className="ion-margin-top" value={ username } onInput={ e => setUsername(e.currentTarget.value) }></IonInput>
                 </IonItem>
                 <IonItem>
                     <IonLabel position="floating">Email</IonLabel>
-                    <IonInput class="ion-margin-top" value={ email } onInput={ e => setEmail(e.currentTarget.value) }></IonInput>
+                    <IonInput className="ion-margin-top" value={ email } onInput={ e => setEmail(e.currentTarget.value) }></IonInput>
                 </IonItem>
                 <IonItem>
                     <IonLabel position="floating">Password</IonLabel>
                     <IonInput
-                      class="ion-margin-top"
+                      className="ion-margin-top"
                       value={ password }
                       type="password"
                       clearOnEdit={ false }
                       onInput={ e => setPassword(e.currentTarget.value) }>
                     </IonInput>
                 </IonItem>
-                <IonItem class="ion-no-margin" lines="none">
-                    <IonButton class="ion-inner-padding ion-margin-top" onClick={ buttonClick } size="default" color="secondary">Register</IonButton>
+                <IonItem className="ion-no-margin" lines="none">
+                    <IonButton className="ion-inner-padding ion-margin-top" onClick={ buttonClick } size="default" color="secondary">Register</IonButton>
                 </IonItem>
             </IonContent>
         </IonPage>

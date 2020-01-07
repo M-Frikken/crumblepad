@@ -45,7 +45,7 @@ const NoteInputs = ({ note, setNote, expirationOptions }) => {
   const renderSelect = () => {
     if (type === PERMANENT) return null;
     return (
-      <IonItem class="ion-no-margin">
+      <IonItem className="ion-no-margin">
         <IonLabel position="floating">Expiration</IonLabel>
         <IonSelect
           onChange={ onSelectChange }
