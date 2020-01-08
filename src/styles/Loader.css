@@ -1,0 +1,9 @@
+.Loader {
+    display: block;
+    margin: 2rem auto;
+}
+
+.Loader-wrapper {
+    display: flex;
+    margin: auto;
+}
