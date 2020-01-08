@@ -54,8 +54,8 @@ const NoteInputs = ({ note, setNote, expirationOptions }) => {
           interface="alert"
           placeholder="Select One"
         >
-          { Object.entries(expirationOptions || {}).map(([name, { title, val }]) => (
-            <IonSelectOption key={ name } selected={ +val === expirationOption } value={ name }>
+          { Object.entries(expirationOptions || {}).map(([name, { title, val }], i) => (
+            <IonSelectOption key={ name } selected={ i === expirationOption } value={ name }>
               { title }
             </IonSelectOption>
           )) }
