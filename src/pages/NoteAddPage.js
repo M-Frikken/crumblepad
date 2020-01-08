@@ -19,10 +19,8 @@ const NoteAddPage = ({ match: { url }, history }) => {
     const notes = allNotes[uid] || {};
     const dispatch = useDispatch();
 
-    // const uid = localStorage.getItem('uid');
     const settings = useSelector(({ firebase }) => firebase.data.settings) || {};
-    const { expirationOptions: userExpirationOptions } = settings[uid] || {};
-    const expirationOptions = userExpirationOptions || defaultExpirationOptions;
+    const { [uid]: { expirationOptions = defaultExpirationOptions } } = settings || {};
 
     const [note, setNote] = useState({})
 
