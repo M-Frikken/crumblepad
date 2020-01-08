@@ -1,0 +1,34 @@
+[debug] [2020-01-08T21:34:53.858Z] ----------------------------------------------------------------------
+[debug] [2020-01-08T21:34:53.860Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy
+[debug] [2020-01-08T21:34:53.860Z] CLI Version:   7.10.0
+[debug] [2020-01-08T21:34:53.860Z] Platform:      linux
+[debug] [2020-01-08T21:34:53.860Z] Node Version:  v12.13.1
+[debug] [2020-01-08T21:34:53.862Z] Time:          Wed Jan 08 2020 23:34:53 GMT+0200 (Eastern European Standard Time)
+[debug] [2020-01-08T21:34:53.862Z] ----------------------------------------------------------------------
+[debug] [2020-01-08T21:34:53.862Z] 
+[debug] [2020-01-08T21:34:53.874Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-01-08T21:34:53.874Z] > authorizing via signed-in user
+[debug] [2020-01-08T21:34:53.874Z] [iam] checking project crumblepad for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2020-01-08T21:34:53.877Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2020-01-08T21:34:53.877Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2020-01-08T21:34:54.028Z] <<< HTTP RESPONSE 200
+[debug] [2020-01-08T21:34:54.040Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/crumblepad:testIamPermissions  
+
+[debug] [2020-01-08T21:34:54.804Z] <<< HTTP RESPONSE 200
+[debug] [2020-01-08T21:34:54.807Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/crumblepad  
+ 
+[debug] [2020-01-08T21:34:55.336Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'crumblepad'...
+[info] 
+[info] i  deploying hosting
+[debug] [2020-01-08T21:34:55.342Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/crumblepad/versions  
+
+[debug] [2020-01-08T21:34:57.317Z] <<< HTTP RESPONSE 200
+[info] i  hosting[crumblepad]: beginning deploy...
+[info] i  hosting[crumblepad]: found 917 files in build
+[debug] [2020-01-08T21:35:00.039Z] [hosting] hash cache [YnVpbGQ] stored for 917 files
+[debug] [2020-01-08T21:35:00.040Z] [hosting][hash queue][FINAL]
+[debug] [2020-01-08T21:35:00.041Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/crumblepad/versions/7b396f5ea018143e:populateFiles  
+ <request body omitted>
