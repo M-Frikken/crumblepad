@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { useFirebase } from 'react-redux-firebase';
 import { Link } from 'react-router-dom';
 import '../styles/Note.css';
-import { DAY_IN_MS, HOUR_IN_MS, MINUTE_IN_MS, SECONDS_IN_MS, timeLeft } from '../utils/time';
+import { DAY_IN_MS, HOUR_IN_MS, MINUTE_IN_MS, SECOND_IN_MS, timeLeft } from '../utils/time';
 
 export const TEMPORARY = 'temporary';
 export const PERMANENT = 'permanent';
@@ -13,7 +13,7 @@ export const PERMANENT = 'permanent';
 export const expirationOptions = {
   0: {
     title: '30 seconds',
-    val: SECONDS_IN_MS * 30,
+    val: SECOND_IN_MS * 30,
   },
   1: {
     title: '15 minutes',

@@ -1,7 +1,7 @@
 import { C } from './Message.actions';
 
 const initialState = {
-    text: "Sample Message",
+    message: "Sample Message",
     isActive: false
   }
 
@@ -9,9 +9,10 @@ const MessageReducer = (state = initialState, action) => {
     const { type } = action;
     switch (type) {
         case C.DISPLAY_MESSAGE:
+            const { message } = action;
             return {
                 ...state,
-                ...action,
+                message,
                 isActive: true
             }
         case C.HIDE_MESSAGE:

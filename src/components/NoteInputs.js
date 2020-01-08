@@ -1,4 +1,4 @@
-import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIcon, IonInput, IonItem, IonLabel, IonSelect, IonSelectOption, IonTextarea, IonToggle } from '@ionic/react';
+import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIcon, IonInput, IonItem, IonSelect, IonSelectOption, IonTextarea, IonToggle, IonLabel } from '@ionic/react';
 import { lock, timer } from 'ionicons/icons';
 import React, { useCallback, useEffect } from 'react';
 import { PERMANENT, TEMPORARY } from './Note';
@@ -11,35 +11,34 @@ const NoteInputs = ({ note, setNote, expirationOptions }) => {
   };
 
   const onTypeChange = (e) => {
-    setNote({
-      ...note,
-      type: e.currentTarget.checked ? PERMANENT : TEMPORARY
-    });
+      setNote({
+          ...note,
+          type: e.currentTarget.checked ? PERMANENT : TEMPORARY
+      });
   }
 
   const onSelectChange = useCallback(
-    (e) => {
-      const selectClass = "md in-item hydrated";
-      if (e.target.className === selectClass) {
-        setNote({ ...note, expirationOption: +e.detail.value })
-      };
-    }, [note, setNote]
+      (e) => {
+          const selectClass = "md hydrated";
+          if (e.target.className === selectClass) {
+              setNote({ ...note, expirationOption: +e.detail.value })
+          };
+      }, [note, setNote]
   );
 
-
   useEffect(() => {
-    window.addEventListener('ionChange', onSelectChange);
-    return () => {
-      window.removeEventListener('ionChange', onSelectChange);
-    };
+      window.addEventListener('ionChange', onSelectChange);
+      return () => {
+          window.removeEventListener('ionChange', onSelectChange);
+      };
   }, [onSelectChange]);
 
   const onTitleChange = (e) => {
-    setNote({ ...note, title: e.currentTarget.value || ''});
+      setNote({ ...note, title: e.currentTarget.value || ''});
   }
 
   const onTextChange = (e) => {
-    setNote({ ...note, content: e.currentTarget.value || '' });
+      setNote({ ...note, content: e.currentTarget.value || '' });
   }
 
   const renderSelect = () => {
@@ -51,9 +50,9 @@ const NoteInputs = ({ note, setNote, expirationOptions }) => {
           onChange={ onSelectChange }
           interfaceOptions={customActionSheetOptions}
           interface="alert"
-          placeholder="Select"
+          placeholder="Select One"
         >
-          { Object.entries(expirationOptions).map(([name, { title }], i) => (
+          { Object.entries(expirationOptions || {}).map(([name, { title }], i) => (
             <IonSelectOption key={ name } selected={ i === expirationOption } value={ name }>
               { title }
             </IonSelectOption>
