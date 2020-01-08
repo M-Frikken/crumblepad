@@ -20,7 +20,7 @@ const NoteAddPage = ({ match: { url }, history }) => {
     const dispatch = useDispatch();
 
     const settings = useSelector(({ firebase }) => firebase.data.settings) || {};
-    const { [uid]: { expirationOptions = defaultExpirationOptions } } = settings || {};
+    const { [uid]: { expirationOptions = defaultExpirationOptions } = {} } = settings || {};
 
     const [note, setNote] = useState({})
 
