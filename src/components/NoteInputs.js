@@ -23,7 +23,6 @@ const NoteInputs = ({ note, setNote, expirationOptions }) => {
           const selectClass = "md in-item hydrated";
           const anotherSelectClass = "md hydrated";
           if (targetClass === selectClass || targetClass === anotherSelectClass) {
-            console.log('adding',  +e.detail.value);
             setNote({ ...note, expirationOption: +e.detail.value })
           };
       }, [note, setNote]
@@ -55,8 +54,8 @@ const NoteInputs = ({ note, setNote, expirationOptions }) => {
           interface="alert"
           placeholder="Select One"
         >
-          { Object.entries(expirationOptions || {}).map(([name, { title }], i) => (
-            <IonSelectOption key={ name } selected={ i === expirationOption } value={ name }>
+          { Object.entries(expirationOptions || {}).map(([name, { title, val }]) => (
+            <IonSelectOption key={ name } selected={ +val === expirationOption } value={ name }>
               { title }
             </IonSelectOption>
           )) }

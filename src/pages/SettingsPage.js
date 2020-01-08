@@ -31,8 +31,11 @@ const SettingsPage = ({ location: { pathname = '' }, match: { path = '' } }) => 
   const settings = useSelector(({ firebase }) => firebase.data.settings) || {};
   const isRequesting = useSelector(({ firebase }) => firebase.requesting[`settings/${uid}`]);
 
-  const { [uid]: { expirationOptions = defaultExpirationOptions } = {} } = settings || {};
-  const [expOptionOrder, setExpOptionOrder] = useState(Object.keys(expirationOptions));
+  const { [uid]: user = {} } = settings || {};
+  const { expirationOptions = defaultExpirationOptions } = user || {};
+  const [expOptionOrder, setExpOptionOrder] = useState(
+    Object.values(expirationOptions).map(({ val }) => val)
+  );
 
   const isOnSettingsPage = usePageHook(pathname, path);
 
