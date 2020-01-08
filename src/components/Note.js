@@ -19,23 +19,23 @@ export const expirationOptions = {
     title: '15 minutes',
     val: MINUTE_IN_MS * 15,
   },
+  // 2: {
+  //   title: '1 hour',
+  //   val: HOUR_IN_MS,
+  // },
+  // 3: {
+  //   title: '1 day',
+  //   val: DAY_IN_MS,
+  // },
+  // 4: {
+  //   title: '1 week',
+  //   val: DAY_IN_MS * 7,
+  // },
+  // 5: {
+  //   title: '1 month',
+  //   val: DAY_IN_MS * 30,
+  // },
   2: {
-    title: '1 hour',
-    val: HOUR_IN_MS,
-  },
-  3: {
-    title: '1 day',
-    val: DAY_IN_MS,
-  },
-  4: {
-    title: '1 week',
-    val: DAY_IN_MS * 7,
-  },
-  5: {
-    title: '1 month',
-    val: DAY_IN_MS * 30,
-  },
-  6: {
     title: '1 year',
     val: DAY_IN_MS * 30 * 12,
   }

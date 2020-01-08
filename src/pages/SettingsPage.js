@@ -16,15 +16,15 @@ const SettingsPage = ({ location: { pathname = '' }, match: { path = '' } }) => 
   const settings = useSelector(({ firebase }) => firebase.data.settings) || {};
   const isRequesting = useSelector(({ firebase }) => firebase.requesting[`settings/${uid}`]);
 
-  const { [uid]: expirationOptions = defaultExpirationOptions } = settings || {};
-  const [expOptionOrder, setExpOptionOrder] = useState(Object.keys(expirationOptions) || []);
+  const { [uid]: { expirationOptions = defaultExpirationOptions } = {} } = settings || {};
+  const [expOptionOrder, setExpOptionOrder] = useState(Object.keys(expirationOptions));
 
-  const [expOpts, setExpOpts] = useState(expirationOptions);
+  // const [exp1Opts, setExp1Opts] = useState(expirationOptions);
 
-  function doReorder (event) {
+  const doReorder = event => {
     const from = event.detail.from;
     // fix bug with more places then elements
-    const to = event.detail.to === Object.keys(expOpts).length ? event.detail.to - 1 : event.detail.to;
+    const to = event.detail.to === Object.keys(expirationOptions).length ? event.detail.to - 1 : event.detail.to;
     if (from === to) return event.detail.complete();
 
     const newOrder = [...expOptionOrder];
@@ -35,45 +35,47 @@ const SettingsPage = ({ location: { pathname = '' }, match: { path = '' } }) => 
     event.detail.complete();
   }
 
-  // useEffect(
-  //   () => console.log('orderInEffect', expOptionOrder),
-  //   [expOptionOrder]
-  // )
-
   const [isOnSettingsPage, setIsOnSettingsPage] = useState(true);
 
-  const saveExpOpts = useCallback(
-    () => {
-      console.log('before change', expOptionOrder, expOpts);
-      const convertedOptions = expOptionOrder.reduce((acc, pos, i) => (
-        { ...acc, [i]: expOpts[pos] }
-      ), {});
-      console.log('after changes', convertedOptions);
-      firebase.set(`settings/${uid}/expirationOptions`, convertedOptions);
-    },
-    [expOpts, expOptionOrder],
-  )
+  // const saveexpirationOptions = useCallback(
+  //   () => {
+  //     // console.log('before change', expOptionOrder, expirationOptions);
+  //     const convertedOptions = expOptionOrder.reduce((acc, pos, i) => (
+  //       { ...acc, [i]: expirationOptions[pos] }
+  //     ), {});
+  //     console.log('saving', expOptionOrder, convertedOptions);
+  //     // console.log('after changes', convertedOptions);
+  //     firebase.set(`settings/${uid}/expirationOptions`, convertedOptions);
+  //   },
+  //   [expirationOptions, expOptionOrder],
+  // )
 
   useEffect(() => {
+    // console.log('expOptionOrder', expOptionOrder);
     // in order to render correctly expiration options after settings got changed
     if (pathname === path) {
+      console.log('heree');
       setIsOnSettingsPage(true);
-      setExpOptionOrder(Object.keys(expOpts));
+      setExpOptionOrder(Object.keys(expirationOptions));
     }
+    else setIsOnSettingsPage(false);
 
     return () => {
+      // console.log('expOptionOrder when left page', expOptionOrder);
+      // if (pathname === path) {
+      //   console.log('expOptionOrder when left settings page!!', expOptionOrder);
       if (pathname === path) {
-        saveExpOpts();
-        setIsOnSettingsPage(false);
+        const convertedOptions = expOptionOrder.reduce((acc, pos, i) => (
+          { ...acc, [i]: expirationOptions[pos] }
+        ), {});
+        firebase.set(`settings/${uid}/expirationOptions`, convertedOptions);
+        // setIsOnSettingsPage(false);
+        // console.log('beforesave', expOptionOrder);
+        // saveexpirationOptions();
       }
     }
   }, [pathname, path]);
-  // }, [saveExpOpts, pathname, path]);
-
-  // useEffect(() => {
-  //   setExpOptionOrder(Object.keys(expOpts));
-  //   // setIsOnSettingsPage(false);
-  // }, [expOpts]);
+  // }, [saveexpirationOptions, pathname, path]);
 
   const [isPickerOpen, setIsPickerOpen] = useState(false);
 
@@ -83,7 +85,7 @@ const SettingsPage = ({ location: { pathname = '' }, match: { path = '' } }) => 
       ...expirationOptions,
       [expOptCount]: customExpirationTime
     }
-    setExpOpts(allExpirationOptions);
+    // setexpirationOptions(allExpirationOptions);
     setExpOptionOrder([...expOptionOrder, `${expOptCount}`]);
     firebase.set(`settings/${uid}/expirationOptions`, allExpirationOptions);
   };
@@ -108,7 +110,7 @@ const SettingsPage = ({ location: { pathname = '' }, match: { path = '' } }) => 
   const renderExpirationOptions = () => {
     if (isRequesting) return <Loader />;
 
-    return Object.entries(expOpts).map(([id, { title }]) => (
+    return Object.entries(expirationOptions).map(([id, { title }]) => (
       <IonItem key={id}>
         <IonLabel>{`${id} | ${title}`}</IonLabel>
         {/* <IonReorder slot="end" /> */}
@@ -136,7 +138,7 @@ const SettingsPage = ({ location: { pathname = '' }, match: { path = '' } }) => 
   };
 
   if (!uid) return <Redirect to='/login' />
-  console.log('expopts', expOpts, 'order', expOptionOrder);
+  // console.log('expirationOptions', expirationOptions, 'order', expOptionOrder);
   return (
     <IonPage>
       <PageHeader title='Settings'/>
