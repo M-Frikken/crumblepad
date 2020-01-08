@@ -1,4 +1,4 @@
-import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIcon, IonInput, IonItem, IonSelect, IonSelectOption, IonTextarea, IonToggle } from '@ionic/react';
+import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIcon, IonInput, IonItem, IonSelect, IonSelectOption, IonTextarea, IonToggle, IonLabel } from '@ionic/react';
 import { lock, timer } from 'ionicons/icons';
 import React, { useCallback, useEffect } from 'react';
 import { PERMANENT, TEMPORARY } from './Note';
@@ -44,20 +44,21 @@ const NoteInputs = ({ note, setNote, expirationOptions }) => {
   const renderSelect = () => {
     if (type === PERMANENT) return null;
     return (
-      <>
+      <IonItem className="ion-no-margin">
+        <IonLabel position="floating">Expiration</IonLabel>
         <IonSelect
           onChange={ onSelectChange }
           interfaceOptions={customActionSheetOptions}
           interface="alert"
           placeholder="Select One"
         >
-          { Object.entries(expirationOptions).map(([name, { title }], i) => (
+          { Object.entries(expirationOptions || {}).map(([name, { title }], i) => (
             <IonSelectOption key={ name } selected={ i === expirationOption } value={ name }>
               { title }
             </IonSelectOption>
           )) }
         </IonSelect>
-      </>
+      </IonItem>
     );
   }
 
