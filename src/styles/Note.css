@@ -2,3 +2,17 @@
     text-decoration: none;
     padding-right: 5px;
 }
+
+.note-header {
+    max-width: 400px;
+}
+
+.note-switch {
+    display: flex;
+    justify-items: end;
+    align-items: end;
+}
+
+.note-switch ion-label {
+    padding-top: 12px;
+}

@@ -14,7 +14,6 @@ const pages = [
 
 const Menu = ({ location: { pathname }, history }) => {
     const firebase = useFirebase();
-
     const uid = localStorage.getItem('uid');
 
     useFirebaseConnect([
@@ -50,12 +49,12 @@ const Menu = ({ location: { pathname }, history }) => {
             <IonContent>
                 <IonList>
                     { Object.values(pages).map(({ title, path, icon }) => (
-                            <Link className="link" onClick={ menuItemClick } key={ title } to={ path }>
-                                <IonItem color={ path === pathname ? "secondary" : "" }>
-                                    <IonIcon icon={ icon } />
-                                    <IonTitle>{ title }</IonTitle>
-                                </IonItem>
-                            </Link>
+                        <Link className="link" onClick={ menuItemClick } key={ title } to={ path }>
+                            <IonItem color={ path === pathname ? "secondary" : "" }>
+                                <IonIcon icon={ icon } />
+                                <IonTitle>{ title }</IonTitle>
+                            </IonItem>
+                        </Link>
                     ))}
                 </IonList>
             </IonContent>
