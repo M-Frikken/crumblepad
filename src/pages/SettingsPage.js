@@ -56,7 +56,13 @@ const SettingsPage = ({ location: { pathname = '' }, match: { path = '' } }) => 
   }
 
   const updateExpiratonOptions = (customExpirationTime) => {
-    const expOptCount = expOptionOrder.length;
+    const chooseExpOpt = (orig = 0) => {
+      const index = orig + expOptionOrder.length;
+      if (expOpts[index]) return chooseExpOpt(orig + 1);
+      return index;
+    }
+
+    const expOptCount = chooseExpOpt();
     const allExpirationOptions = {
       ...expOpts,
       [expOptCount]: customExpirationTime
