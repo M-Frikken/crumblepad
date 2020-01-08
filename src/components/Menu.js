@@ -61,7 +61,7 @@ const Menu = ({ location: { pathname }, history }) => {
             <IonButton className="ion-padding-start ion-padding-end" color="secondary" onClick={ logout }>
                 Log out
             </IonButton>
-            <Link color="secondary" to="premium/users" style={{ display: 'inline' }}>
+            <Link color="secondary" onClick={ menuItemClick } to="/premium/users" style={{ display: 'inline' }}>
                 <IonIcon icon={information} />
             </Link>
         </IonMenu>
