@@ -19,9 +19,12 @@ const NoteInputs = ({ note, setNote, expirationOptions }) => {
 
   const onSelectChange = useCallback(
       (e) => {
-          const selectClass = "md hydrated";
-          if (e.target.className === selectClass) {
-              setNote({ ...note, expirationOption: +e.detail.value })
+          const targetClass = e.target.className;
+          const selectClass = "md in-item hydrated";
+          const anotherSelectClass = "md hydrated";
+          if (targetClass === selectClass || targetClass === anotherSelectClass) {
+            console.log('adding',  +e.detail.value);
+            setNote({ ...note, expirationOption: +e.detail.value })
           };
       }, [note, setNote]
   );
