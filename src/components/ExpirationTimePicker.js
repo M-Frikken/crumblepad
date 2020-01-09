@@ -32,10 +32,10 @@ const ExpirationTimePicker = ({ isPickerOpen, setIsPickerOpen, updateExpiratonOp
         <IonPicker
           isOpen={ isPickerOpen }
           columns={[
-            { name: 'days', suffix: 'days', options: days },
-            { name: 'hours', suffix: 'hours', options: hours },
-            { name: 'minutes', suffix: 'minutes', options: minutes },
-            { name: 'seconds', suffix: 'seconds', options: minutes }
+            { name: 'days', suffix: 'd', options: days },
+            { name: 'hours', suffix: 'h', options: hours },
+            { name: 'minutes', suffix: 'm', options: minutes },
+            { name: 'seconds', suffix: 's', options: minutes }
           ]}
           buttons={[
             { text: 'close', handler: closeHandler },
