@@ -77,16 +77,12 @@ const SettingsPage = ({ location: { pathname = '' }, match: { path = '' } }) => 
 
     const noteId = e.target.id;
     const newOrder = [...expOptionOrder];
-    const index = newOrder.indexOf(noteId);
     newOrder.splice(newOrder.indexOf(noteId), 1);
 
     const newExpOpts = newOrder.reduce((acc, pos) => (
       { ...acc, [pos]: expOpts[pos] }
     ), {});
 
-    console.log(noteId, index, '----');
-    console.log('old', expOptionOrder, expOpts);
-    console.log('new', newOrder, newExpOpts);
     setExpOptionOrder(newOrder);
     setExpOpts(newExpOpts);
   }
@@ -137,7 +133,6 @@ const SettingsPage = ({ location: { pathname = '' }, match: { path = '' } }) => 
             </IonButton>
           )}
         </IonLabel>
-        {/* <IonReorder slot="end" /> */}
         <IonReorder slot="start" />
       </IonItem>
     ));
