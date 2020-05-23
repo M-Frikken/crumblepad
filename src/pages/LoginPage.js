@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { IonButton, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import React, { useState } from 'react';
 import { useFirebase } from 'react-redux-firebase';
+import '../styles/Header.css';
 import { setItem } from '../utils/BrowserDB';
 
-const SignInPage = ({ history }) => {
+const RegisterPage = ({ history }) => {
     const firebase = useFirebase();
 
     const [email, setEmail] = useState('');
@@ -35,11 +36,9 @@ const SignInPage = ({ history }) => {
         <IonPage>
             <IonHeader>
                 <IonToolbar color="orange">
-                    <IonRow>
-                        <IonTitle>Login</IonTitle>
-                    </IonRow>
-                    <IonButton onClick={ () => history.push('/signin') } slot="end">
-                        SignIn page
+                    <IonTitle className="headerTitle">Login</IonTitle>
+                    <IonButton className="register" onClick={ () => history.push('/register') } slot="end">
+                        Register
                     </IonButton>
                 </IonToolbar>
             </IonHeader>
@@ -58,10 +57,17 @@ const SignInPage = ({ history }) => {
                       onInput={ e => setPassword(e.currentTarget.value) }>
                     </IonInput>
                 </IonItem>
-                <IonButton onClick={ buttonClick } color="orange">Login</IonButton>
+                <IonButton
+                  onClick={ buttonClick }
+                  color="orange"
+                  margin-start="10px"
+                  margin-top="10px"
+                >
+                    Login
+                </IonButton>
             </IonContent>
         </IonPage>
     );
   };
 
-export default SignInPage;
+export default RegisterPage;
