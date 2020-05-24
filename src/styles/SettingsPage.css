@@ -1,0 +1,12 @@
+.SettingsCard {
+    padding: 0;
+}
+
+.ExpirationOptionsButton {
+    margin-left: 5px;
+}
+
+.item .sc-ion-label-ios-h.ExpirationOptionsLabel {
+    display: flex;
+    align-items: center;
+}
