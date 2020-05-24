@@ -151,18 +151,19 @@ const Note = (props) => {
   }
 
   return (
-      <IonItemDivider className="ion-padding">
+      <IonItemDivider className="note ion-padding">
         <Link
-          className="note"
+          className="noteTexts"
           to={ `/note/${ id }` }
           style={{ color: '#222428', textDecoration: 'none' }}
         >
-          <IonTitle className="ion-no-padding ion-padding-bottom">
+          <IonTitle className="noteTitle">
             { renderIcon() }
             { renderLabel() }
           </IonTitle>
-          <IonLabel style={{ whiteSpace: 'pre-line' }}>
-            { renderShort() }
+          <IonLabel className="noteShortText">
+            {/* { renderShort() } */}
+            { content }
           </IonLabel>
         </Link>
           { renderRestoreButton() }
