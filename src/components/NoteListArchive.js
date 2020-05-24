@@ -5,11 +5,12 @@ import '../styles/NoteList.css';
 import { useSelector } from 'react-redux';
 
 const NoteList = () => {
-  const currentUserId = useSelector(state => state.firebase.auth.uid);
-  const notes = useSelector(state => state.firebase.data.notes) || {};
+  const uid = localStorage.getItem('uid');
+  const allNotes = useSelector(({ firebase }) => firebase.data.notes) || {};
+  const notes = allNotes[uid] || {};
 
   const expiredNotes = Object.entries(notes).reduce((acc, [key, note]) => (
-    note.expired && note.userId === currentUserId
+    note.expired
     ? { ...acc, [key]: note }
     : acc
   ), {});

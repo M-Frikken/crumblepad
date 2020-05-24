@@ -8,10 +8,11 @@ import NoteAddPage from './NoteAddPage';
 import NoteListPage from './NoteListPage';
 import SettingsPage from './SettingsPage';
 import RegisterPage from './RegisterPage';
+import PremiumUsersPage from './PremiumUsersPage';
 import { hideMessage } from '../store/Message.actions';
 
 const Router = () => {
-    const { text, isActive } = useSelector(({ message }) => message);
+    const { message, isActive } = useSelector(({ message }) => message);
     const dispatch = useDispatch();
 
     return (
@@ -19,12 +20,13 @@ const Router = () => {
         <IonToast
             isOpen={ isActive }
             onDidDismiss={ () => dispatch(hideMessage()) }
-            message={ text }
+            message={ message }
             duration={ 600 }
             position="top"
         />
         <IonRouterOutlet id="content">
             <Route path="/note/:noteId" component={ NoteAddPage } />
+            <Route path="/premium/users" component={ PremiumUsersPage } />
             <Route path="/home" component={ NoteListPage } exact={ true } />
             <Route path="/register" component={ RegisterPage } exact={ true } />
             <Route path="/login" component={ LoginPage } exact={ true } />

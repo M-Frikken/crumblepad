@@ -1,45 +1,57 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react';
-import { IonLabel, IonItem, IonIcon, IonButton } from '@ionic/react';
+import { IonButton, IonIcon, IonItemDivider, IonLabel, IonTitle } from '@ionic/react';
+import { closeCircle, lock, timer, trash, undo } from 'ionicons/icons';
+import React, { useEffect, useState } from 'react';
+import { useFirebase } from 'react-redux-firebase';
 import { Link } from 'react-router-dom';
 import '../styles/Note.css';
-import { timer, lock, pulse, close } from 'ionicons/icons';
-import { timeLeft } from '../utils/time';
-import { SECONDS_IN_MS, MINUTE_IN_MS } from '../utils/time';
-import { useFirebase } from 'react-redux-firebase';
+import { DAY_IN_MS, HOUR_IN_MS, MINUTE_IN_MS, SECOND_IN_MS, timeLeft } from '../utils/time';
 
 export const TEMPORARY = 'temporary';
 export const PERMANENT = 'permanent';
 
 export const expirationOptions = {
   0: {
-    title: '10 seconds',
-    val: SECONDS_IN_MS * 10,
+    title: '30 seconds',
+    val: SECOND_IN_MS * 30,
   },
   1: {
-    title: '20 seconds',
-    val: SECONDS_IN_MS * 20,
+    title: '15 minutes',
+    val: MINUTE_IN_MS * 15,
   },
   2: {
-    title: '1 minute',
-    val: MINUTE_IN_MS,
+    title: '1 hour',
+    val: HOUR_IN_MS,
   },
   3: {
-    title: '2 minutes',
-    val: MINUTE_IN_MS * 2,
+    title: '1 day',
+    val: DAY_IN_MS,
+  },
+  4: {
+    title: '1 week',
+    val: DAY_IN_MS * 7,
+  },
+  5: {
+    title: '1 month',
+    val: DAY_IN_MS * 30,
+  },
+  6: {
+    title: '1 year',
+    val: DAY_IN_MS * 30 * 12,
   }
 }
 
 const Note = (props) => {
+  const uid = localStorage.getItem('uid');
   const firebase = useFirebase();
 
   const {
     note, note: {
-      type, title,
+      type, title, content = "",
       expired: expiredInitial = false, expiresAt = new Date().getTime()
     }, id
   } = props;
-  const notePath = `notes/${ id }`;
+  const notePath = `notes/${ uid }/${ id }`;
   const [expired, setExpired] = useState(expiredInitial);
 
   const _dateToShow = () => {
@@ -66,10 +78,6 @@ const Note = (props) => {
     };
   }, [type, expired, expiresAt])
 
-  const onLinkClick = (e) => {
-    if (expired) e.preventDefault();
-  }
-
   const renderIcon = () => {
     return type === TEMPORARY
       ? <IonIcon icon={ timer } />
@@ -77,11 +85,29 @@ const Note = (props) => {
   };
 
   const renderLabel = () => {
-    if (type === PERMANENT) return ` ${ title } `;
+    let titleShort = title
+    if (title.length > 50) titleShort = title.substring(0,47).concat("...");
+
+    if (type === PERMANENT) return ` ${ titleShort } `;
 
     return !expired
-      ? ` ${ time } | ${ title } `
-      : ` ${ title } `;
+      ? ` ${ time } | ${ titleShort } `
+      : ` ${ titleShort } `;
+  }
+
+  const renderShort = () => {
+    let text = content.substring(0,100);
+
+    let lines = text.split("\n");
+    text = "";
+    for ( let i = 0; i < 4 && i < lines.length; i++ ) {
+      text += lines[i];
+      if ( i < 3 ) text += "\n";
+    }
+
+    if (content.length > 100) text = text.substring(0,97).concat("...");
+
+    return ` ${ text } `;
   }
 
   const renderDeleteButton = () => {
@@ -89,13 +115,17 @@ const Note = (props) => {
       DELETE: () => firebase.remove(notePath),
       UPDATE_TO_EXPIRED: () => {
         setExpired(true);
-        firebase.update(notePath, { ...note, expired: true });
+        firebase.update(notePath, {
+          ...note,
+          expired: true,
+          updatedAt: new Date().getTime()
+        });
       }
     };
 
     return (
-      <IonButton onClick={ expired ? actions.DELETE : actions.UPDATE_TO_EXPIRED }>
-        <IonIcon icon={ close }></IonIcon>
+      <IonButton className="ion-no-margin ion-margin-start" color="secondary" slot="end" onClick={ expired ? actions.DELETE : actions.UPDATE_TO_EXPIRED }>
+        <IonIcon icon={ expired ? closeCircle : trash }></IonIcon>
       </IonButton>
     )
   }
@@ -114,27 +144,30 @@ const Note = (props) => {
     }
 
     return (
-      <IonButton onClick={ restore }>
-        <IonIcon icon={ pulse }></IonIcon>
+      <IonButton className="ion-no-margin" color="secondary" slot="end" onClick={ restore }>
+        <IonIcon icon={ undo }></IonIcon>
       </IonButton>
     )
   }
 
   return (
-      <IonItem>
+      <IonItemDivider className="ion-padding">
         <Link
           className="note"
-          to={ `/note/${id}` }
-          onClick={ onLinkClick }
+          to={ `/note/${ id }` }
+          style={{ color: '#222428', textDecoration: 'none' }}
         >
-          <IonLabel>
+          <IonTitle className="ion-no-padding ion-padding-bottom">
             { renderIcon() }
             { renderLabel() }
+          </IonTitle>
+          <IonLabel style={{ whiteSpace: 'pre-line' }}>
+            { renderShort() }
           </IonLabel>
         </Link>
-        { renderDeleteButton() }
-        { renderRestoreButton() }
-      </IonItem>
+          { renderRestoreButton() }
+          { renderDeleteButton() }
+      </IonItemDivider>
   );
 };
 

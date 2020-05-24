@@ -55,15 +55,16 @@ const RegisterPage = ({ history }) => {
                 { renderError() }
                 <IonItem>
                     <IonLabel position="floating">Username</IonLabel>
-                    <IonInput value={ username } onInput={ e => setUsername(e.currentTarget.value) }></IonInput>
+                    <IonInput className="ion-margin-top" value={ username } onInput={ e => setUsername(e.currentTarget.value) }></IonInput>
                 </IonItem>
                 <IonItem>
                     <IonLabel position="floating">Email</IonLabel>
-                    <IonInput value={ email } onInput={ e => setEmail(e.currentTarget.value) }></IonInput>
+                    <IonInput className="ion-margin-top" value={ email } onInput={ e => setEmail(e.currentTarget.value) }></IonInput>
                 </IonItem>
                 <IonItem>
                     <IonLabel position="floating">Password</IonLabel>
                     <IonInput
+                      className="ion-margin-top"
                       value={ password }
                       type="password"
                       clearOnEdit={ false }

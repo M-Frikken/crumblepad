@@ -1,28 +1,27 @@
-import React from 'react';
-import Note from './Note';
 import { IonList } from '@ionic/react';
-import '../styles/NoteList.css';
+import React from 'react';
 import { useSelector } from 'react-redux';
+import '../styles/NoteList.css';
+import Loader from './Loader';
+import Note from './Note';
 
 const NoteList = () => {
-  const currentUserId = useSelector(state => state.firebase.auth.uid);
-  const notes = useSelector(state => state.firebase.data.notes) || {};
+  const uid = localStorage.getItem('uid');
+  const isLoading = useSelector(({ firebase }) => firebase.requesting[`notes/${uid}`]);
+  const { [uid]: notes = {} } = useSelector(({ firebase }) => firebase.data.notes) || {};
 
-  const activeNotes = Object.entries(notes).reduce((acc, [key, note]) => (
-    (!('expired' in note) || !note.expired) && note.userId === currentUserId
+  const activeNotes = Object.entries(notes || {}).reduce((acc, [key, note]) => (
+    !('expired' in note) || !note.expired
     ? { ...acc, [key]: note }
     : acc
   ), {});
 
-  if (!Object.keys(activeNotes).length) return <h4 className='empty' >Oops, no notes to crumble...</h4>
+  if (isLoading) return <Loader />;
 
-  const renderAlert = () => (
-    null
-  );
+  if (!Object.keys(activeNotes).length) return <h4 className='empty' >Oops, no notes to crumble...</h4>
 
   return (
     <IonList>
-      { renderAlert() }
       { Object.entries(activeNotes).reverse().map(([id, note]) => (
           <Note
             key={ id }
