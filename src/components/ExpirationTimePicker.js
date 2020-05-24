@@ -42,7 +42,7 @@ const ExpirationTimePicker = ({ isPickerOpen, setIsPickerOpen, updateExpiratonOp
             { text: 'save', handler: saveHandler }
           ]}
           id="dateTimePicker"
-        ></IonPicker>
+        />
     )
 }
 

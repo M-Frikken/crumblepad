@@ -111,7 +111,7 @@ const SettingsPage = ({ location: { pathname = '' }, match: { path = '' } }) => 
 
     return (
       <>
-        <IonButton onClick={ onButtonClick }>Add option</IonButton>
+        <IonButton className="ExceptionOptionsAddOptionButton" onClick={ onButtonClick }>Add option</IonButton>
         <ExpirationTimePicker
           isPickerOpen={isPickerOpen}
           setIsPickerOpen={setIsPickerOpen}
@@ -128,12 +128,12 @@ const SettingsPage = ({ location: { pathname = '' }, match: { path = '' } }) => 
       <IonItem key={id}>
         <IonLabel className="ExpirationOptionsLabel">
           {`${title} (${timeLeft(new Date().getTime() + val, true)})`}
-          { expOptionOrder.length === 1 ? null : (
-            <IonButton className="ion-no-margin ExpirationOptionsButton" color="secondary" id={ id } slot="end" onClick={ deleteExpirationOption }>
-              <IonIcon icon={ closeCircle }></IonIcon>
-            </IonButton>
-          )}
         </IonLabel>
+        { expOptionOrder.length === 1 ? null : (
+          <IonButton className="ion-no-margin ExpirationOptionsButton" color="secondary" id={ id } slot="end" onClick={ deleteExpirationOption }>
+            <IonIcon icon={ closeCircle }></IonIcon>
+          </IonButton>
+        )}
         <IonReorder slot="start" />
       </IonItem>
     ));
