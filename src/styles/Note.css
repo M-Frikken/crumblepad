@@ -1,4 +1,23 @@
-.note {
+.noteTexts {
     text-decoration: none;
     padding-right: 5px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.noteShortText,
+.noteTitle {
+    display: block;
+    position: relative;
+}
+
+.noteTitle {
+    text-align: left;
+    padding: 0;
+}
+
+.noteShortText {
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
