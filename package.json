@@ -2,6 +2,7 @@
   "name": "crumblePad",
   "version": "0.0.1",
   "private": true,
+  "homepage": "http://dmitrijs-voronovs.github.io/crumblepad",
   "dependencies": {
     "@ionic/react": "^4.11.6",
     "@ionic/react-router": "^4.11.6",
@@ -49,6 +50,7 @@
   },
   "description": "An Ionic project",
   "devDependencies": {
+    "gh-pages": "^2.2.0",
     "redux-devtools": "^3.5.0"
   }
 }

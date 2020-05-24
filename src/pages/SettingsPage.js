@@ -11,6 +11,7 @@ import Loader from '../components/Loader';
 import { expirationOptions as defaultExpirationOptions } from '../components/Note';
 import PageHeader from '../components/PageHeader';
 import { timeLeft } from '../utils/time';
+import '../styles/SettingsPage.css';
 
 const usePageHook = (currentPath, targetPath) => {
   const [isOnSettingsPage, setIsOnSettingsPage] = useState(true);
@@ -125,10 +126,10 @@ const SettingsPage = ({ location: { pathname = '' }, match: { path = '' } }) => 
 
     return Object.entries(expOpts).map(([id, { title, val }]) => (
       <IonItem key={id}>
-        <IonLabel>
+        <IonLabel className="ExpirationOptionsLabel">
           {`${title} (${timeLeft(new Date().getTime() + val, true)})`}
           { expOptionOrder.length === 1 ? null : (
-            <IonButton className="ion-no-margin" color="secondary" id={ id } slot="end" onClick={ deleteExpirationOption }>
+            <IonButton className="ion-no-margin ExpirationOptionsButton" color="secondary" id={ id } slot="end" onClick={ deleteExpirationOption }>
               <IonIcon icon={ closeCircle }></IonIcon>
             </IonButton>
           )}
@@ -144,7 +145,7 @@ const SettingsPage = ({ location: { pathname = '' }, match: { path = '' } }) => 
     return (
       <IonCard>
         <IonCardHeader>Expiration options</IonCardHeader>
-        <IonCardContent>
+        <IonCardContent className="SettingsCard">
           <IonReorderGroup disabled={false} onIonItemReorder={doReorder}>
             {renderExpirationOptions()}
           </IonReorderGroup>

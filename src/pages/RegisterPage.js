@@ -1,9 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { IonButton, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import React, { useState } from 'react';
-import { IonPage, IonHeader, IonToolbar, IonRow, IonTitle, IonContent, IonButton, IonItem, IonLabel, IonInput } from '@ionic/react';
 import { useFirebase } from 'react-redux-firebase';
+import '../styles/Header.css';
+import { setItem } from '../utils/BrowserDB';
 
-const SignInPage = ({ history }) => {
+const RegisterPage = ({ history }) => {
     const firebase = useFirebase();
 
     const [email, setEmail] = useState('');
@@ -17,7 +19,16 @@ const SignInPage = ({ history }) => {
             { email, password },
             { username, email }
         ).then(
-            () => history.push('/home')
+            () => firebase.login(
+                { email, password }
+            )
+            // () => history.push('/home')
+        ).then(
+            user => {
+                console.log(user);
+                setItem('uid', user.user.user.uid);
+                history.push('/home')
+            }
         ).catch(
             err => {
                 setError(err.message);
@@ -34,11 +45,9 @@ const SignInPage = ({ history }) => {
         <IonPage>
             <IonHeader>
                 <IonToolbar color="orange">
-                    <IonRow>
-                        <IonTitle>Register</IonTitle>
-                    </IonRow>
-                    <IonButton className="ion-margin-end" color="secondary" onClick={ () => history.push('/login') } slot="end">
-                        Log In
+                <IonTitle className="headerTitle">Register</IonTitle>
+                    <IonButton className="login" onClick={ () => history.push('/login') } slot="end">
+                        Login
                     </IonButton>
                 </IonToolbar>
             </IonHeader>
@@ -62,12 +71,17 @@ const SignInPage = ({ history }) => {
                       onInput={ e => setPassword(e.currentTarget.value) }>
                     </IonInput>
                 </IonItem>
-                <IonItem className="ion-no-margin" lines="none">
-                    <IonButton className="ion-inner-padding ion-margin-top" onClick={ buttonClick } size="default" color="secondary">Register</IonButton>
-                </IonItem>
+                <IonButton
+                  onClick={ buttonClick }
+                  color="orange"
+                  margin-start="10px"
+                  margin-top="10px"
+                >
+                    Login
+                </IonButton>
             </IonContent>
         </IonPage>
     );
   };
 
-export default SignInPage;
+export default RegisterPage;

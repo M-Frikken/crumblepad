@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { IonButton, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import React, { useState } from 'react';
 import { useFirebase } from 'react-redux-firebase';
+import '../styles/Header.css';
 import { setItem } from '../utils/BrowserDB';
 
-const SignInPage = ({ history }) => {
+const RegisterPage = ({ history }) => {
     const firebase = useFirebase();
 
     const [email, setEmail] = useState('');
@@ -35,11 +36,9 @@ const SignInPage = ({ history }) => {
         <IonPage>
             <IonHeader>
                 <IonToolbar color="orange">
-                    <IonRow>
-                        <IonTitle>Login</IonTitle>
-                    </IonRow>
-                    <IonButton className="ion-margin-end" color="secondary" onClick={ () => history.push('/signin') } slot="end">
-                        Create Account
+                    <IonTitle className="headerTitle">Login</IonTitle>
+                    <IonButton className="register" onClick={ () => history.push('/register') } slot="end">
+                        Register
                     </IonButton>
                 </IonToolbar>
             </IonHeader>
@@ -59,12 +58,17 @@ const SignInPage = ({ history }) => {
                       onInput={ e => setPassword(e.currentTarget.value) }>
                     </IonInput>
                 </IonItem>
-                <IonItem className="ion-no-margin" lines="none">
-                    <IonButton className="ion-inner-padding ion-margin-top" size="default" onClick={ buttonClick } color="secondary">Log In</IonButton>
-                </IonItem>
+                <IonButton
+                  onClick={ buttonClick }
+                  color="orange"
+                  margin-start="10px"
+                  margin-top="10px"
+                >
+                    Login
+                </IonButton>
             </IonContent>
         </IonPage>
     );
   };
 
-export default SignInPage;
+export default RegisterPage;
